@@ -42,7 +42,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div></div>');  
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a class="ghb_user_info_nav">User Info</a><a class="ghb_user_repo_nav">Repos</a></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div></div>');  
     
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
@@ -85,7 +85,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     $.getJSON(requestURLIssues, function(data){
         // console.log(data);
         if(data.issues.length === 0) {
-            $('#ghb_issue_list_' + options.repo_name).html('<li class="no_records">There are no open issues for this project</li>');
+            $('#ghb_issue_list_' + options.repo_name).html('<li class="no_records">There are no open issues for this repository.</li>');
         } else {
             $.each(data.issues, function (i, obj) {
                 record ='<li><a target="_blank" href="http://github.com/'+ options.login + '/' + options.repo_name + '/issues#issue/' + obj.number + '">'+ obj.title +'</a> <span>'+ obj.body +'</span></li>';

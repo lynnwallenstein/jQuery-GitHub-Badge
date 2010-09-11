@@ -1,5 +1,6 @@
 /*
-jquery.github_badge.css v1.0
+jQuery GitHub Badge Plugin v1.0
+jquery.github_badge.css
 Last updated: 10 September 2010
 
 Created by Lynn Wallenstein
@@ -8,3 +9,86 @@ http://www.maverickconceptions.com/2010/09/11/github-badge/
 Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
 http://creativecommons.org/licenses/by-nc/3.0/
 */
+
+.ghb_badge {
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    font: 13.34px helvetica,arial,freesans,clean,sans-serif;
+}
+    .ghb_badge .ghb_badge_header {
+        background: #eaecec;
+        background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.03, rgb(247,248,249)),color-stop(1, rgb(234,236,236)));
+        background-image: -moz-linear-gradient(center top,rgb(247,248,249) 3%,rgb(234,236,236) 100%);
+        height: 34px;
+        padding: 5px 10px;       
+    }
+    .ghb_badge .ghb_badge_header h1, .ghb_badge .ghb_badge_header h1 a  {
+        color: #52595D;
+        font-size: 16px;
+        line-height: 34px;
+        text-decoration: none;
+    }
+        .ghb_badge .ghb_badge_header h1 a:hover {
+            border-bottom: 1px dashed #4183C4;
+        }
+    .ghb_user_nav {
+        background: #FAFAFB;
+        border-bottom: 1px solid #E1E1E2;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 10px;
+    }
+        .ghb_user_nav a {
+            color: #000000;
+            margin-right: 15px;
+        }
+            .ghb_user_nav a:hover {
+                text-decoration: underline;
+            }
+    .ghb_badge h2 {
+        display: none;
+    }
+    .ghb_badge .ghb_badge_user_info {
+        clear: both;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 10px auto;
+        padding-left: 10px;
+    }
+        .ghb_badge .ghb_badge_user_info img {
+            border: 1px solid #E1E1E2;
+            clear: both;
+            float: right;
+            margin: 0 10px;
+            padding: 10px;
+        }
+        .ghb_badge .ghb_badge_user_info dl {
+            font-size: 12px;
+            font-weight: normal;            
+            margin-top: 10px;
+        }
+            .ghb_badge .ghb_badge_user_info dt {
+                float: left;
+                font-weight: bold;
+                margin-right: 15px;
+            }
+    .ghb_badge .ghb_repo_list {
+        clear: both;
+        margin: 10px auto;
+    }
+
+
+    
+    .ghb_repo_list {}
+        .ghb_repo_list ul {
+            list-style: none;
+        }    
+            .ghb_repo_list li {
+                background: ;
+                border-bottom: 1px solid #E5E5E5;
+            }
+                .ghb_repo_list li span {
+                    display: none;
+                }
