@@ -31,11 +31,12 @@ http://creativecommons.org/licenses/by-nc/3.0/
     
     // User Badge Options
     userBadgeTitle: "My Projects",
+    repo_count: "100",
     
     // Project Badge Options 
     repo_name: null,
     repo_branch: "master",
-    issue_count: "10",
+    issue_count: "100",
     commit_count: "10"
   }
 
@@ -45,21 +46,21 @@ http://creativecommons.org/licenses/by-nc/3.0/
           
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
     $.getJSON(requestURLRepos, function(data){
-      //console.log(data);
-      $.each(data.repositories, function (i, obj) {
+        //console.log(data);
         if(data.length === 0) {
-          $('#ghb_repolist_' + options.login).html('<li>This User Has No Projects</li>');
-        } else {
-          record ='<li><a target="_blank" href="'+ obj.url +'">'+ obj.name +'</a> <span>'+ obj.description +'</span></li>';
-          
-          if (options.sorting == "ascending" ) {
-            $('#ghb_repolist_' + options.login).append(record);
-          } else {
-            $('#ghb_repolist_' + options.login).prepend(record);
-          }
-          
+            $('#ghb_repolist_' + options.login).html('<li>This User Has No Projects</li>');
+        } else {      
+            $.each(data.repositories, function (i, obj) {
+                record ='<li><a target="_blank" href="'+ obj.url +'">'+ obj.name +'</a> <span>'+ obj.description +'</span></li>';
+                if (options.sorting == "ascending" ) {
+                    $('#ghb_repolist_' + options.login).append(record);
+                } else {
+                    $('#ghb_repolist_' + options.login).prepend(record);
+                }
+                if ( i == (options.repo_count-1) ) return false;   
+            });
+             
         }
-      });
     });   
   }
 
@@ -86,7 +87,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 } else {
                     $('#ghb_issue_list_' + options.repo_name).prepend(record);
                 }
-                if ( i == options.issue_count ) return false;
+                if ( i == (options.issue_count-1) ) return false;
                         
             });
         }
@@ -107,7 +108,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 } else {
                     $('#ghb_commit_list_' + options.repo_name).prepend(record);
                 }
-                if ( i == options.commit_count ) return false;
+                if ( i == (options.commit_count-1) ) return false;
             });        
         }
     }); 
