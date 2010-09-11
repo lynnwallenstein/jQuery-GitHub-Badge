@@ -64,8 +64,14 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 } else {
                     $('#ghb_repo_list_' + options.login).prepend(record);
                 }
-                if ( i == (options.repo_count-1) ) return false;   
+                if ( i == (options.repo_count-1) ) return false;
+                
             });
+            // give first list item a special class
+            $('ul#ghb_repo_list_' + options.login +' li:first').addClass("firstrepo");
+
+		    // give last list item a special class
+		    $('ul#ghb_repo_list_' + options.login +' li:last').addClass("lastrepo");
              
         }
     });   

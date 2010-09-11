@@ -15,6 +15,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     border-radius: 5px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
+    clear: both;
     font: 13.34px helvetica,arial,freesans,clean,sans-serif;
 }
     .ghb_badge .ghb_badge_header {
@@ -76,19 +77,34 @@ http://creativecommons.org/licenses/by-nc/3.0/
             }
     .ghb_badge .ghb_repo_list {
         clear: both;
-        margin: 10px auto;
+        margin: 10px auto 0px auto;
     }
 
 
     
     .ghb_repo_list {}
-        .ghb_repo_list ul {
+        .ghb_repo_list {
             list-style: none;
         }    
             .ghb_repo_list li {
-                background: ;
+                background: url(../img/public.png) no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
                 border-bottom: 1px solid #E5E5E5;
+                padding-left: 22px;
             }
+                .ghb_repo_list li a {
+                    color: #4183C4;
+                    display: block;
+                    font-size: 14px;
+                    font-weight: bold;
+                    padding: 6px 10px 5px;
+                    text-decoration: none;
+                }
+                    .ghb_repo_list li a:hover {
+                        text-decoration: underline;
+                    }
+                .ghb_repo_list li.lastrepo {
+                   border-bottom: none;
+                }
                 .ghb_repo_list li span {
                     display: none;
                 }
