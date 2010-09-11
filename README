@@ -4,12 +4,14 @@ INSTALLATION AND CONFIGURATION
 
 Requirements:
 
-    + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you do and it works, drop me a line at lwallenstein@gmail.com)
+    + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 
+      do and it works, drop me a line at lwallenstein@gmail.com)
 
 
 To Install:
 
-    You can see a full installation in the demo.html file included in this repo, however here are the itemized steps.
+    You can see a full installation in the demo.html file included in this repo, however here are 
+    the itemized steps.
     
     STEP 1: Include the plugin script after jQuery
     --------------------------------------------------------------------------------------------
