@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<title>jquery.github_badge.js Demo</title>
+
+        <style>
+        body {
+	        font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", "Lucida", sans-serif;
+	        font-size: 76%;
+        }
+        </style>
+        
+		<link rel="stylesheet" href="jquery.twitter.css" type="text/css" media="all">
+	</head>
+
+	<body>
+		<div id="sample_user_badge"></div>
+		
+		<div id="sample_project_badge"></div>
+	</body>
+
+        <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script>!window.jQuery && document.write('<script src="js/jquery-1.4.2.min.js"><\/script>')</script>
+        
+        <script type="text/javascript" src="jquery.github_badge.js"></script>
+    
+        <script>
+            $("#sample_user_badge").GithubBadge({
+                login: "jquery"
+            });
+        </script>
+        <script>
+            $("#sample_project_badge").GithubBadge({
+                login: "paulirish",
+                kind: "project",
+                repo_name: "html5-boilerplate"
+            });
+        </script>	
+        
+</html>
