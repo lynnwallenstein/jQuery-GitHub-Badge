@@ -30,7 +30,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     theme: "github",
     
     // User Badge Options
-    userBadgeTitle: "My Projects",
+    userBadgeTitle: "Repositories",
     repo_count: "100",
     
     // Project Badge Options 
@@ -42,20 +42,26 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><h1>'+ options.userBadgeTitle +' (<a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'</a>)</h1><ul id="ghb_repolist_' + options.login + '"></ul></div>');
-          
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a></h1><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div>');  
+    
+    var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
+    $.getJSON(requestURLUserInfo, function(data){
+      // console.log(data);
+      $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name);
+    });      
+    
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
     $.getJSON(requestURLRepos, function(data){
         //console.log(data);
         if(data.length === 0) {
-            $('#ghb_repolist_' + options.login).html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
+            $('#ghb_repo_list_' + options.login).html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
         } else {      
             $.each(data.repositories, function (i, obj) {
                 record ='<li><a target="_blank" href="'+ obj.url +'">'+ obj.name +'</a> <span>'+ obj.description +'</span></li>';
                 if (options.sorting == "ascending" ) {
-                    $('#ghb_repolist_' + options.login).append(record);
+                    $('#ghb_repo_list_' + options.login).append(record);
                 } else {
-                    $('#ghb_repolist_' + options.login).prepend(record);
+                    $('#ghb_repo_list_' + options.login).prepend(record);
                 }
                 if ( i == (options.repo_count-1) ) return false;   
             });
@@ -65,12 +71,12 @@ http://creativecommons.org/licenses/by-nc/3.0/
   }
 
   var buildProject = function(where, options) {
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_repoinfo_' + options.repo_name +'"></div><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '"></ul><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '"></ul></div>');
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_repo_info_' + options.repo_name +'"></div><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '"></ul><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '"></ul></div>');
     
     var requestURLRepo = "http://github.com/api/v2/json/repos/show/" + options.login + "/" + options.repo_name + "?callback=?";
     $.getJSON(requestURLRepo, function(data){
       // console.log(data);
-      $("#ghb_repoinfo_" + options.repo_name).html('<h1><a target="_blank" href="'+ data.repository.url +'">' + data.repository.name +'</a></h1><p>' + data.repository.description + '</p>');
+      $("#ghb_repo_info_" + options.repo_name).html('<h1><a target="_blank" href="'+ data.repository.url +'">' + data.repository.name +'</a></h1><p>' + data.repository.description + '</p>');
     });
     
     var requestURLIssues = "http://github.com/api/v2/json/issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?";
@@ -141,3 +147,6 @@ http://creativecommons.org/licenses/by-nc/3.0/
   }
 
 })(jQuery);
+
+
+

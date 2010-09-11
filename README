@@ -6,6 +6,10 @@ Requirements:
 
     + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 
       do and it works, drop me a line at lwallenstein@gmail.com)
+      
+    + I designed this in an HTML5 template. Thus far I have not tested it in other HTML versions,
+      however you may need to adjust some components if you are concerned about validation and 
+      older HTML versions.
 
 
 To Install:
@@ -15,12 +19,14 @@ To Install:
     
     STEP 1: Include the plugin script after jQuery
     --------------------------------------------------------------------------------------------
-    <script type="text/javascript" src="jquery.twitter.js"></script>
+    <!-- Script for GitHub Badge Widget -->
+    <script src="jquery.twitter.js"></script>
     
     
     STEP 2: Include the CSS in the head of the document
     --------------------------------------------------------------------------------------------
-    <link rel="stylesheet" href="jquery.twitter.css" type="text/css" media="all">
+    <!-- CSS for GitHub Badge Widget: implied media="all" -->
+    <link rel="stylesheet" href="css/jquery.github_badge.css?v=1" />
     
     
     STEP 3: In the body of your documents, create a container where you want the badge to display
