@@ -48,7 +48,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     $.getJSON(requestURLUserInfo, function(data){
         // console.log(data);
         $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a> ('+ data.user.public_repo_count +')</h1>');
-        $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt># of Public Repos</dt><dd>' + data.user.public_repo_count +'</dd><dt># of Followers</dt><dd>' + data.user.followers_count +'</dd><dt># Following</dt><dd>' + data.user.following_count +'</dd><dt># of Public Gists</dt><dd>' + data.user.public_gist_count +'</dd></d>');
+        $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt>Public Repos:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/repositories">' + data.user.public_repo_count +'</a></dd><dt>Followers:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/followers">' + data.user.followers_count +'</a></dd><dt>Following:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/following">' + data.user.following_count +'</a></dd><dt>Public Gists:</dt><dd><a target="_blank" href="http://gist.github.com/' + options.login + '">' + data.user.public_gist_count +'</a></dd></d>');
     });      
     
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";

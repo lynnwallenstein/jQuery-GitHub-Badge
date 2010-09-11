@@ -67,13 +67,16 @@ http://creativecommons.org/licenses/by-nc/3.0/
         }
         .ghb_badge .ghb_badge_user_info dl {
             font-size: 12px;
-            font-weight: normal;            
+            font-weight: bold;            
             margin-top: 10px;
         }
             .ghb_badge .ghb_badge_user_info dt {
                 float: left;
-                font-weight: bold;
-                margin-right: 15px;
+                margin: 1px 15px 1px 0px;
+            }
+            .ghb_badge .ghb_badge_user_info dd {
+                float: left;
+                margin: 1px 15px 1px 0px;
             }
     .ghb_badge .ghb_repo_list {
         clear: both;
