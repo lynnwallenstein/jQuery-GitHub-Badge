@@ -47,7 +47,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
       // console.log(data);
-      $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name);
+      $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt># of Public Repos</dt><dd>' + data.user.public_repo_count +'</dd><dt># of Followers</dt><dd>' + data.user.followers_count +'</dd><dt># Following</dt><dd>' + data.user.following_count +'</dd><dt># of Public Gists</dt><dd>' + data.user.public_gist_count +'</dd></d>');
     });      
     
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
