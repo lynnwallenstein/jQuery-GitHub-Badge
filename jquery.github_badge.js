@@ -27,6 +27,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     login: null,
     kind: "user", // user or project
     sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
+    theme: "github",
     
     // User Badge Options
     userBadgeTitle: "My Projects",
@@ -38,10 +39,10 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge"><h1>'+ options.userBadgeTitle +' (<a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'</a>)</h1><ul id="ghb_repolist_' + options.login + '"></ul></div>');
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><h1>'+ options.userBadgeTitle +' (<a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'</a>)</h1><ul id="ghb_repolist_' + options.login + '"></ul></div>');
           
-    var requestURL = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
-    $.getJSON(requestURL, function(data){
+    var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
+    $.getJSON(requestURLRepos, function(data){
       //console.log(data);
       $.each(data.repositories, function (i, obj) {
         if(data.length === 0) {
@@ -57,39 +58,38 @@ http://creativecommons.org/licenses/by-nc/3.0/
           
         }
       });
-    });
-
+    });   
   }
 
   var buildProject = function(where, options) {
-    $(where).html('<div class="ghb_badge"><div id="ghb_repoinfo_' + options.repo_name +'"></div><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '"></ul><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '"></ul></div>');
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_repoinfo_' + options.repo_name +'"></div><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '"></ul><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '"></ul></div>');
     
     var requestURLRepo = "http://github.com/api/v2/json/repos/show/" + options.login + "/" + options.repo_name + "?callback=?";
     $.getJSON(requestURLRepo, function(data){
-      //console.log(data);
+      // console.log(data);
       $("#ghb_repoinfo_" + options.repo_name).html('<h1><a target="_blank" href="'+ data.repository.url +'">' + data.repository.name +'</a></h1><p>' + data.repository.description + '</p>');
     });
     
     var requestURLIssues = "http://github.com/api/v2/json/issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?";
     $.getJSON(requestURLIssues, function(data){
-      console.log(data);
-      $.each(data.issues, function (i, obj) {
-        if(data.length === 0) {
-          $('#ghb_issuelist_' + options.repo_name).html('<li>There are no open issues for this project</li>');
+        // console.log(data);
+        if(data.issues.length === 0) {
+            $('#ghb_issue_list_' + options.repo_name).html('<li>There are no open issues for this project</li>');
         } else {
-            record ='<li><a target="_blank" href="http://github.com/'+ options.login + '/' + options.repo_name + '/issues#issue/' + obj.number + '">'+ obj.title +'</a> <span>'+ obj.body +'</span></li>';
-            if (options.sorting == "ascending" ) {
-                $('#ghb_issue_list_' + options.repo_name).append(record);
-            } else {
-                $('#ghb_issue_list_' + options.repo_name).prepend(record);
-            }          
+            $.each(data.issues, function (i, obj) {
+                record ='<li><a target="_blank" href="http://github.com/'+ options.login + '/' + options.repo_name + '/issues#issue/' + obj.number + '">'+ obj.title +'</a> <span>'+ obj.body +'</span></li>';
+                if (options.sorting == "ascending" ) {
+                    $('#ghb_issue_list_' + options.repo_name).append(record);
+                } else {
+                    $('#ghb_issue_list_' + options.repo_name).prepend(record);
+                }          
+            });
         }
-      });
     });
     
     var requestURLCommits = "http://github.com/api/v2/json/commits/list/" + options.login + "/" + options.repo_name + "/" + options.repo_branch + "?callback=?";
     $.getJSON(requestURLCommits, function(data){
-      console.log(data);
+      // console.log(data);
       $.each(data.commits, function (i, obj) {
         if(data.length === 0) {
           $('#ghb_commit_list_' + options.repo_name).html('<li>There are no commits in the ' + options.repo_branch + '</li>');
