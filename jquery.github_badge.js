@@ -42,12 +42,13 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a></h1><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div>');  
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div></div>');  
     
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
-      // console.log(data);
-      $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt># of Public Repos</dt><dd>' + data.user.public_repo_count +'</dd><dt># of Followers</dt><dd>' + data.user.followers_count +'</dd><dt># Following</dt><dd>' + data.user.following_count +'</dd><dt># of Public Gists</dt><dd>' + data.user.public_gist_count +'</dd></d>');
+        // console.log(data);
+        $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a> ('+ data.user.public_repo_count +')</h1>');
+        $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt># of Public Repos</dt><dd>' + data.user.public_repo_count +'</dd><dt># of Followers</dt><dd>' + data.user.followers_count +'</dd><dt># Following</dt><dd>' + data.user.following_count +'</dd><dt># of Public Gists</dt><dd>' + data.user.public_gist_count +'</dd></d>');
     });      
     
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
