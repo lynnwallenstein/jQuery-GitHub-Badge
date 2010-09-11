@@ -1,0 +1,40 @@
+--------------------------------------------------
+INSTALLATION AND CONFIGURATION
+--------------------------------------------------
+
+Requirements:
+
+    + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you do and it works, drop me a line at lwallenstein@gmail.com)
+
+
+To Install:
+
+    You can see a full installation in the demo.html file included in this repo, however here are the itemized steps.
+    
+    STEP 1: Include the plugin script after jQuery
+    --------------------------------------------------------------------------------------------
+    <script type="text/javascript" src="jquery.twitter.js"></script>
+    
+    
+    STEP 2: Include the CSS in the head of the document
+    --------------------------------------------------------------------------------------------
+    <link rel="stylesheet" href="jquery.twitter.css" type="text/css" media="all">
+    
+    
+    STEP 3: In the body of your documents, create a container where you want the badge to display
+    --------------------------------------------------------------------------------------------
+    <div id="sample_user_badge"></div>
+    
+
+    STEP 4: Call the script with minimal default options
+    --------------------------------------------------------------------------------------------
+    <script>
+        $("#sample_user_badge").GithubBadge({
+            login: "jquery"
+        });
+    </script>
+    
+    
+Configuration:
+
+TBD
