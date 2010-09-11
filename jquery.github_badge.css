@@ -90,11 +90,12 @@ http://creativecommons.org/licenses/by-nc/3.0/
             list-style: none;
         }    
             .ghb_repo_list li {
-                background: url(../img/public.png) no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
+                background: url("public.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
                 border-bottom: 1px solid #E5E5E5;
                 padding-left: 22px;
             }
                 .ghb_repo_list li a {
+                    background: url("arrow-40.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo */
                     color: #4183C4;
                     display: block;
                     font-size: 14px;
@@ -103,6 +104,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
                     text-decoration: none;
                 }
                     .ghb_repo_list li a:hover {
+                        background: url("arrow-80.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo when Hovered*/
                         text-decoration: underline;
                     }
                 .ghb_repo_list li.lastrepo {
