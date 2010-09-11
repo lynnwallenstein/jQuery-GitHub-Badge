@@ -48,7 +48,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     $.getJSON(requestURLRepos, function(data){
         //console.log(data);
         if(data.length === 0) {
-            $('#ghb_repolist_' + options.login).html('<li>This User Has No Projects</li>');
+            $('#ghb_repolist_' + options.login).html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
         } else {      
             $.each(data.repositories, function (i, obj) {
                 record ='<li><a target="_blank" href="'+ obj.url +'">'+ obj.name +'</a> <span>'+ obj.description +'</span></li>';
