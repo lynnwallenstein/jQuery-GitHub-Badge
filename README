@@ -2,6 +2,10 @@
 INSTALLATION AND CONFIGURATION
 --------------------------------------------------
 
+NOTE:   This documentation is highly in flux as I am in the middle of alpha testing this right
+        now. I will be flushing out all the explanations of all the options once I finish making
+        them work ;) 
+
 Requirements:
 
     + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 

@@ -1,5 +1,5 @@
 /*
-jquery.github_badge.js v1.0
+jquery.github_badge.js v0.1
 Last updated: 10 September 2010
 
 Created by Lynn Wallenstein
