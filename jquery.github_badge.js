@@ -29,7 +29,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
     theme: "github",
     include_github_logo: true, // show a lil love
-    image_path: "", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
+    image_path: "images/", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
     animate_style: "slide", //slideDown or show
     
     // User Badge Options
