@@ -30,6 +30,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     theme: "github",
     include_github_logo: true, // show a lil love
     image_path: "", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
+    animate_style: "slide", //slideDown or show
     
     // User Badge Options
     userBadgeTitle: "Repositories",
@@ -51,7 +52,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
         // console.log(data);
         $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s GitHub</a> ('+ data.user.public_repo_count +')</h1>');
         if (options.include_github_logo) {
-            $("#ghb_user_header_" + options.login).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub" width="75" height="30"></a>');
+            $("#ghb_user_header_" + options.login).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub"></a>');
         }
         $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt>Public Repos:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/repositories">' + data.user.public_repo_count +'</a></dd><dt>Followers:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/followers">' + data.user.followers_count +'</a></dd><dt>Following:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/following">' + data.user.following_count +'</a></dd><dt>Public Gists:</dt><dd><a target="_blank" href="http://gist.github.com/' + options.login + '">' + data.user.public_gist_count +'</a></dd></dl>');
         
@@ -187,45 +188,86 @@ http://creativecommons.org/licenses/by-nc/3.0/
         break
     }
 
-    $('#ghb_user_info_nav').click(function() {
-        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').hide();
-        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').slideDown();
-        $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
-        $(this).addClass('chosen');
-        return false;
-    });
-    $('#ghb_user_repo_nav').click(function() {
-        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').hide();
-        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').slideDown();
-        $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
-        $(this).addClass('chosen');
-        return false;
-    });
-    
-    $('#ghb_repo_info_nav').click(function() {
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').slideDown();
-        $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-        $(this).addClass('chosen');
-        return false;
-    });
-    $('#ghb_repo_issues_nav').click(function() {
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').slideDown();
-        $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-        $(this).addClass('chosen');
-        return false;
-    });    
-    $('#ghb_repo_commits_nav').click(function() {
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
-        $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').slideDown();
-        $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-        $(this).addClass('chosen');
-        return false;
-    });
+        $('#ghb_user_info_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').hide();
+            $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
+            $(this).addClass('chosen');
+            return false;
+        });
+        $('#ghb_user_repo_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').hide();
+            $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
+            $(this).addClass('chosen');
+            return false;
+        });
+        
+        $('#ghb_repo_info_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
+            $(this).addClass('chosen');
+            return false;
+        });
+        $('#ghb_repo_issues_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
+            $(this).addClass('chosen');
+            return false;
+        });    
+        $('#ghb_repo_commits_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
+            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
+            $(this).addClass('chosen');
+            return false;
+        });
+
+    if (options.animate_style === "slide") {
+        $('#ghb_user_info_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').slideDown();
+            return false;
+        });
+        $('#ghb_user_repo_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').slideDown();
+            return false;
+        });
+        
+        $('#ghb_repo_info_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').slideDown();
+            return false;
+        });
+        $('#ghb_repo_issues_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').slideDown();
+            return false;
+        });    
+        $('#ghb_repo_commits_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').slideDown();
+            return false;
+        });
+    } else {
+        $('#ghb_user_info_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').show();
+            return false;
+        });
+        $('#ghb_user_repo_nav').click(function() {
+            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').show();
+            return false;
+        });
+        
+        $('#ghb_repo_info_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').show();
+            return false;
+        });
+        $('#ghb_repo_issues_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').show();
+            return false;
+        });    
+        $('#ghb_repo_commits_nav').click(function() {
+            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').show();
+            return false;
+        });        
+    }
  
     console.groupEnd();
   }
