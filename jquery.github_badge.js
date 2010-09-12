@@ -1,13 +1,11 @@
-/*
-jquery.github_badge.js v0.1
-Last updated: 10 September 2010
-
-Created by Lynn Wallenstein
-http://www.maverickconceptions.com/2010/09/11/github-badge/
-
-Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
-http://creativecommons.org/licenses/by-nc/3.0/
-*/
+/*!
+ * jQuery Github Badge - v0.2 - 10/12/2010
+ * http://www.maverickconceptions.com/2010/09/11/github-badge/
+ * 
+ * Copyright (c) 2010 Lynn Wallenstein
+ * Dual licensed under the MIT and GPL licenses.
+ * http://www.maverickconceptions.com/about/license/
+ */
 
 // avoid javascript errors on browsers that aren't using FireBug.
 (function ($) {
