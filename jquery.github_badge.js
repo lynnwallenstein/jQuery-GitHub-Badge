@@ -40,7 +40,7 @@
                 '<div></div>',
             '</div>',
             '<div class="ghb_badge_user_repos" style="display:none;">',
-                '<h2>Public {{userBadgeTitle}}</h2>',
+                '<h2>Public {{user_badge_title}}</h2>',
                 '<ul class="ghb_repo_list"></ul>',
                 '<div class="ghb_repo_goto"></div>',
             '</div>',
@@ -69,7 +69,7 @@
             '<dd><a target="_blank" href="http://gist.github.com/{{login}}">{{public_gist_count}}</a></dd>',
         '</dl>'].join(''),
 
-    repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{userBadgeTitle}} ({{remaining}} More) ... </a>',
+    repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
     repo_row_template = '<li><a target="_blank" href="{{url}}">{{name}}</a> <span>{{description}}</span></li>',
 
     repo_template = [
@@ -309,7 +309,7 @@
     animate_style: "slide", //slideDown or show
     
     // User Badge Options
-    userBadgeTitle: "Repositories",
+    user_badge_title: "Repositories",
     repo_count: "10",
     
     // Project Badge Options 
