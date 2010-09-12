@@ -31,7 +31,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     
     // User Badge Options
     userBadgeTitle: "Repositories",
-    repo_count: "100",
+    repo_count: "5",
     
     // Project Badge Options 
     repo_name: null,
@@ -42,13 +42,20 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a class="ghb_user_info_nav">User Info</a><a class="ghb_user_repo_nav">Repos</a></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul></div></div>');  
+    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a class="ghb_user_info_nav">User Info</a><a class="ghb_user_repo_nav">Repos</a></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul><div id="ghb_repo_goto_'+ options.login +'" class="ghb_repo_goto"></div></div></div>');  
     
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
         // console.log(data);
         $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a> ('+ data.user.public_repo_count +')</h1>');
         $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt>Public Repos:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/repositories">' + data.user.public_repo_count +'</a></dd><dt>Followers:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/followers">' + data.user.followers_count +'</a></dd><dt>Following:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/following">' + data.user.following_count +'</a></dd><dt>Public Gists:</dt><dd><a target="_blank" href="http://gist.github.com/' + options.login + '">' + data.user.public_gist_count +'</a></dd></d>');
+        
+        if (data.user.public_repo_count > (options.repo_count-1) ) {
+            remaining = (data.user.public_repo_count - options.repo_count);
+            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '/repositories">View All Respositories (' + remaining + ' More) ... </a>');
+        } else {
+            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
+        }
     });      
     
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";

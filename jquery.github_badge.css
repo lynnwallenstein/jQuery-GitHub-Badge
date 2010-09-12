@@ -34,7 +34,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_badge_header h1 a:hover {
             border-bottom: 1px dashed #4183C4;
         }
-    .ghb_user_nav {
+    .ghb_user_nav{
         background: #FAFAFB;
         border-bottom: 1px solid #E1E1E2;
         font-size: 11px;
@@ -83,9 +83,6 @@ http://creativecommons.org/licenses/by-nc/3.0/
         margin: 10px auto 0px auto;
     }
 
-
-    
-    .ghb_repo_list {}
         .ghb_repo_list {
             list-style: none;
         }    
@@ -113,3 +110,18 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 .ghb_repo_list li span {
                     display: none;
                 }
+                
+    .ghb_repo_goto {
+        background: #FAFAFB;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px;
+    }
+        .ghb_repo_goto a {
+            color: #999999;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+            .ghb_repo_goto a:hover {
+                text-decoration: underline;
+            }
