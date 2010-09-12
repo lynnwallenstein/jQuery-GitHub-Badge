@@ -10,249 +10,296 @@ http://creativecommons.org/licenses/by-nc/3.0/
 */
 
 // avoid javascript errors on browsers that aren't using FireBug.
-(function($){
+(function ($) {
 
-  if (!window.console || !console.firebug) {
-    var names = [
-      'log', 'debug', 'info', 'warn', 'error', 'assert',
-      'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd',
-      'count', 'trace', 'profile', 'profileEnd'
-    ];
-    window.console = {};
-    for ( var i = 0; i < names.length; ++i )
-      window.console[names[i]] = function() {}
-  }
+    if (!window.console || !console.firebug) {
+        (function () {
+            var names = [
+              'log', 'debug', 'info', 'warn', 'error', 'assert',
+              'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd',
+              'count', 'trace', 'profile', 'profileEnd'
+            ], i = 0;
+            window.console = {};
+            for (; i < names.length; i = i + 1) {
+              window.console[names[i]] = $.noop;
+            }
+        }());
+    }
+  
+    var api_root = "http://github.com/api/v2/json/",
 
+    github_logo_template = '<a target="_blank" href="http://www.github.com"><img src="{{image_path}}ghb_logo.png" alt="GitHub"></a>',
 
+    user_template = [
+        '<div class="ghb_badge {{theme}}">',
+            '<div class="ghb_badge_header"></div>',
+            '<div class="ghb_user_nav">',
+                '<a class="ghb_user_info_nav chosen" rel="ghb_badge_user_info" href="#">User Info</a>',
+                '<a class="ghb_user_repo_nav"        rel="ghb_badge_user_repos" href="#">Repos</a>',
+            '</div>',
+            '<div class="ghb_badge_user_info" style="display:none;">',
+                '<h2>User Info</h2>',
+                '<div></div>',
+            '</div>',
+            '<div class="ghb_badge_user_repos" style="display:none;">',
+                '<h2>Public {{userBadgeTitle}}</h2>',
+                '<ul class="ghb_repo_list"></ul>',
+                '<div class="ghb_repo_goto"></div>',
+            '</div>',
+        '</div>'].join(''),
 
-  var buildUser = function(where, options) {
-      
-    $(where).html('<div id="ghb_badge_user_'+ options.login +'" class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a id="ghb_user_info_nav" class="chosen" href="#">User Info</a><a id="ghb_user_repo_nav" href="#">Repos</a></div><div class="ghb_badge_user_info" style="display:none;"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos" style="display:none;"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul><div id="ghb_repo_goto_'+ options.login +'" class="ghb_repo_goto"></div></div></div>');  
+    user_header_template = [
+        '<h1>',
+            '<a target="_blank" href="http://www.github.com/{{login}}">{{login}}\'s GitHub</a> ',
+            '({{public_repo_count}})',
+        '</h1>'].join(''),
+
+    user_info_template = [
+        '<img src="http://www.gravatar.com/avatar/{{gravatar_id}}" />',
+        '{{name}}',
+        '<dl>',
+            '<dt>Public Repos:</dt>',
+            '<dd><a target="_blank" href="http://github.com/{{login}}/repositories">{{public_repo_count}}</a></dd>',
+
+            '<dt>Followers:</dt>',
+            '<dd><a target="_blank" href="http://github.com/{{login}}/followers">{{followers_count}}</a></dd>',
+
+            '<dt>Following:</dt>',
+            '<dd><a target="_blank" href="http://github.com/{{login}}/following">{{following_count}}</a></dd>',
+
+            '<dt>Public Gists:</dt>',
+            '<dd><a target="_blank" href="http://gist.github.com/{{login}}">{{public_gist_count}}</a></dd>',
+        '</dl>'].join(''),
+
+    repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{userBadgeTitle}} ({{remaining}} More) ... </a>',
+    repo_row_template = '<li><a target="_blank" href="{{url}}">{{name}}</a> <span>{{description}}</span></li>',
+
+    repo_template = [
+        '<div class="ghb_badge {{theme}}">',
+            '<div class="ghb_badge_header"></div>',
+            '<div class="ghb_repo_nav">',
+                '<a class="ghb_repo_info_nav chosen" rel="ghb_repo_info"    href="#">Repo Info</a>',
+                '<a class="ghb_repo_issues_nav"      rel="ghb_repo_issues"  href="#">Issues</a>',
+                '<a class="ghb_repo_commits_nav"     rel="ghb_repo_commits" href="#">Commits</a>',
+            '</div>',
+            '<div class="ghb_repo_info" style="display:none;"></div>',
+            '<div class="ghb_repo_issues" style="display:none;">',
+                '<h2>Open Issues</h2>',
+                '<ul class="ghb_issue_list"></ul>',
+                '<div class="ghb_repo_goto_issues"></div>',
+            '</div>',
+            '<div class="ghb_repo_commits" style="display:none;">',
+                '<h2>Commits</h2>',
+                '<ul class="ghb_commit_list">',
+                    '<li class="no_records">There are no commits in the {{repo_branch}} branch</li>',
+                '</ul>',
+                '<div class="ghb_repo_goto_commits"></div>',
+            '</div>',
+        '</div>'].join(''),
+
+    repo_info_template = [
+        '<p>{{description}}</p>',
+        '<p><a target="_blank" href="{{url}}">{{url}}</a></p>',
+        '<dl class="repo_info_list">',
+            '<dt>Watchers:</dt>',
+            '<dd>{{watchers}}</dd>',
+            '<dt>Created:</dt>',
+            '<dd>{{created_at}}</dd>',
+            '<dt>Last Updated:</dt>',
+            '<dd>{{pushed_at}}</dd>',
+        '</dl>'].join(''),
+        
+    issues_item = [
+        '<li>',
+            '<a target="_blank" href="http://github.com/{{login}}/{{repo_name}}/issues#issue/{{number}}">{{title}}</a>',
+            ' <span>{{body}}</span>',
+        '</li>'].join(''),
+
+    render = function (template, data) {
+        return template.replace(/\{\{([-_a-z]+)\}\}/g, function (m, key, value) {
+          return data[key] ? data[key] : key;
+        });
+    },
+
+  buildUser = function(where, options) {
+    var 
+        // URLs
+        requestURLUserInfo = api_root + "user/show/" + options.login + "?callback=?",
+        requestURLRepos    = api_root + "repos/show/" + options.login + "?callback=?",
     
-    var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
+        // Select HTML Elements
+        base      = $(where).html(render(user_template, options)),
+        header    = base.find(".ghb_badge_header"),
+        user_info = base.find(".ghb_badge_user_info"),
+        repo_goto = base.find(".ghb_repo_goto"),
+        repo_list = base.find(".ghb_repo_list");
+    
     $.getJSON(requestURLUserInfo, function(data){
-        // console.log(data);
-        $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s GitHub</a> ('+ data.user.public_repo_count +')</h1>');
+        var merged = $.extend({}, options, data.user);
+
+        header.html(render(user_header_template, merged));
+        
         if (options.include_github_logo) {
-            $("#ghb_user_header_" + options.login).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub"></a>');
+            header.prepend(render(github_logo_template, merged));
         }
-        $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt>Public Repos:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/repositories">' + data.user.public_repo_count +'</a></dd><dt>Followers:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/followers">' + data.user.followers_count +'</a></dd><dt>Following:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/following">' + data.user.following_count +'</a></dd><dt>Public Gists:</dt><dd><a target="_blank" href="http://gist.github.com/' + options.login + '">' + data.user.public_gist_count +'</a></dd></dl>');
+
+        user_info.html(render(user_info_template, merged));
         
-        if (data.user.public_repo_count > (options.repo_count-1) ) {
-            remaining = (data.user.public_repo_count - options.repo_count);
-            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '/repositories">View All '+ options.userBadgeTitle +' (' + remaining + ' More) ... </a>');
+        if (data.user.public_repo_count > (options.repo_count - 1) ) {
+            merged.remaining = (data.user.public_repo_count - options.repo_count);
+            repo_goto.html(render(repo_goto_template, merged));
         } else {
-            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
+            repo_goto.html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
         }
         
-        $(".ghb_badge_user_info").show()
-        
+        user_info.show();
     });      
-    
-    var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
+
     $.getJSON(requestURLRepos, function(data){
         //console.log(data);
         if(data.length === 0) {
-            $('#ghb_repo_list_' + options.login).html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
-        } else {      
+            repo_list.html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
+        } else {
+            var rows = [];
+            
             $.each(data.repositories, function (i, obj) {
-                record ='<li><a target="_blank" href="'+ obj.url +'">'+ obj.name +'</a> <span>'+ obj.description +'</span></li>';
-                if (options.sorting == "ascending" ) {
-                    $('#ghb_repo_list_' + options.login).append(record);
-                } else {
-                    $('#ghb_repo_list_' + options.login).prepend(record);
-                }
-                if ( i == (options.repo_count-1) ) return false;
-                
+                rows.push(render(repo_row_template, obj));
+                if ( i === (options.repo_count - 1) ) return false;
             });
             
-            // give first list item a special class
-            $('ul#ghb_repo_list_' + options.login +' li:first').addClass("firstrepo");
-            // give last list item a special class
-            $('ul#ghb_repo_list_' + options.login +' li:last').addClass("lastrepo");
-             
+            if (options.sorting !== "ascending" ) {
+                rows.reverse();
+            }
+            
+            repo_list
+              .html(rows.join(''))
+              .children()
+                .filter(':first').addClass("firstrepo").end()
+                .filter(':last').addClass("lastrepo");
         }
     });   
-  }
+  },
 
-  var buildProject = function(where, options) {
+  buildProject = function(where, options) {
+      var
+          // URLs
+          requestURLRepo    = api_root +   "repos/show/" + options.login + "/" + options.repo_name + "?callback=?",
+          requestURLIssues  = api_root +  "issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?",
+          requestURLCommits = api_root + "commits/list/" + options.login + "/" + options.repo_name + "/" + options.repo_branch + "?callback=?",
       
-    $(where).html('<div id="ghb_badge_repo_'+ options.repo_name +'" class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.repo_name +'" class="ghb_badge_header"></div><div class="ghb_repo_nav"><a id="ghb_repo_info_nav" class="chosen" href="#">Repo Info</a><a id="ghb_repo_issues_nav" href="#">Issues</a><a id="ghb_repo_commits_nav" href="#">Commits</a></div><div id="ghb_repo_info_' + options.repo_name +'" class="ghb_repo_info" style="display:none;"></div><div class="ghb_repo_issues" style="display:none;"><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '" class="ghb_issue_list"></ul><div id="ghb_repo_goto_issues_'+ options.repo_name +'" class="ghb_repo_goto_issues"></div></div><div class="ghb_repo_commits" style="display:none;"><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '" class="ghb_commit_list"><li class="no_records">There are no commits in the ' + options.repo_branch + ' branch</li></ul><div id="ghb_repo_goto_commits_'+ options.repo_name +'" class="ghb_repo_goto_commits"></div></div></div>');    
-       
-    var requestURLRepo = "http://github.com/api/v2/json/repos/show/" + options.login + "/" + options.repo_name + "?callback=?";
+          // Select HTML Elements
+          base         = $(where).html(render(repo_template, options)),
+          header       = base.find('.ghb_badge_header'),
+          repo_info    = base.find('.ghb_repo_info'),
+          issues_list  = base.find('.ghb_issue_list'),
+          goto_issues  = base.find('.ghb_repo_goto_issues').hide(),
+          goto_commits = base.find('.ghb_repo_goto_commits').hide(),
+          commit_list  = base.find('.ghb_commit_list'),
+          no_commits   = commit_list.find('.no_commits');
     
     $.getJSON(requestURLRepo, function(data){
-        // console.log(data);
-        $("#ghb_user_header_" + options.repo_name).html('<h1><a target="_blank" href="'+ data.repository.url +'">' + data.repository.name +'</a></h1>');
-        if (options.include_github_logo) {
-            $("#ghb_user_header_" + options.repo_name).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub"></a>');
-        }      
+
+        header.html('<h1><a target="_blank" href="'+ data.repository.url +'">' + data.repository.name +'</a></h1>');
         
-        $("#ghb_repo_info_" + options.repo_name).html('<p>' + data.repository.description + '</p><p><a target="_blank" href="' + data.repository.url + '">' + data.repository.url +'</a></p><dl class="repo_info_list"></dd><dt>Watchers:</dt><dd>' + data.repository.watchers + '</dd><dt>Created:</dt><dd>' + data.repository.created_at + '</dd><dt>Last Updated:</dt><dd>' + data.repository.pushed_at + '</dd></dl>');
-        $("#ghb_repo_goto_issues_" + options.repo_name).html('<a href="' + data.repository.url + '/issues">View All Issues');
-        $("#ghb_repo_goto_commits_" + options.repo_name).html('<a href="' + data.repository.url + '/commits/' + options.repo_branch +'">View All Commits');
-        $("#ghb_repo_goto_issues_" + options.repo_name).hide();
-        $("#ghb_repo_goto_commits_" + options.repo_name).hide();
-        $(".ghb_repo_info").show()
+        if (options.include_github_logo) {
+            header.prepend(render(github_logo_template, options));
+        }
+        
+        repo_info.html(render(repo_info_template, data.repository));
+        
+        goto_issues.html('<a href="' + data.repository.url + '/issues">View All Issues</a>');
+        goto_commits.html('<a href="' + data.repository.url + '/commits/' + options.repo_branch +'">View All Commits</a>');
+        
+        repo_info.show();
     });
     
-    var requestURLIssues = "http://github.com/api/v2/json/issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?";
-    console.log(requestURLIssues);
     $.getJSON(requestURLIssues, function(data){
-        //console.log(data);
         if(data.issues.length === 0) {
-            $('#ghb_issue_list_' + options.repo_name).html('<li class="no_records">There are no open issues for this repo.</li>');
+            issues_list.html('<li class="no_records">There are no open issues for this repo.</li>');
         } else {
-            $("#ghb_repo_goto_issues_" + options.repo_name).show();
+            goto_issues.show();
+            var rows = [];
             $.each(data.issues, function (i, obj) {
-                record ='<li><a target="_blank" href="http://github.com/'+ options.login + '/' + options.repo_name + '/issues#issue/' + obj.number + '">'+ obj.title +'</a> <span>'+ obj.body +'</span></li>';
-                if (options.sorting == "ascending" ) {
-                    $('#ghb_issue_list_' + options.repo_name).append(record);
-                } else {
-                    $('#ghb_issue_list_' + options.repo_name).prepend(record);
-                }
-                if ( i == (options.issue_count-1) ) return false;
-                        
+                var merged = $.extend({}, options, obj);
+                
+                rows.push(render(issues_item, merged));
+                if ( i === (options.issue_count - 1 ) ) return false;
             });
-            // give first list item a special class
-            $('ul#ghb_issue_list_' + options.login +' li:first').addClass("firstrepo");
-            // give last list item a special class
-            $('ul#ghb_issue_list_' + options.login +' li:last').addClass("lastrepo");
+            
+            if (options.sorting !== "ascending" ) {
+                rows.reverse();
+            }
+            
+            issues_list
+                .html(rows.join(''))
+                .children()
+                    .filter(':first').addClass("firstrepo").end()
+                    .filter(':last').addClass("lastrepo");
+                    
         }
     });
     
-    var requestURLCommits = "http://github.com/api/v2/json/commits/list/" + options.login + "/" + options.repo_name + "/" + options.repo_branch + "?callback=?";
     $.getJSON(requestURLCommits, function(data){
-        console.log(data);
+        var commits = [];
         $.each(data.commits, function (i, obj) {
-            $('#ghb_commit_list_' + options.repo_name + ' .no_records').hide();
-            record ='<li><a target="_blank" href="'+ obj.url + '">' + obj.message + '</a> <span>'+ obj.author.name +'</span></li>';
-            if (options.sorting == "ascending" ) {
-                $('#ghb_commit_list_' + options.repo_name).append(record);
-            } else {
-                $('#ghb_commit_list_' + options.repo_name).prepend(record);
-            }
-            if ( i == (options.commit_count-1) ) return false;
+            commits.push('<li><a target="_blank" href="'+ obj.url + '">' + obj.message + '</a> <span>'+ obj.author.name +'</span></li>');
+
+            if ( i === (options.commit_count - 1) ) return false;
         });
-        // give first list item a special class
-        $('ul#ghb_commit_list_' + options.login +' li:first').addClass("firstrepo");
-        // give last list item a special class
-        $('ul#ghb_commit_list_' + options.login +' li:last').addClass("lastrepo");   		    
-        $("#ghb_repo_goto_commits_" + options.repo_name).show();       
+        
+        if (options.sorting !== "ascending" ) {
+            commits.reverse();
+        }
+        
+        commit_list
+            .html(commits.join(''))
+            .children()
+                .filter(':first').addClass("firstrepo").end()
+                .filter(':last').addClass("lastrepo");
+                
+        goto_commits.show();
     }); 
 
-  }
+  };
 
   $.fn.GithubBadge = function(options) {
+    var context = this;
 
     // option parsing
-    var options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
+    options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
+    
     console.group( 'GithubBadge' );
     console.log( "Options parsed as: %o", options );
     
     // sanity checks.
     if (!options.login) {
       console.log( "%s", options.login + " is undefined, not doing anything." );
-      return;
+      return this;
     }
     
     // dispatch
-    switch (options.kind) {
-    case "user":
-      buildUser(this, options);
-      break;
-    case "project":
+    if (options.kind === "user") {
+        buildUser(this, options);
+    } else if (options.kind === "project") {
         if (!options.repo_name) {
           console.log( "%s", options.repo_name + " is undefined, not doing anything." );
-          return;
+          return this;
         }
         buildProject(this, options);
-        break
     }
+        
+    this.delegate('.ghb_user_nav a, .ghb_repo_nav a', 'click', function (e) {
+        e.preventDefault();
+        var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
+            new_panel = $(this).addClass('chosen').attr('rel');
 
-        $('#ghb_user_info_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').hide();
-            $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
-            $(this).addClass('chosen');
-            return false;
-        });
-        $('#ghb_user_repo_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').hide();
-            $('#ghb_badge_user_'+ options.login +' a').removeClass('chosen');
-            $(this).addClass('chosen');
-            return false;
-        });
-        
-        $('#ghb_repo_info_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-            $(this).addClass('chosen');
-            return false;
-        });
-        $('#ghb_repo_issues_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-            $(this).addClass('chosen');
-            return false;
-        });    
-        $('#ghb_repo_commits_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').hide();
-            $('#ghb_badge_repo_'+ options.repo_name +' a').removeClass('chosen');
-            $(this).addClass('chosen');
-            return false;
-        });
-
-    if (options.animate_style === "slide") {
-        $('#ghb_user_info_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').slideDown();
-            return false;
-        });
-        $('#ghb_user_repo_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').slideDown();
-            return false;
-        });
-        
-        $('#ghb_repo_info_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').slideDown();
-            return false;
-        });
-        $('#ghb_repo_issues_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').slideDown();
-            return false;
-        });    
-        $('#ghb_repo_commits_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').slideDown();
-            return false;
-        });
-    } else {
-        $('#ghb_user_info_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').show();
-            return false;
-        });
-        $('#ghb_user_repo_nav').click(function() {
-            $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').show();
-            return false;
-        });
-        
-        $('#ghb_repo_info_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_info').show();
-            return false;
-        });
-        $('#ghb_repo_issues_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_issues').show();
-            return false;
-        });    
-        $('#ghb_repo_commits_nav').click(function() {
-            $('#ghb_badge_repo_'+ options.repo_name +' .ghb_repo_commits').show();
-            return false;
-        });        
-    }
- 
+        context.find('.' + old_panel).hide();
+        context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
+    });
+    
     console.groupEnd();
-  }
+    return this; // Don't break the chain    
+  };
   
   $.fn.GithubBadge.defaults = {
     login: null,
@@ -260,7 +307,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
     theme: "github",
     include_github_logo: true, // show a lil love
-    image_path: "images/", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
+    image_path: "images/", 
     animate_style: "slide", //slideDown or show
     
     // User Badge Options
@@ -272,8 +319,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
     repo_branch: "master",
     issue_count: "100",
     commit_count: "10"
-  }
-})(jQuery);
+  };
+  
+}(jQuery));
 
 
 
