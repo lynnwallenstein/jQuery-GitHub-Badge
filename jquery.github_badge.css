@@ -10,6 +10,18 @@ Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported Licens
 http://creativecommons.org/licenses/by-nc/3.0/
 */
 
+.ghb_badge div, .ghb_badge span,
+.ghb_badge h1, .ghb_badge h2, .ghb_badge p,
+.ghb_badge dl, .ghb_badge dt, .ghb_badge dd, .ghb_badge ol, .ghb_badge ul, .ghb_badge li {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background: transparent;
+} 
+
 .ghb_badge {
     border: 1px solid #E5E5E5;
     border-radius: 5px;
@@ -25,27 +37,31 @@ http://creativecommons.org/licenses/by-nc/3.0/
         height: 34px;
         padding: 5px 10px;       
     }
-    .ghb_badge .ghb_badge_header h1, .ghb_badge .ghb_badge_header h1 a  {
-        color: #52595D;
-        font-size: 16px;
-        line-height: 34px;
-        text-decoration: none;
-    }
-        .ghb_badge .ghb_badge_header h1 a:hover {
-            border-bottom: 1px dashed #4183C4;
+        .ghb_badge .ghb_badge_header img  {
+            float: right;
+            margin-top: 4px;
         }
-    .ghb_user_nav{
+        .ghb_badge .ghb_badge_header h1, .ghb_badge .ghb_badge_header h1 a  {
+            color: #52595D;
+            font-size: 16px;
+            line-height: 34px;
+            text-decoration: none;
+        }
+            .ghb_badge .ghb_badge_header h1 a:hover {
+                border-bottom: 1px dashed #4183C4;
+            }
+    .ghb_badge .ghb_user_nav{
         background: #FAFAFB;
         border-bottom: 1px solid #E1E1E2;
         font-size: 11px;
         font-weight: bold;
         padding: 10px;
     }
-        .ghb_user_nav a {
+        .ghb_badge .ghb_user_nav a {
             color: #000000;
             margin-right: 15px;
         }
-            .ghb_user_nav a:hover {
+            .ghb_badge .ghb_user_nav a:hover {
                 text-decoration: underline;
             }
     .ghb_badge h2 {
@@ -71,11 +87,11 @@ http://creativecommons.org/licenses/by-nc/3.0/
             margin-top: 10px;
         }
             .ghb_badge .ghb_badge_user_info dt {
+                clear: left;
                 float: left;
-                margin: 1px 15px 1px 0px;
+                margin: 0px 15px 0px 0px;
             }
             .ghb_badge .ghb_badge_user_info dd {
-                float: left;
                 margin: 1px 15px 1px 0px;
             }
     .ghb_badge .ghb_repo_list {
@@ -83,15 +99,15 @@ http://creativecommons.org/licenses/by-nc/3.0/
         margin: 10px auto 0px auto;
     }
 
-        .ghb_repo_list {
+        .ghb_badge .ghb_repo_list {
             list-style: none;
         }    
-            .ghb_repo_list li {
+            .ghb_badge .ghb_repo_list li {
                 background: url("public.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
                 border-bottom: 1px solid #E5E5E5;
                 padding-left: 22px;
             }
-                .ghb_repo_list li a {
+                .ghb_badge .ghb_repo_list li a {
                     background: url("arrow-40.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo */
                     color: #4183C4;
                     display: block;
@@ -104,24 +120,24 @@ http://creativecommons.org/licenses/by-nc/3.0/
                         background: url("arrow-80.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo when Hovered*/
                         text-decoration: underline;
                     }
-                .ghb_repo_list li.lastrepo {
+                .ghb_badge .ghb_repo_list li.lastrepo {
                    border-bottom: none;
                 }
-                .ghb_repo_list li span {
+                .ghb_badge .ghb_repo_list li span {
                     display: none;
                 }
                 
-    .ghb_repo_goto {
+    .ghb_badge .ghb_repo_goto {
         background: #FAFAFB;
         font-size: 14px;
         font-weight: bold;
         padding: 10px;
     }
-        .ghb_repo_goto a {
+        .ghb_badge .ghb_repo_goto a {
             color: #999999;
             margin-right: 15px;
             text-decoration: none;
         }
-            .ghb_repo_goto a:hover {
+            .ghb_badge .ghb_repo_goto a:hover {
                 text-decoration: underline;
             }

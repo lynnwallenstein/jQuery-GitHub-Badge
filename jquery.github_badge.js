@@ -28,10 +28,12 @@ http://creativecommons.org/licenses/by-nc/3.0/
     kind: "user", // user or project
     sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
     theme: "github",
+    include_github_logo: true, // show a lil love
+    image_path: "", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
     
     // User Badge Options
     userBadgeTitle: "Repositories",
-    repo_count: "5",
+    repo_count: "10",
     
     // Project Badge Options 
     repo_name: null,
@@ -47,12 +49,15 @@ http://creativecommons.org/licenses/by-nc/3.0/
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
         // console.log(data);
-        $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s '+ options.userBadgeTitle +'</a> ('+ data.user.public_repo_count +')</h1>');
+        $("#ghb_user_header_" + options.login).html('<h1><a target="_blank" href="http://www.github.com/'+ options.login +'">'+ options.login +'\'s GitHub</a> ('+ data.user.public_repo_count +')</h1>');
+        if (options.include_github_logo) {
+			$("#ghb_user_header_" + options.login).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub"></a>');
+		}
         $("#ghb_user_info_" + options.login).html('<img src="http://www.gravatar.com/avatar/'+ data.user.gravatar_id +'">' + data.user.name +'<dl><dt>Public Repos:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/repositories">' + data.user.public_repo_count +'</a></dd><dt>Followers:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/followers">' + data.user.followers_count +'</a></dd><dt>Following:</dt><dd><a target="_blank" href="http://github.com/' + options.login + '/following">' + data.user.following_count +'</a></dd><dt>Public Gists:</dt><dd><a target="_blank" href="http://gist.github.com/' + options.login + '">' + data.user.public_gist_count +'</a></dd></d>');
         
         if (data.user.public_repo_count > (options.repo_count-1) ) {
             remaining = (data.user.public_repo_count - options.repo_count);
-            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '/repositories">View All Respositories (' + remaining + ' More) ... </a>');
+            $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '/repositories">View All '+ options.userBadgeTitle +' (' + remaining + ' More) ... </a>');
         } else {
             $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
         }
@@ -154,8 +159,12 @@ http://creativecommons.org/licenses/by-nc/3.0/
       buildUser(this, options);
       break;
     case "project":
-      buildProject(this, options);
-      break
+        if (!options.repo_name) {
+          console.log( "%s", options.repo_name + " is undefined, not doing anything." );
+          return;
+        }
+        buildProject(this, options);
+        break
     }
     console.groupEnd();
   }
