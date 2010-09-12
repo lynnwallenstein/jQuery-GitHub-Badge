@@ -62,11 +62,15 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_user_nav a {
             color: #000000;
             margin-right: 15px;
+            padding-bottom:8px;
             text-decoration: none;
         }
             .ghb_badge .ghb_user_nav a:hover {
                 text-decoration: underline;
             }
+        .ghb_badge .ghb_user_nav a.chosen {
+            background: url("filter_selected_bit.gif") no-repeat scroll 50% 100% transparent;
+        }            
     .ghb_badge h2 {
         display: none;
     }
@@ -156,11 +160,15 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_repo_nav a {
             color: #000000;
             margin-right: 15px;
+            padding-bottom: 8px;
             text-decoration: none;
         }
             .ghb_badge .ghb_repo_nav a:hover {
                 text-decoration: underline;
             }
+            .ghb_badge .ghb_repo_nav a.chosen {
+                background: url("filter_selected_bit.gif") no-repeat scroll 50% 100% transparent;
+            } 
     .ghb_repo_commits {
         clear: both;
     }            
@@ -285,5 +293,4 @@ http://creativecommons.org/licenses/by-nc/3.0/
             .ghb_badge .ghb_repo_info dd {
                 margin: 1px 15px 1px 0px;
                 wrap: nowrap;
-            }            
-                      
+            }                             
