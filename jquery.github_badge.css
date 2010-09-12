@@ -82,6 +82,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
         margin: 10px auto;
         padding: 0px 0px 10px 10px;
     }
+	    .ghb_badge .ghb_badge_user_info a {
+	        color: #4183C4;
+	    }
         .ghb_badge .ghb_badge_user_info img {
             border: 1px solid #E1E1E2;
             clear: both;
@@ -278,6 +281,10 @@ http://creativecommons.org/licenses/by-nc/3.0/
         margin: 10px auto;
         padding: 10px;
     }
+	    .ghb_badge .ghb_repo_info a {
+	        color: #4183C4;
+	        font-weight: bold;
+	    }
         .ghb_badge .ghb_repo_info p {
             margin-bottom: 10px;
         }

@@ -39,7 +39,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
     // Project Badge Options 
     repo_name: null,
     repo_branch: "master",
-    issue_count: "100",
+    issue_count: "10",
     commit_count: "10"
   }
 
