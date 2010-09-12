@@ -28,23 +28,25 @@ http://creativecommons.org/licenses/by-nc/3.0/
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
     clear: both;
+    overflow: hidden;
     font: 13.34px helvetica,arial,freesans,clean,sans-serif;
 }
     .ghb_badge .ghb_badge_header {
         background: #eaecec;
         background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.03, rgb(247,248,249)),color-stop(1, rgb(234,236,236)));
         background-image: -moz-linear-gradient(center top,rgb(247,248,249) 3%,rgb(234,236,236) 100%);
-        height: 34px;
+        min-height: 30px;
         padding: 5px 10px;       
     }
         .ghb_badge .ghb_badge_header img  {
+            clear: both;
             float: right;
-            margin-top: 4px;
         }
         .ghb_badge .ghb_badge_header h1, .ghb_badge .ghb_badge_header h1 a  {
+            clear: left;
             color: #52595D;
             font-size: 16px;
-            line-height: 34px;
+            margin-top: 5px;
             text-decoration: none;
         }
             .ghb_badge .ghb_badge_header h1 a:hover {
@@ -113,7 +115,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
                     display: block;
                     font-size: 14px;
                     font-weight: bold;
-                    padding: 6px 10px 5px;
+                    padding: 6px 25px 5px 10px;
                     text-decoration: none;
                 }
                     .ghb_repo_list li a:hover {
@@ -141,3 +143,140 @@ http://creativecommons.org/licenses/by-nc/3.0/
             .ghb_badge .ghb_repo_goto a:hover {
                 text-decoration: underline;
             }
+            
+    .ghb_badge .ghb_repo_nav{
+        background: #FAFAFB;
+        border-bottom: 1px solid #E1E1E2;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 10px;
+    }
+        .ghb_badge .ghb_repo_nav a {
+            color: #000000;
+            margin-right: 15px;
+        }
+            .ghb_badge .ghb_repo_nav a:hover {
+                text-decoration: underline;
+            }
+    .ghb_repo_commits {
+        clear: both;
+    }            
+        .ghb_badge .ghb_commit_list {
+            list-style: none;
+        }    
+            .ghb_badge .ghb_commit_list li {
+                background: url("push.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
+                border-bottom: 1px solid #E5E5E5;
+                font-size: 14px;
+                font-weight: bold;
+                padding-left: 22px;
+            }
+                .ghb_badge .ghb_commit_list li.no_records {
+                    color: #940a18;
+                    padding: 6px 25px 5px 32px;
+                }           
+                .ghb_badge .ghb_commit_list li a {
+                    background: url("arrow-40.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo */
+                    color: #4183C4;
+                    display: block;
+                    padding: 6px 25px 5px 10px;
+                    text-decoration: none;
+                }
+                    .ghb_commit_list li a:hover {
+                        background: url("arrow-80.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo when Hovered*/
+                        text-decoration: underline;
+                    }
+                .ghb_badge .ghb_commit_list li.lastrepo {
+                   border-bottom: none;
+                }
+                .ghb_badge .ghb_commit_list li span {
+                    display: none;
+            }
+                
+    .ghb_badge .ghb_repo_goto_commits {
+        background: #FAFAFB;
+        clear: both;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px;
+    }
+        .ghb_badge .ghb_repo_goto_commits a {
+            color: #999999;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+            .ghb_badge .ghb_repo_goto_commits a:hover {
+                text-decoration: underline;
+            }
+         
+        .ghb_repo_issues {
+            clear: both;
+        }     
+        .ghb_badge .ghb_issue_list {
+            list-style: none;
+        }    
+            .ghb_badge .ghb_issue_list li {
+                background: url("issues_opened.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
+                border-bottom: 1px solid #E5E5E5;
+                font-size: 14px;
+                font-weight: bold;
+                padding-left: 22px;
+            }
+                .ghb_badge .ghb_issue_list li.no_records {
+                    color: #940a18;
+                    padding: 6px 25px 5px 32px;
+                }
+                .ghb_badge .ghb_issue_list li a {
+                    background: url("arrow-40.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo */
+                    color: #4183C4;
+                    display: block;
+                    padding: 6px 25px 5px 10px;
+                    text-decoration: none;
+                }
+                    .ghb_issue_list li a:hover {
+                        background: url("arrow-80.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo when Hovered*/
+                        text-decoration: underline;
+                    }
+                .ghb_badge .ghb_issue_list li.lastrepo {
+                   border-bottom: none;
+                }
+                .ghb_badge .ghb_issue_list li span {
+                    display: none;
+                }
+                
+    .ghb_badge .ghb_repo_goto_issues {
+        background: #FAFAFB;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px;
+    }
+        .ghb_badge .ghb_repo_goto_issues a {
+            color: #999999;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+            .ghb_badge .ghb_repo_goto_issues a:hover {
+                text-decoration: underline;
+            }
+            
+    .ghb_badge .ghb_repo_info {
+        clear: both;
+        font-size: 12px;
+        font-weight: normal;
+        margin: 10px auto;
+        padding: 0 10px;
+    }
+        .ghb_badge .ghb_repo_info dl {
+            font-size: 12px;
+            font-weight: bold;            
+            margin-top: 10px;
+        }
+            .ghb_badge .ghb_repo_info dt {
+                clear: left;
+                float: left;
+                margin: 0px 15px 0px 0px;
+            }
+            .ghb_badge .ghb_repo_info dd {
+                margin: 1px 15px 1px 0px;
+            }            
+                      
