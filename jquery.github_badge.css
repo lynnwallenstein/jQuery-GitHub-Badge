@@ -95,6 +95,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
             }
             .ghb_badge .ghb_badge_user_info dd {
                 margin: 1px 15px 1px 0px;
+                wrap: nowrap;
             }
     .ghb_badge .ghb_repo_list {
         clear: both;
@@ -266,6 +267,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
         margin: 10px auto;
         padding: 0 10px;
     }
+        .ghb_badge .ghb_repo_info p {
+            margin-bottom: 10px;
+        }
         .ghb_badge .ghb_repo_info dl {
             font-size: 12px;
             font-weight: bold;            
@@ -278,5 +282,6 @@ http://creativecommons.org/licenses/by-nc/3.0/
             }
             .ghb_badge .ghb_repo_info dd {
                 margin: 1px 15px 1px 0px;
+                wrap: nowrap;
             }            
                       

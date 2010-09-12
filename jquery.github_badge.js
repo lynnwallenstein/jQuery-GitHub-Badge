@@ -102,7 +102,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
             $("#ghb_user_header_" + options.repo_name).prepend('<a target="_blank" href="http://www.github.com"><img src="'+ options.image_path +'ghb_logo.png" alt="GitHub"></a>');
         }      
         
-        $("#ghb_repo_info_" + options.repo_name).html('<p>' + data.repository.description + '</p><dl class="repo_info_list"><dt>URL:</dt><dd><a target="_blank" href="' + data.repository.url + '">' + data.repository.url +'</a></dd></dl>');
+        $("#ghb_repo_info_" + options.repo_name).html('<p>' + data.repository.description + '</p><p><a target="_blank" href="' + data.repository.url + '">' + data.repository.url +'</a></p><dl class="repo_info_list"></dd><dt>Watchers:</dt><dd>' + data.repository.watchers + '</dd><dt>Created:</dt><dd>' + data.repository.created_at + '</dd><dt>Last Updated:</dt><dd>' + data.repository.pushed_at + '</dd></dl>');
         $("#ghb_repo_goto_issues_" + options.repo_name).html('<a href="' + data.repository.url + '/issues">View All Issues');
         $("#ghb_repo_goto_commits_" + options.repo_name).html('<a href="' + data.repository.url + '/commits/' + options.repo_branch +'">View All Commits');
         $("#ghb_repo_goto_issues_" + options.repo_name).hide();
