@@ -23,25 +23,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
       window.console[names[i]] = function() {}
   }
 
-  var defaults = {
-    login: null,
-    kind: "user", // user or project
-    sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
-    theme: "github",
-    include_github_logo: true, // show a lil love
-    image_path: "images/", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
-    animate_style: "slide", //slideDown or show
-    
-    // User Badge Options
-    userBadgeTitle: "Repositories",
-    repo_count: "10",
-    
-    // Project Badge Options 
-    repo_name: null,
-    repo_branch: "master",
-    issue_count: "100",
-    commit_count: "10"
-  }
+
 
   var buildUser = function(where, options) {
       
@@ -164,7 +146,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
   $.fn.GithubBadge = function(options) {
 
     // option parsing
-    var options = jQuery.extend({}, defaults, options);
+    var options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
     console.group( 'GithubBadge' );
     console.log( "Options parsed as: %o", options );
     
@@ -270,6 +252,26 @@ http://creativecommons.org/licenses/by-nc/3.0/
     }
  
     console.groupEnd();
+  }
+  
+  $.fn.GithubBadge.defaults = {
+    login: null,
+    kind: "user", // user or project
+    sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
+    theme: "github",
+    include_github_logo: true, // show a lil love
+    image_path: "images/", // by default it is assumed that the images are in the same directory as the js. you probably will want to change this 
+    animate_style: "slide", //slideDown or show
+    
+    // User Badge Options
+    userBadgeTitle: "Repositories",
+    repo_count: "10",
+    
+    // Project Badge Options 
+    repo_name: null,
+    repo_branch: "master",
+    issue_count: "100",
+    commit_count: "10"
   }
 })(jQuery);
 
