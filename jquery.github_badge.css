@@ -62,6 +62,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_user_nav a {
             color: #000000;
             margin-right: 15px;
+            text-decoration: none;
         }
             .ghb_badge .ghb_user_nav a:hover {
                 text-decoration: underline;
@@ -155,6 +156,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_repo_nav a {
             color: #000000;
             margin-right: 15px;
+            text-decoration: none;
         }
             .ghb_badge .ghb_repo_nav a:hover {
                 text-decoration: underline;

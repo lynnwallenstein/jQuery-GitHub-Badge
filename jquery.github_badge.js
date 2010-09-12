@@ -44,7 +44,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildUser = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a class="ghb_user_info_nav">User Info</a><a class="ghb_user_repo_nav">Repos</a></div><div class="ghb_badge_user_info"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul><div id="ghb_repo_goto_'+ options.login +'" class="ghb_repo_goto"></div></div></div>');  
+    $(where).html('<div id="ghb_badge_user_'+ options.login +'" class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.login +'" class="ghb_badge_header"></div><div class="ghb_user_nav"><a id="ghb_user_info_nav" href="#">User Info</a><a id="ghb_user_repo_nav" href="#">Repos</a></div><div class="ghb_badge_user_info" style="display:none;"><h2>User Info</h2><div id="ghb_user_info_'+ options.login +'"></div></div><div class="ghb_badge_user_repos" style="display:none;"><h2>Public '+ options.userBadgeTitle +'</h2><ul id="ghb_repo_list_' + options.login + '" class="ghb_repo_list"></ul><div id="ghb_repo_goto_'+ options.login +'" class="ghb_repo_goto"></div></div></div>');  
     
     var requestURLUserInfo = "http://github.com/api/v2/json/user/show/" + options.login + "?callback=?";
     $.getJSON(requestURLUserInfo, function(data){
@@ -61,6 +61,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
         } else {
             $("#ghb_repo_goto_" + options.login).html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
         }
+        
+        $(".ghb_badge_user_info").show()
+        
     });      
     
     var requestURLRepos = "http://github.com/api/v2/json/repos/show/" + options.login + "?callback=?";
@@ -91,7 +94,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
 
   var buildProject = function(where, options) {
       
-    $(where).html('<div class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.repo_name +'" class="ghb_badge_header"></div><div class="ghb_repo_nav"><a class="ghb_repo_info_nav">Repo Info</a><a class="ghb_repo_issues_nav">Issues</a><a class="ghb_repo_commits_nav">Commits</a></div><div id="ghb_repo_info_' + options.repo_name +'" class="ghb_repo_info"></div><div class="ghb_repo_issues"><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '" class="ghb_issue_list"></ul><div id="ghb_repo_goto_issues_'+ options.repo_name +'" class="ghb_repo_goto_issues"></div></div><div class="ghb_repo_commits"><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '" class="ghb_commit_list"><li class="no_records">There are no commits in the ' + options.repo_branch + ' branch</li></ul><div id="ghb_repo_goto_commits_'+ options.repo_name +'" class="ghb_repo_goto_commits"></div></div></div>');    
+    $(where).html('<div id="ghb_badge_repo_'+ options.repo_name +'" class="ghb_badge '+ options.theme +'"><div id="ghb_user_header_'+ options.repo_name +'" class="ghb_badge_header"></div><div class="ghb_repo_nav"><a id="ghb_repo_info_nav" href="#">Repo Info</a><a id="ghb_repo_issues_nav" href="#">Issues</a><a id="ghb_repo_commits_nav" href="#">Commits</a></div><div id="ghb_repo_info_' + options.repo_name +'" class="ghb_repo_info" style="display:none;"></div><div class="ghb_repo_issues" style="display:none;"><h2>Open Issues</h2><ul id="ghb_issue_list_' + options.repo_name + '" class="ghb_issue_list"></ul><div id="ghb_repo_goto_issues_'+ options.repo_name +'" class="ghb_repo_goto_issues"></div></div><div class="ghb_repo_commits" style="display:none;"><h2>Commits</h2><ul id="ghb_commit_list_' + options.repo_name + '" class="ghb_commit_list"><li class="no_records">There are no commits in the ' + options.repo_branch + ' branch</li></ul><div id="ghb_repo_goto_commits_'+ options.repo_name +'" class="ghb_repo_goto_commits"></div></div></div>');    
        
     var requestURLRepo = "http://github.com/api/v2/json/repos/show/" + options.login + "/" + options.repo_name + "?callback=?";
     
@@ -107,6 +110,7 @@ http://creativecommons.org/licenses/by-nc/3.0/
         $("#ghb_repo_goto_commits_" + options.repo_name).html('<a href="' + data.repository.url + '/commits/' + options.repo_branch +'">View All Commits');
         $("#ghb_repo_goto_issues_" + options.repo_name).hide();
         $("#ghb_repo_goto_commits_" + options.repo_name).hide();
+        $(".ghb_repo_info").show()
     });
     
     var requestURLIssues = "http://github.com/api/v2/json/issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?";
@@ -182,9 +186,39 @@ http://creativecommons.org/licenses/by-nc/3.0/
         buildProject(this, options);
         break
     }
+
+    $('#ghb_user_info_nav').click(function() {
+        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').hide();
+        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').slideDown();
+        return false;
+    });
+    $('#ghb_user_repo_nav').click(function() {
+        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_info').hide();
+        $('#ghb_badge_user_'+ options.login +' .ghb_badge_user_repos').slideDown();
+        return false;
+    });
+    
+    $('#ghb_repo_info_nav').click(function() {
+        $('.ghb_repo_issues').hide();
+        $('.ghb_repo_commits').hide();
+        $('.ghb_repo_info').slideDown();
+        return false;
+    });
+    $('#ghb_repo_issues_nav').click(function() {
+        $('.ghb_repo_info').hide();
+        $('.ghb_repo_commits').hide();
+        $('.ghb_repo_issues').slideDown();
+        return false;
+    });    
+    $('#ghb_repo_commits_nav').click(function() {
+        $('.ghb_repo_info').hide();
+        $('.ghb_repo_issues').hide();
+        $('.ghb_repo_commits').slideDown();
+        return false;
+    });
+ 
     console.groupEnd();
   }
-
 })(jQuery);
 
 
