@@ -1,11 +1,51 @@
 /*!
- * jQuery Github Badge - v0.2.1 - 10/13/2010
+ * jQuery Github Badge - v0.2.2 - 10/13/2010
  * http://www.maverickconceptions.com/2010/09/11/github-badge/
  * 
  * Copyright (c) 2010 Lynn Wallenstein
  * Dual licensed under the MIT and GPL licenses.
  * http://www.maverickconceptions.com/about/license/
  */
+
+/*
+ * JavaScript Pretty Date
+ * Copyright (c) 2008 John Resig (jquery.com)
+ * Licensed under the MIT license.
+ */
+
+// Takes an ISO time and returns a string representing how
+// long ago the date represents.
+
+function prettyDate(time) {
+    var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+        diff = (((new Date()).getTime() - date.getTime()) / 1000),
+        day_diff = Math.floor(diff / 86400);
+            
+    if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
+        return;
+            
+    return day_diff == 0 && (
+        diff < 60 && "just now" ||
+        diff < 120 && "1 minute ago" ||
+        diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+        diff < 7200 && "1 hour ago" ||
+        diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+        day_diff == 1 && "Yesterday" ||
+        day_diff < 7 && day_diff + " days ago" ||
+        day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
+    }
+
+    // If jQuery is included in the page, adds a jQuery plugin to handle it as well
+    
+    if ( typeof jQuery != "undefined" )
+    jQuery.fn.prettyDate = function(){
+        return this.each(function(){
+            var date = prettyDate(this.title);
+            if ( date )
+                jQuery(this).text( date );
+        });
+    };
+
 
 // avoid javascript errors on browsers that aren't using FireBug.
 (function ($) {
@@ -71,7 +111,7 @@
 
     repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
     
-    repo_row_template = '<li><a target="_blank" href="{{url}}">{{name}}</a> <span>{{description}}</span></li>',
+    repo_row_template = '<li class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
 
     repo_template = [
         '<div class="ghb_badge {{theme}}">',
@@ -175,26 +215,27 @@
               .children()
                 .filter(':first').addClass("firstrepo").end()
                 .filter(':last').addClass("lastrepo");
+                            
         }
     });   
   },
 
-  buildProject = function(where, options) {
-      var
-          // URLs
-          requestURLRepo    = api_root +   "repos/show/" + options.login + "/" + options.repo_name + "?callback=?",
-          requestURLIssues  = api_root +  "issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?",
-          requestURLCommits = api_root + "commits/list/" + options.login + "/" + options.repo_name + "/" + options.repo_branch + "?callback=?",
-      
-          // Select HTML Elements
-          base         = $(where).html(render(repo_template, options)),
-          header       = base.find('.ghb_badge_header'),
-          repo_info    = base.find('.ghb_repo_info'),
-          issues_list  = base.find('.ghb_issue_list'),
-          goto_issues  = base.find('.ghb_repo_goto_issues').hide(),
-          goto_commits = base.find('.ghb_repo_goto_commits').hide(),
-          commit_list  = base.find('.ghb_commit_list'),
-          no_commits   = commit_list.find('.no_commits');
+    buildProject = function(where, options) {
+        var
+        // URLs
+        requestURLRepo    = api_root +   "repos/show/" + options.login + "/" + options.repo_name + "?callback=?",
+        requestURLIssues  = api_root +  "issues/list/" + options.login + "/" + options.repo_name + "/open?callback=?",
+        requestURLCommits = api_root + "commits/list/" + options.login + "/" + options.repo_name + "/" + options.repo_branch + "?callback=?",
+        
+        // Select HTML Elements
+        base         = $(where).html(render(repo_template, options)),
+        header       = base.find('.ghb_badge_header'),
+        repo_info    = base.find('.ghb_repo_info'),
+        issues_list  = base.find('.ghb_issue_list'),
+        goto_issues  = base.find('.ghb_repo_goto_issues').hide(),
+        goto_commits = base.find('.ghb_repo_goto_commits').hide(),
+        commit_list  = base.find('.ghb_commit_list'),
+        no_commits   = commit_list.find('.no_commits');
     
     $.getJSON(requestURLRepo, function(data){
 
@@ -260,67 +301,78 @@
     }); 
 
   };
+  
 
-  $.fn.GithubBadge = function(options) {
-    var context = this;
-
-    // option parsing
-    options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
+    $.fn.GithubBadge = function(options) {
+        var context = this;
+        
+        // option parsing
+        options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
+        
+        console.group( 'GithubBadge' );
+        console.log( "Options parsed as: %o", options );
     
-    console.group( 'GithubBadge' );
-    console.log( "Options parsed as: %o", options );
-    
-    // sanity checks.
-    if (!options.login) {
-      console.log( "%s", options.login + " is undefined, not doing anything." );
-      return this;
-    }
-    
-    // dispatch
-    if (options.kind === "user") {
-        buildUser(this, options);
-    } else if (options.kind === "project") {
-        if (!options.repo_name) {
-          console.log( "%s", options.repo_name + " is undefined, not doing anything." );
+        // sanity checks.
+        if (!options.login) {
+          console.log( "%s", options.login + " is undefined, not doing anything." );
           return this;
         }
-        buildProject(this, options);
-    }
+    
+        // dispatch
+        if (options.kind === "user") {
+            buildUser(this, options);
+        } else if (options.kind === "project") {
+            if (!options.repo_name) {
+              console.log( "%s", options.repo_name + " is undefined, not doing anything." );
+              return this;
+            }
+            buildProject(this, options);
+        }
         
-    this.delegate('.ghb_user_nav a, .ghb_repo_nav a', 'click', function (e) {
-        e.preventDefault();
-        var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
-            new_panel = $(this).addClass('chosen').attr('rel');
-
-        context.find('.' + old_panel).hide();
-        context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
-    });
+        this.delegate('.ghb_user_nav a, .ghb_repo_nav a', 'click', function (e) {
+            e.preventDefault();
+            var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
+                new_panel = $(this).addClass('chosen').attr('rel');
+        
+            context.find('.' + old_panel).hide();
+            context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
+        });
+        
+        this.delegate('ul.ghb_repo_list li', 'mouseenter', function () {
+            $(this).find("div").show()
+        });        
+        this.delegate('ul.ghb_repo_list li', 'mouseleave', function () {
+            $(this).find("div").hide()
+        });        
+            
+        console.groupEnd();
+        return this; // Don't break the chain            
+    };
     
-    console.groupEnd();
-    return this; // Don't break the chain    
-  };
   
-  $.fn.GithubBadge.defaults = {
-    login: null,
-    kind: "user", // user or project
-    sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
-    theme: "github",
-    include_github_logo: true, // show a lil love
-    image_path: "images/", 
-    animate_style: "slide", //slideDown or show
+    $.fn.GithubBadge.defaults = {
+        login: null,
+        kind: "user", // user or project
+        sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
+        theme: "github",
+        include_github_logo: true, // show a lil love
+        image_path: "images/", 
+        animate_style: "slide", //slideDown or show
+        
+        // User Badge Options
+        user_badge_title: "Repositories",
+        repo_count: "10",
+        show_repos: true, 
+        
+        // Repo Badge Options 
+        repo_name: null,
+        repo_branch: "master",
+        show_issues: true,
+        issue_count: "10",
+        show_commits: true,
+        commit_count: "10"
+    };
     
-    // User Badge Options
-    user_badge_title: "Repositories",
-    repo_count: "10",
-    show_repos: true, 
     
-    // Project Badge Options 
-    repo_name: null,
-    repo_branch: "master",
-    show_issues: true,
-    issue_count: "10",
-    show_commits: true,
-    commit_count: "10"
-  };
-  
 }(jQuery));
+

@@ -125,13 +125,14 @@
     /* Repo List for User Badge */        
     .ghb_badge .ghb_repo_list {
         clear: both;
-        margin: 10px auto 0px auto;
+        margin: 0 auto 0 auto;
     }
 
         .ghb_badge .ghb_repo_list {
             list-style: none;
         }    
             .ghb_badge .ghb_repo_list li {
+                display: block;
                 background: url("images/public.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
                 border-bottom: 1px solid #E5E5E5;
                 padding-left: 22px;
@@ -152,8 +153,10 @@
                 .ghb_badge .ghb_repo_list li.lastrepo {
                    border-bottom: none;
                 }
-                .ghb_badge .ghb_repo_list li span {
+                .ghb_badge .ghb_repo_list li div {
                     display: none;
+                    font-size: 10px;
+                    padding: 6px 25px 5px 10px;
                 }
                 
     .ghb_badge .ghb_repo_goto {
