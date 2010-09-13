@@ -26,7 +26,7 @@
   
     var api_root = "http://github.com/api/v2/json/",
 
-    github_logo_template = '<a target="_blank" href="http://www.github.com"><img src="{{image_path}}ghb_logo.png" alt="GitHub"></a>',
+    github_logo_template = '<a target="_blank" href="http://github.com"><img src="{{image_path}}ghb_logo.png" alt="GitHub"></a>',
 
     user_template = [
         '<div class="ghb_badge {{theme}}">',
@@ -48,7 +48,7 @@
 
     user_header_template = [
         '<h1>',
-            '<a target="_blank" href="http://www.github.com/{{login}}">{{login}}\'s GitHub</a> ',
+            '<a target="_blank" href="http://github.com/{{login}}">{{login}}\'s GitHub</a> ',
             '({{public_repo_count}})',
         '</h1>'].join(''),
 
