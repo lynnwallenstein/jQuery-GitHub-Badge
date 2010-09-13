@@ -1,5 +1,5 @@
 /*!
- * jQuery Github Badge - v0.2.4 - 10/13/2010
+ * jQuery Github Badge - v0.2.3 - 10/13/2010
  * http://www.maverickconceptions.com/2010/09/11/github-badge/
  * 
  * Copyright (c) 2010 Lynn Wallenstein
@@ -150,7 +150,7 @@ function prettyDate(time) {
         
     issues_item = [
         '<li>',
-            '<a target="_blank" href="http://github.com/{{login}}/{{repo_name}}/issues#issue/{{number}}">{{title}} <span title="'+ obj.author.name +' @ '+ obj.committed_date + '">by '+ obj.author.login +'</span></a></li>');</a>',
+            '<a target="_blank" href="http://github.com/{{login}}/{{repo_name}}/issues#issue/{{number}}">{{title}}</a>',
             ' <span>{{body}}</span>',
         '</li>'].join(''),
 
@@ -282,7 +282,7 @@ function prettyDate(time) {
     $.getJSON(requestURLCommits, function(data){
         var commits = [];
         $.each(data.commits, function (i, obj) {
-            commits.push('<li><a target="_blank" href="'+ obj.url + '">' + obj.message + ' <span title="'+ obj.author.name +' @ '+ obj.committed_date + '">by '+ obj.author.login +'</span></a></li>');
+            commits.push('<li><a target="_blank" href="'+ obj.url + '">' + obj.message + '<span title="'+ obj.author.name +' @ '+ obj.committed_date + '">by '+ obj.author.login +'</span></a></li>');
 
             if ( i === (options.commit_count - 1) ) return false;
         });

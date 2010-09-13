@@ -1,52 +1,53 @@
 --------------------------------------------------
-INSTALLATION AND CONFIGURATION
+README
 --------------------------------------------------
 
-NOTE:   This documentation is highly in flux as I am in the middle of alpha testing this right
-        now. I will be flushing out all the explanations of all the options once I finish making
-        them work ;) 
+jQuery Github Badge is a jQuery plugin allowing you to display Github activity
+for a user or a repo (project).
 
-Requirements:
+Demo: http://www.maverickconceptions.com/demos/github_badge/index.html 
 
-    + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 
-      do and it works, drop me a line at lwallenstein@gmail.com)
-      
-    + I designed this in an HTML5 template. Thus far I have not tested it in other HTML versions,
-      however you may need to adjust some components if you are concerned about validation and 
-      older HTML versions.
+This documentation is highly in flux as I am in the middle of alpha testing this right
+now. I will be flushing out all the explanations of all the options once I finish making
+them work ;) 
+
+== Requirements ==
+
++ jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 
+  do and it works, drop me a line at lwallenstein@gmail.com)
 
 
-To Install:
+== Installation ==
 
-    You can see a full installation in the demo.html file included in this repo, however here are 
-    the itemized steps.
-    
-    STEP 1: Include the plugin script after jQuery
-    --------------------------------------------------------------------------------------------
-    <!-- Script for GitHub Badge Widget -->
-    <script src="jquery.twitter.js"></script>
-    
-    
-    STEP 2: Include the CSS in the head of the document
-    --------------------------------------------------------------------------------------------
-    <!-- CSS for GitHub Badge Widget: implied media="all" -->
-    <link rel="stylesheet" href="css/jquery.github_badge.css?v=1" />
-    
-    
-    STEP 3: In the body of your documents, create a container where you want the badge to display
-    --------------------------------------------------------------------------------------------
-    <div id="sample_user_badge"></div>
-    
+You can see a full installation in the demo.html file included in this repo, however here are 
+the itemized steps.
 
-    STEP 4: Call the script with minimal default options
-    --------------------------------------------------------------------------------------------
-    <script>
-        $("#sample_user_badge").GithubBadge({
-            login: "jquery"
-        });
-    </script>
+STEP 1: Include the plugin script after jQuery
+--------------------------------------------------------------------------------------------
+<!-- Script for GitHub Badge Widget -->
+<script src="jquery.twitter.js"></script>
+
+
+STEP 2: Include the CSS in the head of the document
+--------------------------------------------------------------------------------------------
+<!-- CSS for GitHub Badge Widget: implied media="all" -->
+<link rel="stylesheet" href="css/jquery.github_badge.css?v=1" />
+
+
+STEP 3: In the body of your documents, create a container where you want the badge to display
+--------------------------------------------------------------------------------------------
+<div id="sample_user_badge"></div>
+
+
+STEP 4: Call the script with minimal default options
+--------------------------------------------------------------------------------------------
+<script>
+    $("#sample_user_badge").GithubBadge({
+        login: "jquery"
+    });
+</script>
     
     
-Configuration:
+== Configuration ==
 
 TBD
