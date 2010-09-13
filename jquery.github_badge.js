@@ -70,6 +70,7 @@
         '</dl>'].join(''),
 
     repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
+    
     repo_row_template = '<li><a target="_blank" href="{{url}}">{{name}}</a> <span>{{description}}</span></li>',
 
     repo_template = [
@@ -77,8 +78,8 @@
             '<div class="ghb_badge_header"></div>',
             '<div class="ghb_repo_nav">',
                 '<a class="ghb_repo_info_nav chosen" rel="ghb_repo_info"    href="#">Repo Info</a>',
-                '<a class="ghb_repo_issues_nav"      rel="ghb_repo_issues"  href="#">Issues</a>',
                 '<a class="ghb_repo_commits_nav"     rel="ghb_repo_commits" href="#">Commits</a>',
+                '<a class="ghb_repo_issues_nav"      rel="ghb_repo_issues"  href="#">Issues</a>',
             '</div>',
             '<div class="ghb_repo_info" style="display:none;"></div>',
             '<div class="ghb_repo_issues" style="display:none;">',
@@ -115,7 +116,7 @@
 
     render = function (template, data) {
         return template.replace(/\{\{([-_a-z]+)\}\}/g, function (m, key, value) {
-          return data[key] ? data[key] : key;
+          return data[key] ? data[key] : "None";
         });
     },
 
@@ -152,7 +153,7 @@
         
         user_info.show();
     });      
-
+    
     $.getJSON(requestURLRepos, function(data){
         //console.log(data);
         if(data.length === 0) {
@@ -311,11 +312,14 @@
     // User Badge Options
     user_badge_title: "Repositories",
     repo_count: "10",
+    show_repos: true, 
     
     // Project Badge Options 
     repo_name: null,
     repo_branch: "master",
+    show_issues: true,
     issue_count: "10",
+    show_commits: true,
     commit_count: "10"
   };
   
