@@ -1,15 +1,13 @@
-/*
-jQuery GitHub Badge Plugin v0.1
-jquery.github_badge.css
-Last updated: 10 September 2010
+/*!
+ * jQuery Github Badge - v0.2 - 10/12/2010
+ * http://www.maverickconceptions.com/2010/09/11/github-badge/
+ * 
+ * Copyright (c) 2010 Lynn Wallenstein
+ * Dual licensed under the MIT and GPL licenses.
+ * http://www.maverickconceptions.com/about/license/
+ */
 
-Created by Lynn Wallenstein
-http://www.maverickconceptions.com/2010/09/11/github-badge/
-
-Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
-http://creativecommons.org/licenses/by-nc/3.0/
-*/
-
+/* Reset */
 .ghb_badge div, .ghb_badge span,
 .ghb_badge h1, .ghb_badge h2, .ghb_badge p,
 .ghb_badge dl, .ghb_badge dt, .ghb_badge dd, .ghb_badge ol, .ghb_badge ul, .ghb_badge li {
@@ -22,15 +20,27 @@ http://creativecommons.org/licenses/by-nc/3.0/
   background: transparent;
 } 
 
+/* Badge Wrapper */
 .ghb_badge {
     border: 1px solid #E5E5E5;
     border-radius: 5px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
+    box-shadow: 1px 1px 2px rgba(200,200,201,0.25);
+        -moz-box-shadow: 1px 1px 2px rgba(200,200,201,0.25);
+        -webkit-box-shadow: 1px 1px 2px rgba(200,200,201,0.25);    
     clear: both;
     overflow: hidden;
     font: 13.34px helvetica,arial,freesans,clean,sans-serif;
 }
+
+    /* Globals */
+    
+    .ghb_badge h2 {
+        display: none;
+    }
+    
+    /* Header for user and project badge */
     .ghb_badge .ghb_badge_header {
         background: #eaecec;
         background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.03, rgb(247,248,249)),color-stop(1, rgb(234,236,236)));
@@ -53,6 +63,10 @@ http://creativecommons.org/licenses/by-nc/3.0/
             .ghb_badge .ghb_badge_header h1 a:hover {
                 border-bottom: 1px dashed #4183C4;
             }
+           
+/* User Badge */
+            
+    /* Navigation for User Badge */         
     .ghb_badge .ghb_user_nav{
         background: #FAFAFB;
         border-bottom: 1px solid #E1E1E2;
@@ -72,9 +86,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
         .ghb_badge .ghb_user_nav a.chosen {
             background: url("images/filter_selected_bit.gif") no-repeat scroll 50% 100% transparent;
         }            
-    .ghb_badge h2 {
-        display: none;
-    }
+
+    
+    /* Info Panel for User Badge */  
     .ghb_badge .ghb_badge_user_info {
         clear: both;
         font-size: 14px;
@@ -106,6 +120,9 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 margin: 1px 15px 1px 0px;
                 wrap: nowrap;
             }
+            
+            
+    /* Repo List for User Badge */        
     .ghb_badge .ghb_repo_list {
         clear: both;
         margin: 10px auto 0px auto;
@@ -153,7 +170,11 @@ http://creativecommons.org/licenses/by-nc/3.0/
             .ghb_badge .ghb_repo_goto a:hover {
                 text-decoration: underline;
             }
+ 
             
+/* Repo Badge */            
+                       
+    /* Navigation for Repo Badge */         
     .ghb_badge .ghb_repo_nav{
         background: #FAFAFB;
         border-bottom: 1px solid #E1E1E2;
@@ -173,7 +194,39 @@ http://creativecommons.org/licenses/by-nc/3.0/
             .ghb_badge .ghb_repo_nav a.chosen {
                 background: url("images/filter_selected_bit.gif") no-repeat scroll 50% 100% transparent;
             } 
-    .ghb_repo_commits {
+
+    /* Info Panel for Repo Badge */
+    .ghb_badge .ghb_repo_info {
+        clear: both;
+        font-size: 12px;
+        font-weight: normal;
+        margin: 10px auto;
+        padding: 10px;
+    }
+	    .ghb_badge .ghb_repo_info a {
+	        color: #4183C4;
+	        font-weight: bold;
+	    }
+        .ghb_badge .ghb_repo_info p {
+            margin-bottom: 10px;
+        }
+        .ghb_badge .ghb_repo_info dl {
+            font-size: 12px;
+            font-weight: bold;            
+            margin-top: 10px;
+        }
+            .ghb_badge .ghb_repo_info dt {
+                clear: left;
+                float: left;
+                margin: 0px 15px 0px 0px;
+            }
+            .ghb_badge .ghb_repo_info dd {
+                margin: 1px 15px 1px 0px;
+                wrap: nowrap;
+            }                                         
+            
+    /* Repo Badge Commit Panel */         
+    .ghb_badge .ghb_repo_commits {
         clear: both;
     }            
         .ghb_badge .ghb_commit_list {
@@ -224,9 +277,10 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 text-decoration: underline;
             }
          
-        .ghb_repo_issues {
-            clear: both;
-        }     
+    /* Repo Badge Issues Panel */             
+    .ghb_repo_issues {
+        clear: both;
+    }     
         .ghb_badge .ghb_issue_list {
             list-style: none;
         }    
@@ -274,31 +328,3 @@ http://creativecommons.org/licenses/by-nc/3.0/
                 text-decoration: underline;
             }
             
-    .ghb_badge .ghb_repo_info {
-        clear: both;
-        font-size: 12px;
-        font-weight: normal;
-        margin: 10px auto;
-        padding: 10px;
-    }
-	    .ghb_badge .ghb_repo_info a {
-	        color: #4183C4;
-	        font-weight: bold;
-	    }
-        .ghb_badge .ghb_repo_info p {
-            margin-bottom: 10px;
-        }
-        .ghb_badge .ghb_repo_info dl {
-            font-size: 12px;
-            font-weight: bold;            
-            margin-top: 10px;
-        }
-            .ghb_badge .ghb_repo_info dt {
-                clear: left;
-                float: left;
-                margin: 0px 15px 0px 0px;
-            }
-            .ghb_badge .ghb_repo_info dd {
-                margin: 1px 15px 1px 0px;
-                wrap: nowrap;
-            }                             
