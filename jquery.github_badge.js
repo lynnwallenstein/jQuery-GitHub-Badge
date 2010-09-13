@@ -354,7 +354,7 @@ function prettyDate(time) {
         login: null,
         kind: "user", // user or project
         sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
-        theme: "github",
+        theme: "github", // adds value as class for entire badge
         include_github_logo: true, // show a lil love
         image_path: "images/", 
         animate_style: "slide", //slideDown or show
