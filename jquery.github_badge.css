@@ -261,9 +261,18 @@
                    border-bottom: none;
                 }
                 .ghb_badge .ghb_commit_list li span {
-                    display: none;
-            }
-                
+                    border-bottom: 1px dotted #666666;
+                    color: #000000;
+                    cursor: help;
+                    font-size: 8px;
+                    line-height: 14px;
+                    margin-bottom: 5px;
+                    white-space: nowrap;
+                }
+                    .ghb_badge .ghb_commit_list li a span {
+                        color: #000000;
+                        text-decoration: none;
+                    }                
     .ghb_badge .ghb_repo_goto_commits {
         background: #FAFAFB;
         clear: both;
@@ -313,8 +322,18 @@
                    border-bottom: none;
                 }
                 .ghb_badge .ghb_issue_list li span {
-                    display: none;
+                    border-bottom: 1px dotted #666666;
+                    color: #000000;
+                    cursor: help;
+                    font-size: 8px;
+                    line-height: 14px;
+                    margin-bottom: 5px;
+                    white-space: nowrap;
                 }
+                    .ghb_badge .ghb_issue_list li a span {
+                        color: #000000;
+                        text-decoration: none;
+                    } 
                 
     .ghb_badge .ghb_repo_goto_issues {
         background: #FAFAFB;
