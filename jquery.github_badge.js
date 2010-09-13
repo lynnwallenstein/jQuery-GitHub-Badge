@@ -1,5 +1,5 @@
 /*!
- * jQuery Github Badge - v0.2.2 - 10/13/2010
+ * jQuery Github Badge - v0.2.3 - 10/13/2010
  * http://www.maverickconceptions.com/2010/09/11/github-badge/
  * 
  * Copyright (c) 2010 Lynn Wallenstein
