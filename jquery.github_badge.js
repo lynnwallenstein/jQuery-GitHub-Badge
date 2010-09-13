@@ -150,8 +150,8 @@ function prettyDate(time) {
         
     issues_item = [
         '<li>',
-            '<a target="_blank" href="http://github.com/{{login}}/{{repo_name}}/issues#issue/{{number}}">{{title}}</a>',
-            ' <span>{{body}}</span>',
+            '<a target="_blank" href="http://github.com/{{login}}/{{repo_name}}/issues#issue/{{number}}">{{title}}<span title="{{user}} @ {{created_at}}">by {{user}}</span></a>',
+            '<div>{{body}}</div>',
         '</li>'].join(''),
 
     render = function (template, data) {
@@ -338,10 +338,10 @@ function prettyDate(time) {
             context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
         });
         
-        this.delegate('ul.ghb_repo_list li', 'mouseenter', function () {
+        this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseenter', function () {
             $(this).find("div").show()
         });        
-        this.delegate('ul.ghb_repo_list li', 'mouseleave', function () {
+        this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseleave', function () {
             $(this).find("div").hide()
         });        
             
