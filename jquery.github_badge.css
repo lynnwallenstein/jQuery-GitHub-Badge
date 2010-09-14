@@ -262,7 +262,7 @@
                 }
                 .ghb_badge .ghb_commit_list li span {
                     border-bottom: 1px dotted #666666;
-                    color: #000000;
+                    color: #515151;
                     cursor: help;
                     font-size: 8px;
                     line-height: 14px;
@@ -270,7 +270,7 @@
                     white-space: nowrap;
                 }
                     .ghb_badge .ghb_commit_list li a span {
-                        color: #000000;
+                        color: #515151;
                         text-decoration: none;
                     }              
     .ghb_badge .ghb_repo_goto_commits {
@@ -323,7 +323,7 @@
                 }
                 .ghb_badge .ghb_issue_list li span {
                     border-bottom: 1px dotted #666666;
-                    color: #000000;
+                    color: #515151;
                     cursor: help;
                     font-size: 8px;
                     line-height: 14px;
@@ -331,7 +331,7 @@
                     white-space: nowrap;
                 }
                     .ghb_badge .ghb_issue_list li a span {
-                        color: #000000;
+                        color: #515151;
                         text-decoration: none;
                     } 
                 .ghb_badge .ghb_issue_list li div {
