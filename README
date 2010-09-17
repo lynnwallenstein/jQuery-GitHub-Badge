@@ -33,7 +33,7 @@ the itemized steps.
 STEP 1: Include the plugin script after jQuery
 -------
 <!-- Script for GitHub Badge Widget -->
-<script src="jquery.twitter.js"></script>
+<script src="jquery.github_badge.js"></script>
 
 
 STEP 2: Include the CSS in the head of the document

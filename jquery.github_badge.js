@@ -1,5 +1,5 @@
 /*!
- * jQuery Github Badge - v0.2.3 - 10/13/2010
+ * jQuery GitHub Badge - v0.2.3 - 10/13/2010
  * http://www.maverickconceptions.com/2010/09/11/github-badge/
  * 
  * Copyright (c) 2010 Lynn Wallenstein
@@ -263,13 +263,13 @@
   };
   
 
-    $.fn.GithubBadge = function(options) {
+    $.fn.GitHubBadge = function(options) {
         var context = this;
         
         // option parsing
-        options = jQuery.extend({}, $.fn.GithubBadge.defaults, options);
+        options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
         
-        console.group( 'GithubBadge' );
+        console.group( 'GitHubBadge' );
         console.log( "Options parsed as: %o", options );
     
         // sanity checks.
@@ -310,7 +310,7 @@
     };
     
   
-    $.fn.GithubBadge.defaults = {
+    $.fn.GitHubBadge.defaults = {
         login: null,
         kind: "user", // user or project
         sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
