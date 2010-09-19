@@ -9,17 +9,11 @@ them work ;)
 
 ##SETUP
 
-----------
-
-
 + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you 
   do and it works, drop me a line at lwallenstein@gmail.com)
 
 
 ##INSTALLATION
-
-----------
-
 
 You can see a full installation in the demo.html file included in this repo, however here are 
 the itemized steps.
@@ -49,9 +43,6 @@ the itemized steps.
 
 
 ##CONFIGURATION
-
-----------
-
 
 ##== User Badge ==
 
