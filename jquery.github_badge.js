@@ -144,7 +144,7 @@
 
         user_info.html(render(user_info_template, merged));
         
-        if (data.user.public_repo_count > (options.repo_count - 1) ) {
+        if (data.user.public_repo_count > (options.repo_count) ) {
             merged.remaining = (data.user.public_repo_count - options.repo_count);
             repo_goto.html(render(repo_goto_template, merged));
         } else {
