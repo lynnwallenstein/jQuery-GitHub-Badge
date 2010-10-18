@@ -134,6 +134,7 @@
         repo_list = base.find(".ghb_repo_list");
     
     $.getJSON(requestURLUserInfo, function(data){
+        // console.log(data);
         var merged = $.extend({}, options, data.user);
 
         header.html(render(user_header_template, merged));
