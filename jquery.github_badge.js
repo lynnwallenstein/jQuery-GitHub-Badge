@@ -1,8 +1,8 @@
 /*!
- * jQuery GitHub Badge - v0.2.3 - 10/13/2010
- * http://www.maverickconceptions.com/2010/09/11/github-badge/
+ * jQuery GitHub Badge - v0.2.4 - 4/1/2011
+ * https://github.com/lynnwallenstein/jQuery-Github-Badge
  * 
- * Copyright (c) 2010 Lynn Wallenstein
+ * Copyright (c) 2011 Lynn Wallenstein
  * Dual licensed under the MIT and GPL licenses.
  * http://www.maverickconceptions.com/about/license/
  */
@@ -300,10 +300,10 @@
         });
         
         this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseenter', function () {
-            $(this).find("div").show()
+			$(this).find("div").show()
         });        
         this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseleave', function () {
-            $(this).find("div").hide()
+			$(this).find("div").hide()
         });        
             
         console.groupEnd();
@@ -317,21 +317,21 @@
         sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
         theme: "github", // adds value as class for entire badge
         include_github_logo: true, // show a lil love
-        image_path: "images/", 
+        image_path: "images/",  // path to images
         animate_style: "slide", //slideDown or show
         
         // User Badge Options
-        user_badge_title: "Repositories",
-        repo_count: "10",
-        show_repos: true, 
+        show_repos: true, // show repos at all?
+        user_badge_title: "Repositories", // title of repos section
+        repo_count: "10", // how many repos do you want to display
         
         // Repo Badge Options 
         repo_name: null,
-        repo_branch: "master",
-        show_issues: true,
-        issue_count: "10",
-        show_commits: true,
-        commit_count: "10"
+        repo_branch: "master", // branch to display
+        show_issues: true, // show issues tab?
+        issue_count: "10", // how many issues to show
+        show_commits: true, // show commits tab?
+        commit_count: "10" // how many commits to show
     };
     
     

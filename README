@@ -14,7 +14,7 @@ This documentation is highly in flux as I am in the middle of alpha testing this
 CONFIGURATION
 *******************************************
 
-+ jQuery 1.4.2+ (Developed on 1.4.2 and tested on 1.4.3. I haven't tested it with older versions. If you do and it works, drop me a line at lwallenstein@gmail.com)
++ jQuery 1.4.2+ (Developed on 1.4.2 and tested up to 1.5.1. I haven't tested it with older versions. If you do and it works, drop me a line at lwallenstein@gmail.com)
 
 
 
@@ -34,7 +34,7 @@ STEP 1: Include the plugin script after jQuery
 STEP 2: Include the CSS in the head of the document
 -------
 <!-- CSS for GitHub Badge Widget: implied media="all" -->
-<link rel="stylesheet" href="css/jquery.github_badge.css?v=1" />
+<link rel="stylesheet" href="jquery.github_badge.css?v=1" />
 
 
 STEP 3: In the body of your documents, create a container where you want the badge to display
