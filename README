@@ -45,7 +45,7 @@ STEP 3: In the body of your documents, create a container where you want the bad
 STEP 4: Call the script (with minimal default options.. see configuration section for more)
 -------
 <script>
-    $("#sample_user_badge").GithubBadge({
+    $("#sample_user_badge").GitHubBadge({
         login: "jquery"
     });
 </script>
@@ -61,7 +61,7 @@ CONFIGURATION
 Minmal Configuration for User Badge:
 
 <script>
-    $("#sample_user_badge").GithubBadge({
+    $("#sample_user_badge").GitHubBadge({
         login: "GITHUB_LOGIN"
     });
 </script>
@@ -69,7 +69,7 @@ Minmal Configuration for User Badge:
 Options for User Badge
 
 <script>
-    $("#sample_user_badge").GithubBadge({
+    $("#sample_user_badge").GitHubBadge({
         login: "GITHUB_LOGIN"
         sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
         theme: "github", // adds value as class for entire badge
@@ -85,7 +85,7 @@ Options for User Badge
 Minmal Configuration for Project Badge:
 
 <script>
-    $("#sample_project_badge").GithubBadge({
+    $("#sample_project_badge").GitHubBadge({
         login: "GITHUB_LOGIN",
         kind: "project", // user or project
         repo_name: "GITHUB_REPO_NAME"
@@ -95,7 +95,7 @@ Minmal Configuration for Project Badge:
 Options for User Badge
 
 <script>
-    $("#sample_user_badge").GithubBadge({
+    $("#sample_user_badge").GitHubBadge({
         login: "GITHUB_LOGIN",
         kind: "project", // user or project
         repo_name: "GITHUB_REPO_NAME",
