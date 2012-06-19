@@ -71,7 +71,8 @@
 
     repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
 
-    repo_row_template = '<li class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
+    repo_row_template_name = '<li class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
+    repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
 
     repo_template = [
         '<div class="ghb_badge {{theme}}">',
@@ -160,24 +161,41 @@
         if(data.data.length === 0) {
             repo_list.html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
         } else {
-            var c, rows = [];
+            var l, c, rows = [];
 
             $.each(data.data, function (i, obj) {
-                rows.push( render(repo_row_template, obj) );
+                l = render(options.sort_on === "date" ? repo_row_template_date : repo_row_template_name, obj);
+                if (obj.fork) { l = l.replace('class="', 'class="ghb_repo_fork '); }
+                rows.push( l );
             });
 
+            rows.sort(function(a,b){
+                a = a.toLowerCase();
+                b = b.toLowerCase();
+                if (a === b) { return 0; }
+                return a > b ? 1 : -1;
+            });
             if (options.sorting !== "ascending" ) {
                 rows.reverse();
             }
 
             c = options.repo_count - 1;
-            repo_list
+            l = repo_list
               .html(rows.join(''))
               .children()
               .filter(':gt(' + c + ')').hide().end()
               .filter(':first').addClass("firstrepo").end()
-              .eq(c).addClass("lastrepo");
+              .eq(c).addClass("lastrepo").end();
 
+            if (l.length > c) {
+                repo_goto
+                    .append('<a href="#" class="ghb_show_more">Show ' + (l.length - c) + ' more</a>')
+                    .find('.ghb_show_more').click(function(){
+                        l.show();
+                        this.innerHTML = '';
+                        return false;
+                    });
+            }
         }
     });
   },
@@ -319,6 +337,7 @@
     $.fn.GitHubBadge.defaults = {
         login: null,
         kind: "user", // user or project
+        sort_on: "date", // "date" or "name"
         sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
         theme: "github", // adds value as class for entire badge
         include_github_logo: true, // show a lil love

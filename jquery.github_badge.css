@@ -48,7 +48,7 @@
         min-height: 30px;
         padding: 5px 10px;       
     }
-        .ghb_badge .ghb_badge_header img  {
+        .ghb_badge .ghb_badge_header img, .ghb_show_more {
             border: none;
             clear: both;
             float: right;
@@ -133,9 +133,12 @@
         }    
             .ghb_badge .ghb_repo_list li {
                 display: block;
-                background: url("images/public.png") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
+                background: url("images/public.gif") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
                 border-bottom: 1px solid #E5E5E5;
                 padding-left: 22px;
+            }
+            .ghb_badge .ghb_repo_list li.ghb_repo_fork {
+                background-image: url("images/public_fork.gif");
             }
                 .ghb_badge .ghb_repo_list li a {
                     background: url("images/arrow-40.png") no-repeat scroll 97% 50% transparent; /* Arrow next to Repo */
