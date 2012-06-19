@@ -16,9 +16,9 @@
               'log', 'debug', 'info', 'warn', 'error', 'assert',
               'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd',
               'count', 'trace', 'profile', 'profileEnd'
-            ], i = 0;
+            ], i;
             window.console = {};
-            for (; i < names.length; i = i + 1) {
+            for (i = 0; i < names.length; i = i + 1) {
               window.console[names[i]] = $.noop;
             }
         }());
@@ -116,8 +116,8 @@
         '</li>'].join(''),
 
     render = function (template, data) {
-        return template.replace(/\{\{([-_a-z]+)\}\}/g, function (m, key, value) {
-          return data[key] ? data[key] : "None";
+        return template.replace(/\{\{([\-_a-z]+)\}\}/g, function (m, key, value) {
+          return data[key] || "None";
         });
     },
 
@@ -245,7 +245,7 @@
                 var merged = $.extend({}, options, obj, obj.user);
 
                 rows.push(render(issues_item, merged));
-                if ( i === (options.issue_count - 1 ) ) return false;
+                if ( i === (options.issue_count - 1 ) ) { return false; }
             });
 
             if (options.sorting !== "ascending" ) {
@@ -268,7 +268,7 @@
              obj.sha + '">' + obj.commit.message + '<span title="'+ obj.committer.login +' @ '+ obj.commit.committer.date + '">by '+
              obj.committer.login +'</span></a></li>');
 
-            if ( i === (options.commit_count - 1) ) return false;
+          if ( i === (options.commit_count - 1) ) { return false; }
         });
 
         if (options.sorting !== "ascending" ) {
@@ -323,10 +323,10 @@
         });
 
         this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseenter', function () {
-            $(this).find("div").show()
+            $(this).find("div").show();
         });
         this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseleave', function () {
-            $(this).find("div").hide()
+            $(this).find("div").hide();
         });
 
         console.groupEnd();
