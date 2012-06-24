@@ -8,7 +8,7 @@ them work ;)
 ##SETUP
 
 + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you
-  do and it works, drop me a line at lwallenstein@gmail.com)
+  do and it works, drop me a line at lynn@lynn.io)
 
 
 ##INSTALLATION
