@@ -1,8 +1,14 @@
 /*!
- * jQuery GitHub Badge - v0.3 - 6/18/2012
- *
- * Copyright (c) 2012 Lynn Wallenstein
- * http://blog.lynn.io/post/25808134076/license
+* jQuery GitHub Badge - v0.3 - 6/18/2012
+*
+* Copyright (c) 2012 Lynn Wallenstein
+* Examples and docs at: http://tablesorter.com
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*
+* @author Lynn Wallenstein/lynn@lynn.io
+* @contributor Rob Garrison/https://github.com/Mottie/
  */
 
 // avoid javascript errors on browsers that aren't using console.
