@@ -75,8 +75,8 @@
 
     repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
 
-    repo_row_template_name = '<li class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
-    repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{url}}">{{name}}</a> <div>{{description}}</div></li>',
+    repo_row_template_name = '<li class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
+    repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
 
     repo_template = [
         '<div class="ghb_badge {{theme}}">',
