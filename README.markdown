@@ -12,8 +12,8 @@ them work ;)
 
 ##SETUP
 
-+ jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you
-  do and it works, drop me a line at lynn@lynn.io)
++ jQuery 1.4.2 - 1.8 (This is what I developed on, I haven't tested it with older versions. If you
+  do and it works, drop me a line at lynn@lynn.io).
 
 
 ##INSTALLATION
