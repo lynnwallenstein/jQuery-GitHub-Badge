@@ -5,6 +5,11 @@ This documentation is highly in flux as I am in the middle of alpha testing this
 now. I will be flushing out all the explanations of all the options once I finish making
 them work ;)
 
+## DEMO
+
+[Click Here](http://www.lynn.io/demos/github_badge/index.html) to see it in action.
+
+
 ##SETUP
 
 + jQuery 1.4.2 (This is what I developed on, I haven't tested it with older versions. If you
@@ -13,7 +18,7 @@ them work ;)
 
 ##INSTALLATION
 
-You can see a full installation in the demo.html file included in this repo, however here are
+You can see a full installation in the index.html file included in this repo, however here are
 the itemized steps.
 
 ###Step 1: Include the plugin script after jQuery
@@ -53,7 +58,7 @@ $("#sample_user_badge").GithubBadge({
 ###Minmal Configuration for User Badge:
 
 ```html
-$("#sample_user_badge").GithubBadge({
+$("#sample_user_badge").GitHubBadge({
     login: "GITHUB_LOGIN"
 });
 ```
@@ -61,7 +66,7 @@ $("#sample_user_badge").GithubBadge({
 ###Options for User Badge
 
 ```html
-$("#sample_user_badge").GithubBadge({
+$("#sample_user_badge").GitHubBadge({
     login               : "GITHUB_LOGIN"
     sorting             : "ascending", // ascending or descending for repos (user badge) and issues (project badge)
     theme               : "github",    // adds value as class for entire badge
@@ -77,7 +82,7 @@ $("#sample_user_badge").GithubBadge({
 ###Minmal Configuration for Project Badge:
 
 ```html
-$("#sample_project_badge").GithubBadge({
+$("#sample_project_badge").GitHubBadge({
     login     : "GITHUB_LOGIN",
     kind      : "project",         // user or project
     repo_name : "GITHUB_REPO_NAME"
@@ -87,7 +92,7 @@ $("#sample_project_badge").GithubBadge({
 ###Options for User Badge
 
 ```html
-$("#sample_user_badge").GithubBadge({
+$("#sample_user_badge").GitHubBadge({
     login               : "GITHUB_LOGIN",
     kind                : "project",          // user or project
     repo_name           : "GITHUB_REPO_NAME",
@@ -101,6 +106,4 @@ $("#sample_user_badge").GithubBadge({
     issue_count         : "10",               // maximum number of issues to be displayed
     commit_count        : "10"                // maximum number of commits to be displayed
 });
-```
-
-  [1]: http://www.maverickconceptions.com/demos/github_badge/index.html
+``
