@@ -41,12 +41,12 @@
             '<a rel="ghb-repo-panel" href="#">Repos</a>',
           '</div>',
 
-          '<div class="ghb-info-panel" style="display:none;">',
+          '<div class="ghb-info-panel ghb-panel" style="display:none;">',
             '<h2>User Info</h2>',
             '<div></div>',
           '</div>',
 
-          '<div class="ghb-repo-panel" style="display:none;">',
+          '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
             '<h2>Public {{user_badge_title}}</h2>',
             '<ul class="ghb-repo-list"></ul>',
             '<div class="ghb-goto"></div>',
@@ -88,15 +88,15 @@
             '<div class="ghb-nav">',
                 '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Repo Info</a>',
                 '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
-                '<a class="ghb_repo_issues_nav"       rel="ghb_repo_issues"   href="#">Issues</a>',
+                '<a class="ghb-repo-panel_nav"       rel="ghb-repo-panel"   href="#">Issues</a>',
             '</div>',
-            '<div class="ghb-info-panel" style="display:none;"></div>',
-            '<div class="ghb_repo_issues" style="display:none;">',
+            '<div class="ghb-info-panel ghb-panel" style="display:none;"></div>',
+            '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
                 '<h2>Open Issues</h2>',
-                '<ul class="ghb_issue_list"></ul>',
+                '<ul class="ghb-issue-list"></ul>',
                 '<div class="ghb-goto ghb-goto-issues"></div>',
             '</div>',
-            '<div class="ghb-commit-panel" style="display:none;">',
+            '<div class="ghb-commit-panel ghb-panel" style="display:none;">',
                 '<h2>Commits</h2>',
                 '<ul class="ghb-commit-list">',
                     '<li class="no-records">There are no commits in the {{repo_branch}} branch</li>',
@@ -219,7 +219,7 @@
         base         = $(where).html(render(repo_template, options)),
         header       = base.find('.ghb-header'),
         repo_info    = base.find('.ghb-info-panel'),
-        issues_list  = base.find('.ghb_issue_list'),
+        issues_list  = base.find('.ghb-issue-list'),
         goto_issues  = base.find('.ghb-goto-issues').hide(),
         goto_commits = base.find('.ghb-goto-commits').hide(),
         commit_list  = base.find('.ghb-commit-list'),
@@ -330,10 +330,10 @@
             context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
         });
 
-        this.delegate('ul.ghb-repo-list li, ul.ghb_issue_list li', 'mouseenter', function () {
+        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseenter', function () {
             $(this).find("div").show();
         });
-        this.delegate('ul.ghb-repo-list li, ul.ghb_issue_list li', 'mouseleave', function () {
+        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseleave', function () {
             $(this).find("div").hide();
         });
 

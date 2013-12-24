@@ -126,8 +126,11 @@ $nav-height: 30px;
 
   } // .ghb-nav
 
-  .ghb-info-panel {
+  .ghb-panel {
     clear: both;
+  }
+
+  .ghb-info-panel {
     font-size: $base-font-size + 1px;
     font-weight: bold;
     margin: 10px auto;
@@ -163,7 +166,6 @@ $nav-height: 30px;
   } // .ghb-info-panel
 
   .ghb-repo-panel {
-    clear: both;
     margin: 0 auto 0 auto;
 
     .ghb-repo-list {
@@ -219,10 +221,6 @@ $nav-height: 30px;
 
   } // .ghb-repo-panel
 
-  .ghb-commit-panel {
-    clear: both;
-  }
-
   .ghb-commit-list {
     list-style: none;
 
@@ -277,8 +275,6 @@ $nav-height: 30px;
 
   } // .ghb-commit-list
 
-
-
   .ghb-goto {
     border-top: 1px solid $gray;
     font-size: $base-font-size + 1px;
@@ -302,75 +298,65 @@ $nav-height: 30px;
 } // .ghb
 
 
+.ghb-issue-list {
+  list-style: none;
 
+  li {
+    background-image: url("images/issue-opened.svg");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 12px 16px;
+    border-bottom: 1px solid $gray;
+    display: block;
+    font-size: $base-font-size + 1px;
+    font-weight: 600;
+    padding-left: 22px;
 
-
-
-
-
-    .ghb .ghb-goto_commits {
-        background: #FAFAFB;
-        clear: both;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 10px;
+    &:last-child {
+      border-bottom: none;
     }
-        .ghb .ghb-goto_commits a {
-            color: #999999;
-            margin-right: 15px;
-            text-decoration: none;
-        }
-            .ghb .ghb-goto_commits a:hover {
-                text-decoration: underline;
-            }
 
-    /* Repo Badge Issues Panel */
-    .ghb_repo_issues {
-        clear: both;
+    &.no-records {
+      border-bottom: none;
+      color: $red;
+      font-weight: bold;
+      padding: 6px 25px 5px 32px;
     }
-        .ghb .ghb_issue_list {
-            list-style: none;
-        }
-            .ghb .ghb_issue_list li {
-                background: url("images/issue-opened.svg") no-repeat scroll 10px 8px #FFFFFF; /* Smiley Pic */
-                border-bottom: 1px solid #E5E5E5;
-                font-size: 14px;
-                font-weight: bold;
-                padding-left: 22px;
-            }
-                .ghb .ghb_issue_list li.no-records {
-                    color: #940a18;
-                    padding: 6px 25px 5px 32px;
-                }
-                .ghb .ghb_issue_list li a {
-               color: #4183C4;
-                    display: block;
-                    padding: 6px 25px 5px 10px;
-                    text-decoration: none;
-                }
-                    .ghb_issue_list li a:hover {
-                      text-decoration: underline;
-                    }
-                .ghb .ghb_issue_list li.lastrepo {
-                   border-bottom: none;
-                }
-                .ghb .ghb_issue_list li span {
-                    border-bottom: 1px dotted #666666;
-                    color: #515151;
-                    cursor: help;
-                    font-size: 8px;
-                    line-height: 14px;
-                    margin:  0 0 5px 5px;
-                    white-space: nowrap;
-                }
-                    .ghb .ghb_issue_list li a span {
-                        color: #515151;
-                        text-decoration: none;
-                    }
-                .ghb .ghb_issue_list li div {
-                    display: none;
-                    font-size: 10px;
-                    font-weight: normal;
-                    padding: 6px 25px 5px 10px;
-                }
 
+    a {
+      color: $blue;
+      display: block;
+      padding: 6px 25px 5px 10px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      span {
+        color: $gray;
+        text-decoration: none;
+      }
+
+    } // a
+
+    span {
+      border-bottom: 1px dotted $gray;
+      color: $gray;
+      cursor: help;
+      font-size: 8px;
+      line-height: 14px;
+      margin:  0 0 5px 5px;
+      white-space: nowrap;
+    }
+
+    div {
+      display: none;
+      font-size: 10px;
+      font-weight: normal;
+      padding: 6px 25px 5px 10px;
+    }
+
+  } // li
+
+} // .ghb-issue-list
