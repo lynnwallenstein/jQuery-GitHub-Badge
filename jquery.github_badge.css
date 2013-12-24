@@ -110,7 +110,7 @@
       .ghb .ghb-repo-panel .ghb-repo-list li {
         background-image: url("images/repo.svg");
         background-repeat: no-repeat;
-        background-position: 10px center;
+        background-position: 10px 7px;
         background-size: 12px 16px;
         border-bottom: 1px solid #d5d5d5;
         display: block;
@@ -142,7 +142,7 @@
     .ghb .ghb-commit-list li {
       background-image: url("images/git-commit.svg");
       background-repeat: no-repeat;
-      background-position: 10px center;
+      background-position: 10px 7px;
       background-size: 12px 16px;
       border-bottom: 1px solid #d5d5d5;
       display: block;
@@ -162,11 +162,11 @@
         .ghb .ghb-commit-list li a:hover {
           text-decoration: underline; }
         .ghb .ghb-commit-list li a span {
-          color: #d5d5d5;
+          color: #555555;
           text-decoration: none; }
       .ghb .ghb-commit-list li span {
         border-bottom: 1px dotted #d5d5d5;
-        color: #d5d5d5;
+        color: #555555;
         cursor: help;
         font-size: 8px;
         line-height: 14px;
@@ -184,46 +184,44 @@
       text-decoration: none; }
       .ghb .ghb-goto a:hover {
         text-decoration: underline; }
-
-.ghb-issue-list {
-  list-style: none; }
-  .ghb-issue-list li {
-    background-image: url("images/issue-opened.svg");
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 12px 16px;
-    border-bottom: 1px solid #d5d5d5;
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    padding-left: 22px; }
-    .ghb-issue-list li:last-child {
-      border-bottom: none; }
-    .ghb-issue-list li.no-records {
-      border-bottom: none;
-      color: #940a18;
-      font-weight: bold;
-      padding: 6px 25px 5px 32px; }
-    .ghb-issue-list li a {
-      color: #4183c4;
+  .ghb .ghb-issue-list {
+    list-style: none; }
+    .ghb .ghb-issue-list li {
+      background-image: url("images/issue-opened.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid #d5d5d5;
       display: block;
-      padding: 6px 25px 5px 10px;
-      text-decoration: none; }
-      .ghb-issue-list li a:hover {
-        text-decoration: underline; }
-      .ghb-issue-list li a span {
-        color: #d5d5d5;
+      font-size: 14px;
+      font-weight: 600;
+      padding-left: 22px; }
+      .ghb .ghb-issue-list li:last-child {
+        border-bottom: none; }
+      .ghb .ghb-issue-list li.no-records {
+        border-bottom: none;
+        color: #940a18;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px; }
+      .ghb .ghb-issue-list li a {
+        color: #4183c4;
+        display: block;
+        padding: 6px 25px 5px 10px;
         text-decoration: none; }
-    .ghb-issue-list li span {
-      border-bottom: 1px dotted #d5d5d5;
-      color: #d5d5d5;
-      cursor: help;
-      font-size: 8px;
-      line-height: 14px;
-      margin: 0 0 5px 5px;
-      white-space: nowrap; }
-    .ghb-issue-list li div {
-      display: none;
-      font-size: 10px;
-      font-weight: normal;
-      padding: 6px 25px 5px 10px; }
+        .ghb .ghb-issue-list li a:hover {
+          text-decoration: none; }
+        .ghb .ghb-issue-list li a span {
+          color: #555555;
+          text-decoration: none; }
+      .ghb .ghb-issue-list li span {
+        border-bottom: 1px dotted #d5d5d5;
+        color: #555555;
+        font-size: 8px;
+        line-height: 14px;
+        margin: 0 0 5px 5px;
+        white-space: nowrap; }
+      .ghb .ghb-issue-list li div {
+        display: none;
+        font-size: 10px;
+        font-weight: normal;
+        padding: 6px 25px 5px 10px; }

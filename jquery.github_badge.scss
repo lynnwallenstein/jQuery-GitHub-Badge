@@ -174,7 +174,7 @@ $nav-height: 30px;
       li {
         background-image: url("images/repo.svg");
         background-repeat: no-repeat;
-        background-position: 10px center;
+        background-position: 10px 7px;
         background-size: 12px 16px;
         border-bottom: 1px solid $gray;
         display: block;
@@ -227,7 +227,7 @@ $nav-height: 30px;
     li {
       background-image: url("images/git-commit.svg");
       background-repeat: no-repeat;
-      background-position: 10px center;
+      background-position: 10px 7px;
       background-size: 12px 16px;
       border-bottom: 1px solid $gray;
       display: block;
@@ -255,7 +255,7 @@ $nav-height: 30px;
         }
 
         span {
-          color: $gray;
+          color: $black-text;
           text-decoration: none;
         }
 
@@ -263,7 +263,7 @@ $nav-height: 30px;
 
       span {
         border-bottom: 1px dotted $gray;
-        color: $gray;
+        color: $black-text;
         cursor: help;
         font-size: 8px;
         line-height: 14px;
@@ -295,68 +295,68 @@ $nav-height: 30px;
 
   } // .ghb-goto
 
+  .ghb-issue-list {
+    list-style: none;
+
+    li {
+      background-image: url("images/issue-opened.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid $gray;
+      display: block;
+      font-size: $base-font-size + 1px;
+      font-weight: 600;
+      padding-left: 22px;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.no-records {
+        border-bottom: none;
+        color: $red;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px;
+      }
+
+      a {
+        color: $blue;
+        display: block;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        span {
+          color: $black-text;
+          text-decoration: none;
+        }
+
+      } // a
+
+      span {
+        border-bottom: 1px dotted $gray;
+        color: $black-text;
+        font-size: 8px;
+        line-height: 14px;
+        margin:  0 0 5px 5px;
+        white-space: nowrap;
+      }
+
+      div {
+        display: none;
+        font-size: 10px;
+        font-weight: normal;
+        padding: 6px 25px 5px 10px;
+      }
+
+    } // li
+
+  } // .ghb-issue-list
+
 } // .ghb
 
 
-.ghb-issue-list {
-  list-style: none;
-
-  li {
-    background-image: url("images/issue-opened.svg");
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 12px 16px;
-    border-bottom: 1px solid $gray;
-    display: block;
-    font-size: $base-font-size + 1px;
-    font-weight: 600;
-    padding-left: 22px;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    &.no-records {
-      border-bottom: none;
-      color: $red;
-      font-weight: bold;
-      padding: 6px 25px 5px 32px;
-    }
-
-    a {
-      color: $blue;
-      display: block;
-      padding: 6px 25px 5px 10px;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      span {
-        color: $gray;
-        text-decoration: none;
-      }
-
-    } // a
-
-    span {
-      border-bottom: 1px dotted $gray;
-      color: $gray;
-      cursor: help;
-      font-size: 8px;
-      line-height: 14px;
-      margin:  0 0 5px 5px;
-      white-space: nowrap;
-    }
-
-    div {
-      display: none;
-      font-size: 10px;
-      font-weight: normal;
-      padding: 6px 25px 5px 10px;
-    }
-
-  } // li
-
-} // .ghb-issue-list
