@@ -87,21 +87,21 @@
             '<div class="ghb-header"></div>',
             '<div class="ghb-nav">',
                 '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Repo Info</a>',
-                '<a class="ghb_repo_commits_nav"      rel="ghb_repo_commits" href="#">Commits</a>',
-                '<a class="ghb_repo_issues_nav"       rel="ghb_repo_issues"  href="#">Issues</a>',
+                '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
+                '<a class="ghb_repo_issues_nav"       rel="ghb_repo_issues"   href="#">Issues</a>',
             '</div>',
             '<div class="ghb-info-panel" style="display:none;"></div>',
             '<div class="ghb_repo_issues" style="display:none;">',
                 '<h2>Open Issues</h2>',
                 '<ul class="ghb_issue_list"></ul>',
-                '<div class="ghb-goto"></div>',
+                '<div class="ghb-goto ghb-goto-issues"></div>',
             '</div>',
-            '<div class="ghb_repo_commits" style="display:none;">',
+            '<div class="ghb-commit-panel" style="display:none;">',
                 '<h2>Commits</h2>',
-                '<ul class="ghb_commit_list">',
-                    '<li class="no_records">There are no commits in the {{repo_branch}} branch</li>',
+                '<ul class="ghb-commit-list">',
+                    '<li class="no-records">There are no commits in the {{repo_branch}} branch</li>',
                 '</ul>',
-                '<div class="ghb-goto_commits"></div>',
+                '<div class="ghb-goto ghb-goto-commits"></div>',
             '</div>',
         '</div>'].join(''),
 
@@ -167,7 +167,7 @@
     $.getJSON(requestURLRepos, function(data){
 
         if(data.data.length === 0) {
-            repo_list.html('<li class="no_records">' + options.login +' Does Not Have Any Repos</li>');
+            repo_list.html('<li class="no-records">' + options.login +' Does Not Have Any Repos</li>');
         } else {
             var l, c, rows = [];
 
@@ -220,9 +220,9 @@
         header       = base.find('.ghb-header'),
         repo_info    = base.find('.ghb-info-panel'),
         issues_list  = base.find('.ghb_issue_list'),
-        goto_issues  = base.find('.ghb-goto').hide(),
-        goto_commits = base.find('.ghb-goto_commits').hide(),
-        commit_list  = base.find('.ghb_commit_list'),
+        goto_issues  = base.find('.ghb-goto-issues').hide(),
+        goto_commits = base.find('.ghb-goto-commits').hide(),
+        commit_list  = base.find('.ghb-commit-list'),
         no_commits   = commit_list.find('.no_commits');
 
     $.getJSON(requestURLRepo, function(data){
@@ -245,7 +245,7 @@
     $.getJSON(requestURLIssues, function(data){
 
         if(!data.data) {
-            issues_list.html('<li class="no_records">There are no open issues for this repo.</li>');
+            issues_list.html('<li class="no-records">There are no open issues for this repo.</li>');
         } else {
             goto_issues.show();
             var rows = [];
