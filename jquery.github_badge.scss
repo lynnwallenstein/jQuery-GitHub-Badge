@@ -189,6 +189,7 @@ $nav-height: 30px;
         &.no-records {
           border-bottom: none;
           color: $red;
+          font-weight: bold;
           padding: 6px 25px 5px 32px;
         }
 
@@ -241,6 +242,7 @@ $nav-height: 30px;
       &.no-records {
         border-bottom: none;
         color: $red;
+        font-weight: bold;
         padding: 6px 25px 5px 32px;
       }
 
@@ -278,14 +280,11 @@ $nav-height: 30px;
 
 
   .ghb-goto {
-    background-color: $gray-light;
-    background-image: -moz-linear-gradient($gray-lighter, $gray-light);
-    background-image: -webkit-linear-gradient($gray-lighter, $gray-light);
-    background-image: linear-gradient($gray-lighter, $gray-light);
     border-top: 1px solid $gray;
     font-size: $base-font-size + 1px;
     font-weight: bold;
     padding: 10px;
+    text-align: center;
 
     a {
       color: lighten($black-text, 20%);

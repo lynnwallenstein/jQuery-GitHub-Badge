@@ -122,6 +122,7 @@
         .ghb .ghb-repo-panel .ghb-repo-list li.no-records {
           border-bottom: none;
           color: #940a18;
+          font-weight: bold;
           padding: 6px 25px 5px 32px; }
       .ghb .ghb-repo-panel .ghb-repo-list a {
         color: #4183c4;
@@ -153,6 +154,7 @@
       .ghb .ghb-commit-list li.no-records {
         border-bottom: none;
         color: #940a18;
+        font-weight: bold;
         padding: 6px 25px 5px 32px; }
       .ghb .ghb-commit-list li a {
         color: #4183c4;
@@ -173,14 +175,11 @@
         margin: 0 0 5px 5px;
         white-space: nowrap; }
   .ghb .ghb-goto {
-    background-color: #eaeaea;
-    background-image: -moz-linear-gradient(#fafafa, #eaeaea);
-    background-image: -webkit-linear-gradient(#fafafa, #eaeaea);
-    background-image: linear-gradient(#fafafa, #eaeaea);
     border-top: 1px solid #d5d5d5;
     font-size: 14px;
     font-weight: bold;
-    padding: 10px; }
+    padding: 10px;
+    text-align: center; }
     .ghb .ghb-goto a {
       color: #888888;
       margin-right: 15px;
