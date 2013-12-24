@@ -10,34 +10,32 @@
 * @author Lynn Wallenstein/lynn@lynn.io
 * @contributor Rob Garrison/https://github.com/Mottie/
 */
-/* Reset */
-.ghb dd,
-.ghb div,
-.ghb dl,
-.ghb dt,
-.ghb h1,
-.ghb h2,
-.ghb p,
-.ghb span,
-.ghb ol,
-.ghb ul,
-.ghb li {
-  background-color: transparent;
-  border: 0;
-  font-size: 100%;
-  outline: 0;
-  margin: 0;
-  padding: 0;
-  vertical-align: baseline; }
-
-/* Badge Wrapper */
 .ghb {
   border: 1px solid #d5d5d5;
   border-radius: 5px;
   box-sizing: border-box;
   clear: both;
   font: 13px Helvetica, arial, freesans, clean, sans-serif;
-  overflow: hidden; }
+  overflow: hidden;
+  /* Reset */ }
+  .ghb dd,
+  .ghb div,
+  .ghb dl,
+  .ghb dt,
+  .ghb h1,
+  .ghb h2,
+  .ghb p,
+  .ghb span,
+  .ghb ol,
+  .ghb ul,
+  .ghb li {
+    background-color: transparent;
+    border: 0;
+    font-size: 100%;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline; }
   .ghb * {
     box-sizing: border-box; }
   .ghb h2 {
@@ -104,49 +102,48 @@
       margin: 0px 5px 0px 0px; }
     .ghb .ghb-info-panel dd {
       margin: 1px 15px 1px 0px; }
-
-.ghb-repo-panel {
-  clear: both;
-  margin: 0 auto 0 auto; }
-  .ghb-repo-panel .ghb-repo-list {
-    list-style: none; }
-    .ghb-repo-panel .ghb-repo-list li {
-      background-image: url("images/repo.svg");
-      background-repeat: no-repeat;
-      background-position: 10px 8px;
-      background-size: 12px 16px;
-      border-bottom: 1px solid #d5d5d5;
-      display: block;
-      padding-left: 22px; }
-      .ghb-repo-panel .ghb-repo-list li.ghb-public-fork {
-        background-image: url("images/repo-forked.svg"); }
-    .ghb-repo-panel .ghb-repo-list a {
-      color: #4183c4;
-      display: block;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 6px 25px 5px 10px;
+  .ghb .ghb-repo-panel {
+    clear: both;
+    margin: 0 auto 0 auto; }
+    .ghb .ghb-repo-panel .ghb-repo-list {
+      list-style: none; }
+      .ghb .ghb-repo-panel .ghb-repo-list li {
+        background-image: url("images/repo.svg");
+        background-repeat: no-repeat;
+        background-position: 10px 8px;
+        background-size: 12px 16px;
+        border-bottom: 1px solid #d5d5d5;
+        display: block;
+        padding-left: 22px; }
+        .ghb .ghb-repo-panel .ghb-repo-list li.ghb-public-fork {
+          background-image: url("images/repo-forked.svg"); }
+      .ghb .ghb-repo-panel .ghb-repo-list a {
+        color: #4183c4;
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none; }
+        .ghb .ghb-repo-panel .ghb-repo-list a:hover {
+          text-decoration: underline; }
+      .ghb .ghb-repo-panel .ghb-repo-list div {
+        display: none;
+        font-size: 10px;
+        padding: 6px 25px 5px 10px; }
+  .ghb .ghb-goto {
+    background-color: #eaeaea;
+    background-image: -moz-linear-gradient(#fafafa, #eaeaea);
+    background-image: -webkit-linear-gradient(#fafafa, #eaeaea);
+    background-image: linear-gradient(#fafafa, #eaeaea);
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px; }
+    .ghb .ghb-goto a {
+      color: #888888;
+      margin-right: 15px;
       text-decoration: none; }
-      .ghb-repo-panel .ghb-repo-list a:hover {
+      .ghb .ghb-goto a:hover {
         text-decoration: underline; }
-    .ghb-repo-panel .ghb-repo-list div {
-      display: none;
-      font-size: 10px;
-      padding: 6px 25px 5px 10px; }
-
-.ghb .ghb_repo_goto {
-  background: #FAFAFB;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 10px; }
-
-.ghb .ghb_repo_goto a {
-  color: #999999;
-  margin-right: 15px;
-  text-decoration: none; }
-
-.ghb .ghb_repo_goto a:hover {
-  text-decoration: underline; }
 
 /* Repo Badge */
 /* Repo Badge Commit Panel */
@@ -197,19 +194,19 @@
   color: #515151;
   text-decoration: none; }
 
-.ghb .ghb_repo_goto_commits {
+.ghb .ghb-goto_commits {
   background: #FAFAFB;
   clear: both;
   font-size: 14px;
   font-weight: bold;
   padding: 10px; }
 
-.ghb .ghb_repo_goto_commits a {
+.ghb .ghb-goto_commits a {
   color: #999999;
   margin-right: 15px;
   text-decoration: none; }
 
-.ghb .ghb_repo_goto_commits a:hover {
+.ghb .ghb-goto_commits a:hover {
   text-decoration: underline; }
 
 /* Repo Badge Issues Panel */
@@ -265,17 +262,3 @@
   font-size: 10px;
   font-weight: normal;
   padding: 6px 25px 5px 10px; }
-
-.ghb .ghb_repo_goto_issues {
-  background: #FAFAFB;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 10px; }
-
-.ghb .ghb_repo_goto_issues a {
-  color: #999999;
-  margin-right: 15px;
-  text-decoration: none; }
-
-.ghb .ghb_repo_goto_issues a:hover {
-  text-decoration: underline; }

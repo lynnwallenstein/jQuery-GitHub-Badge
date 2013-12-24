@@ -49,7 +49,7 @@
           '<div class="ghb-repo-panel" style="display:none;">',
             '<h2>Public {{user_badge_title}}</h2>',
             '<ul class="ghb-repo-list"></ul>',
-            '<div class="ghb_repo_goto"></div>',
+            '<div class="ghb-goto"></div>',
           '</div>',
 
       '</div>'].join(''),
@@ -94,14 +94,14 @@
             '<div class="ghb_repo_issues" style="display:none;">',
                 '<h2>Open Issues</h2>',
                 '<ul class="ghb_issue_list"></ul>',
-                '<div class="ghb_repo_goto_issues"></div>',
+                '<div class="ghb-goto"></div>',
             '</div>',
             '<div class="ghb_repo_commits" style="display:none;">',
                 '<h2>Commits</h2>',
                 '<ul class="ghb_commit_list">',
                     '<li class="no_records">There are no commits in the {{repo_branch}} branch</li>',
                 '</ul>',
-                '<div class="ghb_repo_goto_commits"></div>',
+                '<div class="ghb-goto_commits"></div>',
             '</div>',
         '</div>'].join(''),
 
@@ -139,7 +139,7 @@
         base      = $(where).html(render(user_template, options)),
         header    = base.find(".ghb-header"),
         user_info = base.find(".ghb-info-panel"),
-        repo_goto = base.find(".ghb_repo_goto"),
+        repo_goto = base.find(".ghb-goto"),
         repo_list = base.find(".ghb-repo-list");
 
     $.getJSON(requestURLUserInfo, function(data){
@@ -220,8 +220,8 @@
         header       = base.find('.ghb-header'),
         repo_info    = base.find('.ghb-info-panel'),
         issues_list  = base.find('.ghb_issue_list'),
-        goto_issues  = base.find('.ghb_repo_goto_issues').hide(),
-        goto_commits = base.find('.ghb_repo_goto_commits').hide(),
+        goto_issues  = base.find('.ghb-goto').hide(),
+        goto_commits = base.find('.ghb-goto_commits').hide(),
         commit_list  = base.find('.ghb_commit_list'),
         no_commits   = commit_list.find('.no_commits');
 
