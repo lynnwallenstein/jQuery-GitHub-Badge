@@ -30,22 +30,22 @@
 
     var api_root = "https://api.github.com/", // api v3
 
-    github_logo_template = '<a target="_blank" href="http://github.com"><img src="{{image_path}}ghb_logo.png" alt="GitHub"></a>',
+    github_logo_template = '<a target="_blank" href="http://github.com"><img class="github-mark" src="{{image_path}}github.svg" alt="GitHub"></a>',
 
     user_template = [
-        '<div class="ghb_badge {{theme}}">',
-            '<div class="ghb_badge_header"></div>',
-            '<div class="ghb_user_nav">',
-                '<a class="ghb_user_info_nav chosen" rel="ghb_badge_user_info" href="#">User Info</a>',
-                '<a class="ghb_user_repo_nav"        rel="ghb_badge_user_repos" href="#">Repos</a>',
+        '<div class="ghb {{theme}}">',
+            '<div class="ghb-header"></div>',
+            '<div class="ghb-nav">',
+                '<a class="ghb_user_info_nav chosen" rel="ghb-info-panel" href="#">User Info</a>',
+                '<a class="ghb_user_repo_nav"        rel="ghb-repo-panel" href="#">Repos</a>',
             '</div>',
-            '<div class="ghb_badge_user_info" style="display:none;">',
+            '<div class="ghb-info-panel" style="display:none;">',
                 '<h2>User Info</h2>',
                 '<div></div>',
             '</div>',
-            '<div class="ghb_badge_user_repos" style="display:none;">',
+            '<div class="ghb-repo-panel" style="display:none;">',
                 '<h2>Public {{user_badge_title}}</h2>',
-                '<ul class="ghb_repo_list"></ul>',
+                '<ul class="ghb-repo-list"></ul>',
                 '<div class="ghb_repo_goto"></div>',
             '</div>',
         '</div>'].join(''),
@@ -79,14 +79,14 @@
     repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
 
     repo_template = [
-        '<div class="ghb_badge {{theme}}">',
-            '<div class="ghb_badge_header"></div>',
-            '<div class="ghb_repo_nav">',
-                '<a class="ghb_repo_info_nav chosen" rel="ghb_repo_info"    href="#">Repo Info</a>',
+        '<div class="ghb {{theme}}">',
+            '<div class="ghb-header"></div>',
+            '<div class="ghb-nav">',
+                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Repo Info</a>',
                 '<a class="ghb_repo_commits_nav"     rel="ghb_repo_commits" href="#">Commits</a>',
                 '<a class="ghb_repo_issues_nav"      rel="ghb_repo_issues"  href="#">Issues</a>',
             '</div>',
-            '<div class="ghb_repo_info" style="display:none;"></div>',
+            '<div class="ghb-info-panel" style="display:none;"></div>',
             '<div class="ghb_repo_issues" style="display:none;">',
                 '<h2>Open Issues</h2>',
                 '<ul class="ghb_issue_list"></ul>',
@@ -133,10 +133,10 @@
 
         // Select HTML Elements
         base      = $(where).html(render(user_template, options)),
-        header    = base.find(".ghb_badge_header"),
-        user_info = base.find(".ghb_badge_user_info"),
-        repo_goto = base.find(".ghb_repo_goto"),
-        repo_list = base.find(".ghb_repo_list");
+        header    = base.find(".ghb-header"),
+        user_info = base.find(".ghb-info-panel"),
+        repo_goto = base.find(".ghb-repo-panel"),
+        repo_list = base.find(".ghb-repo-list");
 
     $.getJSON(requestURLUserInfo, function(data){
 
@@ -213,8 +213,8 @@
 
         // Select HTML Elements
         base         = $(where).html(render(repo_template, options)),
-        header       = base.find('.ghb_badge_header'),
-        repo_info    = base.find('.ghb_repo_info'),
+        header       = base.find('.ghb--header'),
+        repo_info    = base.find('.ghb--info-panel'),
         issues_list  = base.find('.ghb_issue_list'),
         goto_issues  = base.find('.ghb_repo_goto_issues').hide(),
         goto_commits = base.find('.ghb_repo_goto_commits').hide(),
@@ -317,7 +317,7 @@
             buildProject(this, options);
         }
 
-        this.delegate('.ghb_user_nav a, .ghb_repo_nav a', 'click', function (e) {
+        this.delegate('.ghb--nav a, .ghb--nav a', 'click', function (e) {
             e.preventDefault();
             var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
                 new_panel = $(this).addClass('chosen').attr('rel');
@@ -326,10 +326,10 @@
             context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
         });
 
-        this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseenter', function () {
+        this.delegate('ul.ghb--repo-list li, ul.ghb_issue_list li', 'mouseenter', function () {
             $(this).find("div").show();
         });
-        this.delegate('ul.ghb_repo_list li, ul.ghb_issue_list li', 'mouseleave', function () {
+        this.delegate('ul.ghb--repo-list li, ul.ghb_issue_list li', 'mouseleave', function () {
             $(this).find("div").hide();
         });
 
