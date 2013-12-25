@@ -1,0 +1,362 @@
+/*!
+* jQuery GitHub Badge - v0.4 - 12/23/2013
+*
+* Copyright (c) 2013 Lynn Wallenstein
+* Examples and docs at: http://tablesorter.com
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*
+* @author Lynn Wallenstein/lynn@lynn.io
+* @contributor Rob Garrison/https://github.com/Mottie/
+*/
+
+// Colors
+// ---------------------------------------------
+$white: #fff;
+$black: #000;
+$black-text: #555;
+$gray: #d5d5d5;
+$gray-light: #eaeaea;
+$gray-lighter: #fafafa;
+$blue: #4183C4;
+$red: #940a18;
+
+// Type
+// ---------------------------------------------
+$base-font-size: 13px;
+$base-font-face: Helvetica, arial, freesans, clean, sans-serif;
+
+// Sizes
+// ---------------------------------------------
+$header-height: 36px;
+$nav-height: 30px;
+
+.ghb {
+  border: 1px solid $gray;
+  border-radius: 5px;
+  box-sizing: border-box;
+  clear: both;
+  font: $base-font-size $base-font-face;
+  overflow: hidden;
+
+  /* Reset */
+  dd,
+  div,
+  dl,
+  dt,
+  h1,
+  h2,
+  p,
+  span,
+  ol,
+  ul,
+  li {
+    background-color: transparent;
+    border: 0;
+    font-size: 100%;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+  }
+
+  * {
+   box-sizing: border-box;
+  }
+
+  h2 {
+    display: none;
+  }
+
+  .ghb-header {
+    background-color: $gray-light;
+    background-image: -moz-linear-gradient($gray-lighter, $gray-light);
+    background-image: -webkit-linear-gradient($gray-lighter, $gray-light);
+    background-image: linear-gradient($gray-lighter, $gray-light);
+    background-repeat: repeat-x;
+    border-bottom: 1px solid $gray;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    line-height: $header-height;
+    padding: 0 9px;
+
+    .github-mark {
+      $mark-size: 24px;
+      float: right;
+      margin-top: (($header-height - $mark-size) / 2);
+      height: $mark-size;
+      width: $mark-size;
+    } // .github-mark
+
+    h1,
+    h1 a  {
+      clear: left;
+      color: $black-text;
+      font-size: $base-font-size + 3px;
+      text-decoration: none;
+    }
+
+  } // .ghb-header
+
+  .ghb-nav {
+    background-color: $gray-lighter;
+    border-bottom: 1px solid $gray;
+    font-size: $base-font-size - 2px;
+    font-weight: 200;
+    height: $nav-height;
+    padding: 6px 8px 0 8px;
+
+    a {
+      color: $black;
+      display: inline-block;
+      line-height: $nav-height - 10px;
+      margin-right: 15px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.chosen {
+        border-bottom: 3px solid $gray;
+      }
+
+    } // a
+
+  } // .ghb-nav
+
+  .ghb-panel {
+    clear: both;
+  }
+
+  .ghb-info-panel {
+    font-size: $base-font-size + 1px;
+    font-weight: bold;
+    margin: 10px auto;
+    padding: 0px 0px 10px 10px;
+
+    a {
+      color: $blue;
+    }
+
+    img {
+      border-radius: 3px;
+      clear: both;
+      float: right;
+      margin: 5px 10px 0 0;
+    }
+
+    dl {
+      font-size: $base-font-size - 1px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    dt {
+      clear: left;
+      float: left;
+      margin: 0px 5px 0px 0px;
+    }
+
+    dd {
+      margin: 1px 15px 1px 0px;
+    }
+
+  } // .ghb-info-panel
+
+  .ghb-repo-panel {
+    margin: 0 auto 0 auto;
+
+    .ghb-repo-list {
+      list-style: none;
+
+      li {
+        background-image: url("images/repo.svg");
+        background-repeat: no-repeat;
+        background-position: 10px 7px;
+        background-size: 12px 16px;
+        border-bottom: 1px solid $gray;
+        display: block;
+        padding-left: 22px;
+
+        &.ghb-public-fork {
+          background-image: url("images/repo-forked.svg");
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &.no-records {
+          border-bottom: none;
+          color: $red;
+          font-weight: bold;
+          padding: 6px 25px 5px 32px;
+        }
+
+      } // li
+
+       a {
+          color: $blue;
+          display: block;
+          font-size: $base-font-size + 1px;
+          font-weight: bold;
+          padding: 6px 25px 5px 10px;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+        } // a
+
+        div {
+          display: none;
+          font-size: $base-font-size - 3px;
+          padding: 6px 25px 5px 10px;
+        }
+
+    } // .ghb-repo-list
+
+  } // .ghb-repo-panel
+
+  .ghb-commit-list {
+    list-style: none;
+
+    li {
+      background-image: url("images/git-commit.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid $gray;
+      display: block;
+      padding-left: 22px;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.no-records {
+        border-bottom: none;
+        color: $red;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px;
+      }
+
+      a {
+        color: $blue;
+        display: block;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        span {
+          color: $black-text;
+          text-decoration: none;
+        }
+
+      } // a
+
+      span {
+        border-bottom: 1px dotted $gray;
+        color: $black-text;
+        cursor: help;
+        font-size: 8px;
+        line-height: 14px;
+        margin: 0 0 5px 5px;
+        white-space: nowrap;
+      }
+
+    } // li
+
+  } // .ghb-commit-list
+
+  .ghb-goto {
+    border-top: 1px solid $gray;
+    font-size: $base-font-size + 1px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+
+    a {
+      color: lighten($black-text, 20%);
+      margin-right: 15px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+    } // a
+
+  } // .ghb-goto
+
+  .ghb-issue-list {
+    list-style: none;
+
+    li {
+      background-image: url("images/issue-opened.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid $gray;
+      display: block;
+      font-size: $base-font-size + 1px;
+      font-weight: 600;
+      padding-left: 22px;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.no-records {
+        border-bottom: none;
+        color: $red;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px;
+      }
+
+      a {
+        color: $blue;
+        display: block;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        span {
+          color: $black-text;
+          text-decoration: none;
+        }
+
+      } // a
+
+      span {
+        border-bottom: 1px dotted $gray;
+        color: $black-text;
+        font-size: 8px;
+        line-height: 14px;
+        margin:  0 0 5px 5px;
+        white-space: nowrap;
+      }
+
+      div {
+        display: none;
+        font-size: 10px;
+        font-weight: normal;
+        padding: 6px 25px 5px 10px;
+      }
+
+    } // li
+
+  } // .ghb-issue-list
+
+} // .ghb
+
+

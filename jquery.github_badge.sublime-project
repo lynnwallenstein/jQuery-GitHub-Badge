@@ -1,0 +1,10 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+      "folder_exclude_patterns": [".sass-cache", "jquery.github_badge.css", "jquery.github_badge.min.js"]
+		}
+	]
+}
