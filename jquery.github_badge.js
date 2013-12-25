@@ -9,7 +9,17 @@
 *
 * @author Lynn Wallenstein/lynn@lynn.io
 * @contributor Rob Garrison/https://github.com/Mottie/
+*/
+
+/*
+ * JavaScript Pretty Date
+ * Modified 2013 by Alfred Xing (alfredxing.com)
+ * Copyright (c) 2011 John Resig (ejohn.org)
+ * Licensed under the MIT and GPL licenses.
  */
+function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," "));a=((new Date).getTime()-a.getTime())/1E3;var c=Math.floor(a/86400),b="Some time ago";switch(!0){case 60>a:b="Just now";break;case 120>a:b="1 minute ago";break;case 3600>a:b=Math.floor(a/60)+" minutes ago";break;case 7200>a:b="1 hour ago";break;case 86400>a:b=Math.floor(a/3600)+" hours ago";break;case 1==c:b="Yesterday";break;case 7>c:b=c+" days ago";break;case 31>c:b=Math.ceil(c/7)+" weeks ago";break;case 366>c:b=Math.floor(c/30)+" months ago";break;case 365<c:b=Math.floor(c/365)+" years ago"}return b}"undefined"!=typeof jQuery&&(jQuery.fn.prettyDate=function(){return this.each(function(){var a=prettyDate($(this).text());a&&$(this).text(a)})});
+
+
 
 // avoid javascript errors on browsers that aren't using console.
 (function ($) {
@@ -112,9 +122,9 @@
             '<dt>Watchers:</dt>',
             '<dd>{{watchers}}</dd>',
             '<dt>Created:</dt>',
-            '<dd>{{created_at}}</dd>',
+            '<dd class="date">{{created_at}}</dd>',
             '<dt>Last Updated:</dt>',
-            '<dd>{{pushed_at}}</dd>',
+            '<dd class="date">{{pushed_at}}</dd>',
         '</dl>'].join(''),
 
     issues_item = [
@@ -240,6 +250,7 @@
         goto_commits.html('<a href="http://github.com/' + d.full_name + '/commits">View All Commits</a>');
 
         repo_info.show();
+        $(".date").prettyDate();
     });
 
     $.getJSON(requestURLIssues, function(data){
