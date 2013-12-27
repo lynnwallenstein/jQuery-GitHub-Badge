@@ -1,0 +1,30 @@
+{
+  "name": "jQuery GitHub Badge",
+  "version": "0.5",
+  "homepage": "https://github.com/lynnwallenstein/jQuery-GitHub-Badge",
+  "authors": [
+    "Lynn Wallenstein <lynn@lynn.io>"
+  ],
+  "dependencies": {
+          "jquery": ">=1.10.2"
+  },
+  "description": "GitHub profile/project badge",
+  "main": "jquery.github_badge.min.js",
+  "keywords": [
+    "github",
+    "jquery"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

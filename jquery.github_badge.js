@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.4 - 12/25/2013
+* jQuery GitHub Badge - v0.5 - 12/26/2013
 *
 * Copyright (c) 2012 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
