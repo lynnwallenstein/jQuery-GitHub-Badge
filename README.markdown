@@ -10,13 +10,13 @@ them work ;)
 [Click Here](http://www.lynn.io/demos/github_badge/index.html) to see it in action.
 
 
-##SETUP
+## SETUP
 
 + jQuery 1.4.2 - 1.8 (This is what I developed on, I haven't tested it with older versions. If you
   do and it works, drop me a line at lynn@lynn.io).
 
 
-##INSTALLATION
+## INSTALLATION
 
 You can see a full installation in the index.html file included in this repo, however here are
 the itemized steps.
@@ -28,20 +28,20 @@ the itemized steps.
 <script src="jquery.github_badge.js"></script>
 ```
 
-###Step 2: Include the CSS in the head of the document
+### Step 2: Include the CSS in the head of the document
 
 ```html
 <!-- CSS for GitHub Badge Widget: implied media="all" -->
 <link rel="stylesheet" href="css/jquery.github_badge.css?v=1" />
 ```
 
-###Step 3: In the body of your documents, create a container where you want the badge to display
+### Step 3: In the body of your documents, create a container where you want the badge to display
 
 ```html
 <div id="sample_user_badge"></div>
 ```
 
-###Step 4: Call the script (with minimal default options.. see configuration section for more)
+### Step 4: Call the script (with minimal default options.. see configuration section for more)
 
 ```html
 <script>
@@ -51,11 +51,11 @@ $("#sample_user_badge").GithubBadge({
 </script>
 ```
 
-##CONFIGURATION
+## CONFIGURATION
 
-##== User Badge ==
+### User Badge
 
-###Minmal Configuration for User Badge:
+### Minmal Configuration for User Badge:
 
 ```html
 $("#sample_user_badge").GitHubBadge({
@@ -63,7 +63,7 @@ $("#sample_user_badge").GitHubBadge({
 });
 ```
 
-###Options for User Badge
+### Options for User Badge
 
 ```html
 $("#sample_user_badge").GitHubBadge({
@@ -77,9 +77,9 @@ $("#sample_user_badge").GitHubBadge({
 });
 ```
 
-##== Project/Repo Badge ==
+## Project/Repo Badge
 
-###Minmal Configuration for Project Badge:
+### Minmal Configuration for Project Badge:
 
 ```html
 $("#sample_project_badge").GitHubBadge({
@@ -89,7 +89,7 @@ $("#sample_project_badge").GitHubBadge({
 });
 ```
 
-###Options for User Badge
+### Options for User Badge
 
 ```html
 $("#sample_user_badge").GitHubBadge({
@@ -106,4 +106,4 @@ $("#sample_user_badge").GitHubBadge({
     issue_count         : "10",               // maximum number of issues to be displayed
     commit_count        : "10"                // maximum number of commits to be displayed
 });
-``
+```
