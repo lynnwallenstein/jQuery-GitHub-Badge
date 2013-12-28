@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.6 - 12/27/2013
+* jQuery GitHub Badge - v0.7 - 12/27/2013
 *
 * Copyright (c) 2013 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -14,6 +14,7 @@
   background-color: white;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   clear: both;
   font: 13px Helvetica, arial, freesans, clean, sans-serif;
@@ -53,8 +54,12 @@
     line-height: 36px;
     padding: 0 9px; }
     .ghb .ghb-header .github-mark {
+      border: none;
+      box-shadow: none;
       float: right;
+      margin: 0;
       margin-top: 6px;
+      padding: 0;
       height: 24px;
       width: 24px; }
     .ghb .ghb-header h1,
