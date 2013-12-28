@@ -1,2 +1,3 @@
 .sass-cache
-.subline-workspace
+*.sublime-workspace
+node_modules

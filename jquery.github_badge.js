@@ -1,5 +1,7 @@
+
+
 /*!
-* jQuery GitHub Badge - v0.8 - 12/28/2013
+* jQuery GitHub Badge - v0.9 - 12/28/2013
 *
 * Copyright (c) 2012 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -11,127 +13,182 @@
 * @contributor Rob Garrison/https://github.com/Mottie/
 */
 
-/*
- * JavaScript Pretty Date
- * Modified 2013 by Alfred Xing (alfredxing.com)
- * Copyright (c) 2011 John Resig (ejohn.org)
- * Licensed under the MIT and GPL licenses.
- */
-function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," "));a=((new Date).getTime()-a.getTime())/1E3;var c=Math.floor(a/86400),b="Some time ago";switch(!0){case 60>a:b="Just now";break;case 120>a:b="1 minute ago";break;case 3600>a:b=Math.floor(a/60)+" minutes ago";break;case 7200>a:b="1 hour ago";break;case 86400>a:b=Math.floor(a/3600)+" hours ago";break;case 1==c:b="Yesterday";break;case 7>c:b=c+" days ago";break;case 31>c:b=Math.ceil(c/7)+" weeks ago";break;case 366>c:b=Math.floor(c/30)+" months ago";break;case 365<c:b=Math.floor(c/365)+" years ago"}return b}"undefined"!=typeof jQuery&&(jQuery.fn.prettyDate=function(){return this.each(function(){var a=prettyDate($(this).text());a&&$(this).text(a)})});
+
+/* ------------------------------------------------------------------------
+* JavaScript Pretty Date
+* Modified 2013 by Alfred Xing (alfredxing.com)
+* Copyright (c) 2011 John Resig (ejohn.org)
+* Licensed under the MIT and GPL licenses.
+*/
+
+function prettyDate(time){
+  var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+    diff = (((new Date()).getTime() - date.getTime()) / 1000),
+    day_diff = Math.floor(diff / 86400),
+    out = "Some time ago";
+
+  switch(true) {
+    case diff < 60:
+    out = "Just now";
+    break;
+    case diff < 120:
+    out = "1 minute ago";
+    break;
+    case diff < 3600:
+    out = Math.floor( diff / 60 ) + " minutes ago";
+    break;
+    case diff < 7200:
+    out = "1 hour ago";
+    break;
+    case diff < 86400:
+    out = Math.floor( diff / 3600 ) + " hours ago";
+    break;
+    case day_diff == 1:
+    out = "Yesterday";
+    break;
+    case day_diff < 7:
+    out = day_diff + " days ago";
+    break;
+    case day_diff < 31:
+    out = Math.ceil( day_diff / 7 ) + " weeks ago";
+    break;
+    case day_diff < 366:
+    out = Math.floor( day_diff / 30 ) + " months ago";
+    break;
+    case day_diff > 365:
+    out = Math.floor( day_diff / 365 ) + " years ago";
+    break;
+  };
+
+  return out;
+
+}
+
+if ( typeof jQuery != "undefined" ) {
+        jQuery.fn.prettyDate = function(){
+                return this.each(function(){
+                        var date = prettyDate(this.text);
+                        if ( date ) { jQuery(this).text( date ); }
+                });
+        };
+}
+
+/* ------------------------------------------------------------------------ */
 
 
-
-// avoid javascript errors on browsers that aren't using console.
 (function ($) {
 
-    if (!window.console) {
-        (function () {
-            var names = [
-              'log', 'debug', 'info', 'warn', 'error', 'assert',
-              'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd',
-              'count', 'trace', 'profile', 'profileEnd'
-            ], i;
-            window.console = {};
-            for (i = 0; i < names.length; i = i + 1) {
-              window.console[names[i]] = $.noop;
-            }
-        }());
-    }
+/* ------------------------------------------------------------------------
+*  avoid javascript errors on browsers that aren't using console.        */
+  if (!window.console) {
+    (function () {
+      var names = [
+        'log', 'debug', 'info', 'warn', 'error', 'assert',
+        'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd',
+        'count', 'trace', 'profile', 'profileEnd'
+      ], i;
+      window.console = {};
+      for (i = 0; i < names.length; i = i + 1) {
+        window.console[names[i]] = $.noop;
+      }
+    }());
+  }
+/* ------------------------------------------------------------------------ */
 
-    var api_root = "https://api.github.com/", // api v3
+  var api_root = "https://api.github.com/", // api v3
 
-    github_logo_template = '<a target="_blank" href="http://github.com"><img class="github-mark" src="{{image_path}}github.svg" alt="GitHub"></a>',
+  github_logo_template = '<a target="_blank" href="http://github.com"><img class="github-mark" src="{{image_path}}github.svg" alt="GitHub"></a>',
 
-    user_template = [
-      '<div class="ghb {{theme}}">',
-          '<div class="ghb-header"></div>',
+  user_template = [
+    '<div class="ghb {{theme}}">',
+        '<div class="ghb-header"></div>',
 
-          '<div class="ghb-nav">',
-            '<a class="chosen" rel="ghb-info-panel" href="#">User Info</a>',
-            '<a rel="ghb-repo-panel" href="#">Repos</a>',
-          '</div>',
+        '<div class="ghb-nav">',
+          '<a class="chosen" rel="ghb-info-panel" href="#">User Info</a>',
+          '<a rel="ghb-repo-panel" href="#">Repos</a>',
+        '</div>',
 
-          '<div class="ghb-info-panel ghb-panel" style="display:none;">',
-            '<h2>User Info</h2>',
-            '<div></div>',
-          '</div>',
+        '<div class="ghb-info-panel ghb-panel" style="display:none;">',
+          '<h2>User Info</h2>',
+          '<div></div>',
+        '</div>',
 
-          '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
-            '<h2>Public {{user_badge_title}}</h2>',
-            '<ul class="ghb-repo-list"></ul>',
-            '<div class="ghb-goto"></div>',
-          '</div>',
+        '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
+          '<h2>Public {{user_badge_title}}</h2>',
+          '<ul class="ghb-repo-list"></ul>',
+          '<div class="ghb-goto"></div>',
+        '</div>',
 
-      '</div>'].join(''),
+    '</div>'].join(''),
 
-    user_header_template = [
-        '<h1>',
-            '<a target="_blank" href="http://github.com/{{login}}">{{login}}\'s GitHub</a> ',
-            '({{public_repos}})',
-        '</h1>'].join(''),
+  user_header_template = [
+      '<h1>',
+          '<a target="_blank" href="http://github.com/{{login}}">{{login}}\'s GitHub</a> ',
+          '({{public_repos}})',
+      '</h1>'].join(''),
 
-    user_info_template = [
-        '<img src="{{avatar_url}}" />',
-        '{{name}}',
-        '<dl>',
-            '<dt>Public Repos:</dt>',
-            '<dd><a target="_blank" href="http://github.com/{{login}}/repositories">{{public_repos}}</a></dd>',
+  user_info_template = [
+      '<img src="{{avatar_url}}" />',
+      '{{name}}',
+      '<dl>',
+          '<dt>Public Repos:</dt>',
+          '<dd><a target="_blank" href="http://github.com/{{login}}/repositories">{{public_repos}}</a></dd>',
 
-            '<dt>Followers:</dt>',
-            '<dd><a target="_blank" href="http://github.com/{{login}}/followers">{{followers}}</a></dd>',
+          '<dt>Followers:</dt>',
+          '<dd><a target="_blank" href="http://github.com/{{login}}/followers">{{followers}}</a></dd>',
 
-            '<dt>Following:</dt>',
-            '<dd><a target="_blank" href="http://github.com/{{login}}/following">{{following}}</a></dd>',
+          '<dt>Following:</dt>',
+          '<dd><a target="_blank" href="http://github.com/{{login}}/following">{{following}}</a></dd>',
 
-            '<dt>Public Gists:</dt>',
-            '<dd><a target="_blank" href="http://gist.github.com/{{login}}">{{public_gists}}</a></dd>',
-        '</dl>'].join(''),
+          '<dt>Public Gists:</dt>',
+          '<dd><a target="_blank" href="http://gist.github.com/{{login}}">{{public_gists}}</a></dd>',
+      '</dl>'].join(''),
 
-    repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
+  repo_goto_template = '<a href="http://github.com/{{login}}/repositories">View All {{user_badge_title}} ({{remaining}} More) ... </a>',
 
-    repo_row_template_name = '<li class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
-    repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
+  repo_row_template_name = '<li class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
+  repo_row_template_date = '<li data-date="{{pushed_at}}" class="ghb_user_repo_item"><a target="_blank" href="{{html_url}}">{{name}}</a> <div>{{description}}</div></li>',
 
-    repo_template = [
-        '<div class="ghb {{theme}}">',
-            '<div class="ghb-header"></div>',
-            '<div class="ghb-nav">',
-                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Project Info</a>',
-                '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
-                '<a class="ghb-repo-panel_nav"       rel="ghb-repo-panel"   href="#">Issues</a>',
-            '</div>',
-            '<div class="ghb-info-panel ghb-panel" style="display:none;"></div>',
-            '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
-                '<h2>Open Issues</h2>',
-                '<ul class="ghb-issue-list"></ul>',
-                '<div class="ghb-goto ghb-goto-issues"></div>',
-            '</div>',
-            '<div class="ghb-commit-panel ghb-panel" style="display:none;">',
-                '<h2>Commits</h2>',
-                '<ul class="ghb-commit-list">',
-                    '<li class="no-records">There are no commits in the {{repo_branch}} branch</li>',
-                '</ul>',
-                '<div class="ghb-goto ghb-goto-commits"></div>',
-            '</div>',
-        '</div>'].join(''),
+  repo_template = [
+    '<div class="ghb {{theme}}">',
+        '<div class="ghb-header"></div>',
+        '<div class="ghb-nav">',
+            '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Project Info</a>',
+            '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
+            '<a class="ghb-repo-panel_nav"       rel="ghb-repo-panel"   href="#">Issues</a>',
+        '</div>',
+        '<div class="ghb-info-panel ghb-panel" style="display:none;"></div>',
+        '<div class="ghb-repo-panel ghb-panel" style="display:none;">',
+            '<h2>Open Issues</h2>',
+            '<ul class="ghb-issue-list"></ul>',
+            '<div class="ghb-goto ghb-goto-issues"></div>',
+        '</div>',
+        '<div class="ghb-commit-panel ghb-panel" style="display:none;">',
+            '<h2>Commits</h2>',
+            '<ul class="ghb-commit-list">',
+                '<li class="no-records">There are no commits in the {{repo_branch}} branch</li>',
+            '</ul>',
+            '<div class="ghb-goto ghb-goto-commits"></div>',
+        '</div>',
+    '</div>'].join(''),
 
-    repo_info_template = [
-        '<p>{{description}}</p>',
-        '<p><a target="_blank" href="http://github.com/{{full_name}}">http://github.com/{{full_name}}</a></p>',
-        '<dl class="repo_info_list">',
-            '<dt>Watchers:</dt>',
-            '<dd>{{watchers}}</dd>',
-            '<dt>Created:</dt>',
-            '<dd class="date">{{created_at}}</dd>',
-            '<dt>Last Updated:</dt>',
-            '<dd class="date">{{pushed_at}}</dd>',
-        '</dl>'].join(''),
+  repo_info_template = [
+    '<p>{{description}}</p>',
+    '<p><a target="_blank" href="http://github.com/{{full_name}}">http://github.com/{{full_name}}</a></p>',
+    '<dl class="repo_info_list">',
+        '<dt>Watchers:</dt>',
+        '<dd>{{watchers}}</dd>',
+        '<dt>Created:</dt>',
+        '<dd class="date">{{created_at}}</dd>',
+        '<dt>Last Updated:</dt>',
+        '<dd class="date">{{pushed_at}}</dd>',
+    '</dl>'].join(''),
 
-    issues_item = [
-        '<li>',
-            '<a target="_blank" href="{{html_url}}">{{title}}<span title="{{login}} @ {{created_at}}">by {{login}}</span></a>',
-            '<div>{{body}}</div>',
-        '</li>'].join(''),
+  issues_item = [
+      '<li>',
+          '<a target="_blank" href="{{html_url}}">{{title}}<span title="{{login}} @ {{created_at}}">by {{login}}</span></a>',
+          '<div>{{body}}</div>',
+      '</li>'].join(''),
 
     render = function (template, data) {
       return template.replace(/\{\{([\-_a-z]+)\}\}/g, function (m, key, value) {
@@ -142,7 +199,6 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
   buildUser = function(where, options) {
     var
     // URLs
-
     requestURLUserInfo = api_root + "users/" + options.login + "?",
     requestURLRepos    = api_root + "users/" + options.login + "/repos?callback=?",
 
@@ -273,9 +329,9 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
     var
     // URLs
-    requestURLProjectInfo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
-    requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
+    requestURLProjectInfo = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
     requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?callback=?",
+    requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
 
     // Select HTML Elements
     base         = $(where).html(render(repo_template, options)),
@@ -340,7 +396,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
       //console.log("No Local storage for project info :( " + project_commits_storage);
 
-      $.getJSON(requestURLProjectCommits, function(projectCommitsData){
+      $.getJSON(requestURLCommits, function(projectCommitsData){
         if(sessionStorage){
           sessionStorage.setItem(project_commits_storage,JSON.stringify(projectCommitsData));
         }
@@ -424,7 +480,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
     // option parsing
     options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
 
-    console.group( 'GitHubBadge' );
+    //console.group( 'GitHubBadge' );
     //console.log( "Options parsed as: %o", options );
 
     // sanity checks.
@@ -460,7 +516,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
       $(this).find("div").hide();
     });
 
-    console.groupEnd();
+    //console.groupEnd();
     return this; // Don't break the chain
   };
 
