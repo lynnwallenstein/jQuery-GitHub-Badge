@@ -147,10 +147,13 @@ $nav-height: 30px;
     }
 
     img {
+      border: none;
       border-radius: 3px;
+      box-shadow: none;
       clear: both;
       float: right;
       margin: 5px 10px 0 0;
+      padding: 0;
     }
 
     dl {

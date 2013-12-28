@@ -95,10 +95,13 @@
     .ghb .ghb-info-panel a {
       color: #4183c4; }
     .ghb .ghb-info-panel img {
+      border: none;
       border-radius: 3px;
+      box-shadow: none;
       clear: both;
       float: right;
-      margin: 5px 10px 0 0; }
+      margin: 5px 10px 0 0;
+      padding: 0; }
     .ghb .ghb-info-panel dl {
       font-size: 12px;
       font-weight: bold;
