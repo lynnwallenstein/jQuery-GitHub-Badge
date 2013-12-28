@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.5 - 12/26/2013x
+* jQuery GitHub Badge - v0.6 - 12/27/2013
 *
 * Copyright (c) 2013 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -33,6 +33,7 @@ $header-height: 36px;
 $nav-height: 30px;
 
 .ghb {
+  background-color: $white;
   border: 1px solid $gray;
   border-radius: 5px;
   box-sizing: border-box;
