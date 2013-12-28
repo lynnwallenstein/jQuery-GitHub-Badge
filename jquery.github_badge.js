@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.6 - 12/27/2013
+* jQuery GitHub Badge - v0.8 - 12/28/2013
 *
 * Copyright (c) 2012 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -96,7 +96,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
         '<div class="ghb {{theme}}">',
             '<div class="ghb-header"></div>',
             '<div class="ghb-nav">',
-                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Repo Info</a>',
+                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Project Info</a>',
                 '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
                 '<a class="ghb-repo-panel_nav"       rel="ghb-repo-panel"   href="#">Issues</a>',
             '</div>',
@@ -134,248 +134,358 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
         '</li>'].join(''),
 
     render = function (template, data) {
-        return template.replace(/\{\{([\-_a-z]+)\}\}/g, function (m, key, value) {
-          return data[key] || "None";
-        });
+      return template.replace(/\{\{([\-_a-z]+)\}\}/g, function (m, key, value) {
+        return data[key] || "None";
+      });
     },
 
   buildUser = function(where, options) {
     var
-        // URLs
-        requestURLUserInfo = api_root + "users/" + options.login + "?callback=?",
-        requestURLRepos    = api_root + "users/" + options.login + "/repos?callback=?",
+    // URLs
 
-        // Select HTML Elements
-        base      = $(where).html(render(user_template, options)),
-        header    = base.find(".ghb-header"),
-        user_info = base.find(".ghb-info-panel"),
-        repo_goto = base.find(".ghb-goto"),
-        repo_list = base.find(".ghb-repo-list");
+    requestURLUserInfo = api_root + "users/" + options.login + "?",
+    requestURLRepos    = api_root + "users/" + options.login + "/repos?callback=?",
 
-    $.getJSON(requestURLUserInfo, function(data){
+    // Select HTML Elements
+    base      = $(where).html(render(user_template, options)),
+    header    = base.find(".ghb-header"),
+    user_info = base.find(".ghb-info-panel"),
+    repo_goto = base.find(".ghb-goto"),
+    repo_list = base.find(".ghb-repo-list");
 
-        var merged = $.extend({}, options, data.data);
+    user_info_storage = "githubUserInfo-" + options.login;
+    user_repos_storage = "githubUserRepos-" + options.login;
 
-        header.html(render(user_header_template, merged));
+    if(sessionStorage && sessionStorage.getItem(user_info_storage)) {
 
-        if (options.include_github_logo) {
-            header.prepend(render(github_logo_template, merged));
+      //console.log("I found the user info in local storage!!!!!! WHEEEEEE : " + user_info_storage);
+
+    } else {
+
+      //console.log("No Local storage for user info :( " + user_info_storage);
+
+      $.getJSON(requestURLUserInfo, function(userInfoData){
+        if(sessionStorage){
+          sessionStorage.setItem(user_info_storage,JSON.stringify(userInfoData));
         }
+      });
 
-        user_info.html(render(user_info_template, merged));
+    }
 
-        if (data.public_repos > (options.repo_count) ) {
-            merged.remaining = (data.public_repos - options.repo_count);
-            repo_goto.html(render(repo_goto_template, merged));
-        } else {
-            repo_goto.html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
+    userInfoData = JSON.parse(sessionStorage.getItem(user_info_storage));
+    //console.log("Heres the data I got: " + userInfoData);
+
+    var merged = $.extend({}, options, userInfoData);
+    //console.log("Here is merged:");
+    //console.dir(merged);
+
+    header.html(render(user_header_template, merged));
+
+    if (options.include_github_logo) {
+      header.prepend(render(github_logo_template, merged));
+    }
+
+    user_info.html(render(user_info_template, merged));
+
+    if (userInfoData.public_repos > (options.repo_count) ) {
+      merged.remaining = (userInfoData.public_repos - options.repo_count);
+      repo_goto.html(render(repo_goto_template, merged));
+    } else {
+      repo_goto.html('<a href="http://github.com/' + options.login + '">' + options.login + ' at GitHub</a>');
+    }
+
+    user_info.show();
+
+    // User Repos
+
+    if(sessionStorage && sessionStorage.getItem(user_repos_storage)){
+
+      //console.log("I found the user repos in local storage!!!!!! WHEEEEEE : " + user_repos_storage);
+
+    } else {
+
+      //console.log("No Local storage for user repos :( " + user_repos_storage);
+
+      $.getJSON(requestURLRepos, function(userRepoData){
+        if(sessionStorage){
+          sessionStorage.setItem(user_repos_storage,JSON.stringify(userRepoData));
         }
+      });
 
-        user_info.show();
-    });
+    }
 
-    $.getJSON(requestURLRepos, function(data){
+    userRepoData = JSON.parse(sessionStorage.getItem(user_repos_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(userRepoData);
+    //console.log("Length:");
+    //console.log(userRepoData.length);
 
-        if(data.data.length === 0) {
-            repo_list.html('<li class="no-records">' + options.login +' Does Not Have Any Repos</li>');
-        } else {
-            var l, c, rows = [];
+    if(userRepoData.length === 0) {
 
-            $.each(data.data, function (i, obj) {
-                l = render(options.sort_on === "date" ? repo_row_template_date : repo_row_template_name, obj);
-                if (obj.fork) { l = l.replace('class="', 'class="ghb_repo_fork '); }
-                rows.push( l );
-            });
+      repo_list.html('<li class="no-records">' + options.login +' Does Not Have Any Repos</li>');
 
-            rows.sort(function(a,b){
-                a = a.toLowerCase();
-                b = b.toLowerCase();
-                if (a === b) { return 0; }
-                return a > b ? 1 : -1;
-            });
-            if (options.sorting !== "ascending" ) {
-                rows.reverse();
-            }
+    } else {
 
-            c = options.repo_count - 1;
-            l = repo_list
-              .html(rows.join(''))
-              .children()
-              .filter(':gt(' + c + ')').hide().end()
-              .filter(':first').addClass("firstrepo").end()
-              .eq(c).addClass("lastrepo").end();
+      var l, c, rows = [];
 
-            if (l.length > c) {
-                repo_goto
-                    .append('<a href="#" class="ghb_show_more">Show ' + (l.length - c) + ' more</a>')
-                    .find('.ghb_show_more').click(function(){
-                        l.show();
-                        this.innerHTML = '';
-                        return false;
-                    });
-            }
+      $.each(userRepoData, function (i, obj) {
+        l = render(options.sort_on === "date" ? repo_row_template_date : repo_row_template_name, obj);
+        if (obj.fork) { l = l.replace('class="', 'class="ghb-repo-fork '); }
+        rows.push( l );
+      });
+
+      rows.sort(function(a,b){
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        if (a === b) {
+          return 0;
         }
-    });
+        return a > b ? 1 : -1;
+      });
+
+      if (options.sorting !== "ascending" ) {
+        rows.reverse();
+      }
+
+      c = options.repo_count - 1;
+      //console.log("You have Count Repos:" + c);
+      l = repo_list
+        .html(rows.join(''))
+        .children()
+        .filter(':gt(' + c + ')').hide().end()
+        .filter(':first').addClass("firstrepo").end()
+        .eq(c).addClass("lastrepo").end();
+
+      if (l.length > c) {
+        repo_goto
+          .find('.ghb-show-more').click(function(){
+            l.show();
+            this.innerHTML = '';
+            return false;
+          });
+      }
+
+    }
+
   },
 
-    buildProject = function(where, options) {
-        var
-        // URLs
-        requestURLRepo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
-        requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
-        requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?callback=?",
+  buildProject = function(where, options) {
 
-        // Select HTML Elements
-        base         = $(where).html(render(repo_template, options)),
-        header       = base.find('.ghb-header'),
-        repo_info    = base.find('.ghb-info-panel'),
-        issues_list  = base.find('.ghb-issue-list'),
-        goto_issues  = base.find('.ghb-goto-issues').hide(),
-        goto_commits = base.find('.ghb-goto-commits').hide(),
-        commit_list  = base.find('.ghb-commit-list'),
-        no_commits   = commit_list.find('.no_commits');
+    var
+    // URLs
+    requestURLProjectInfo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
+    requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
+    requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?callback=?",
 
-    $.getJSON(requestURLRepo, function(data){
-        var d = data.data;
+    // Select HTML Elements
+    base         = $(where).html(render(repo_template, options)),
+    header       = base.find('.ghb-header'),
+    repo_info    = base.find('.ghb-info-panel'),
+    issues_list  = base.find('.ghb-issue-list'),
+    goto_issues  = base.find('.ghb-goto-issues').hide(),
+    goto_commits = base.find('.ghb-goto-commits').hide(),
+    commit_list  = base.find('.ghb-commit-list'),
+    no_commits   = commit_list.find('.no_commits');
 
-        header.html('<h1><a target="_blank" href="http://github.com/' + d.full_name + '">' + d.name +'</a></h1>');
+    projectIdentifier = options.login + "-" + options.repo_name;
+    project_info_storage = "githubProjectInfo-" + projectIdentifier;
+    project_commits_storage = "githubProjectCommits-" + projectIdentifier;
+    project_issues_storage = "githubProjectIssues-" + projectIdentifier;
 
-        if (options.include_github_logo) {
-            header.prepend(render(github_logo_template, options));
+    if(sessionStorage && sessionStorage.getItem(project_info_storage)){
+
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_info_storage);
+
+    } else {
+
+      //console.log("No Local storage for project info :( " + project_info_storage);
+
+      $.getJSON(requestURLProjectInfo, function(projectInfoData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_info_storage,JSON.stringify(projectInfoData));
         }
+      });
 
-        repo_info.html(render(repo_info_template, d));
+    }
 
-        goto_issues.html('<a href="http://github.com/' + d.full_name + '/issues">View All Issues</a>');
-        goto_commits.html('<a href="http://github.com/' + d.full_name + '/commits">View All Commits</a>');
+    projectInfoData = JSON.parse(sessionStorage.getItem(project_info_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(projectInfoData);
 
-        repo_info.show();
-        $(".date").prettyDate();
+    var d = projectInfoData;
+
+    header.html('<h1><a target="_blank" href="http://github.com/' + d.full_name + '">' + d.name +'</a></h1>');
+
+    if (options.include_github_logo) {
+        header.prepend(render(github_logo_template, options));
+    }
+
+    repo_info.html(render(repo_info_template, d));
+
+    goto_issues.html('<a href="http://github.com/' + d.full_name + '/issues">View All Issues</a>');
+    goto_commits.html('<a href="http://github.com/' + d.full_name + '/commits">View All Commits</a>');
+
+    repo_info.show();
+
+    $(".date").prettyDate();
+
+
+
+
+    if(sessionStorage && sessionStorage.getItem(project_commits_storage)){
+
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_commits_storage);
+
+    } else {
+
+      //console.log("No Local storage for project info :( " + project_commits_storage);
+
+      $.getJSON(requestURLProjectCommits, function(projectCommitsData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_commits_storage,JSON.stringify(projectCommitsData));
+        }
+      });
+
+    }
+
+    projectCommitsData = JSON.parse(sessionStorage.getItem(project_commits_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(projectCommitsData);
+
+    var commits = [];
+    $.each(projectCommitsData, function (i, obj) {
+      commits.push('<li><a target="_blank" href="http://github.com/' + options.login + '/' + options.repo_name + '/commit/' +
+       obj.sha + '">' + obj.commit.message + '<span title="'+ obj.committer.login +' @ '+ obj.commit.committer.date + '">by '+
+       obj.committer.login +'</span></a></li>');
+
+      if ( i === (options.commit_count - 1) ) { return false; }
     });
 
-    $.getJSON(requestURLIssues, function(data){
+    if (options.sorting !== "ascending" ) {
+      commits.reverse();
+    }
 
-        if(!data.data) {
-            issues_list.html('<li class="no-records">There are no open issues for this repo.</li>');
-        } else {
-            goto_issues.show();
-            var rows = [];
-            $.each(data.data, function (i, obj) {
-                var merged = $.extend({}, options, obj, obj.user);
+    commit_list
+      .html(commits.join(''))
+      .children()
+        .filter(':first').addClass("firstrepo").end()
+        .filter(':last').addClass("lastrepo");
 
-                rows.push(render(issues_item, merged));
-                if ( i === (options.issue_count - 1 ) ) { return false; }
-            });
+    goto_commits.show();
 
-            if (options.sorting !== "ascending" ) {
-                rows.reverse();
-            }
+    if(sessionStorage && sessionStorage.getItem(project_issues_storage)){
 
-            issues_list
-                .html(rows.join(''))
-                .children()
-                    .filter(':first').addClass("firstrepo").end()
-                    .filter(':last').addClass("lastrepo");
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_issues_storage);
 
+    } else {
+
+      //console.log("No Local storage for project info :( " + project_issues_storage);
+
+      $.getJSON(requestURLProjectIssues, function(projectIssuesData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_issues_storage,JSON.stringify(projectIssuesData));
         }
-    });
+      });
 
-    $.getJSON(requestURLCommits, function(data){
-        var commits = [];
-        $.each(data.data, function (i, obj) {
-            commits.push('<li><a target="_blank" href="http://github.com/' + options.login + '/' + options.repo_name + '/commit/' +
-             obj.sha + '">' + obj.commit.message + '<span title="'+ obj.committer.login +' @ '+ obj.commit.committer.date + '">by '+
-             obj.committer.login +'</span></a></li>');
+    }
 
-          if ( i === (options.commit_count - 1) ) { return false; }
-        });
+    projectIssuesData = JSON.parse(sessionStorage.getItem(project_issues_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(projectIssuesData);
 
-        if (options.sorting !== "ascending" ) {
-            commits.reverse();
-        }
+    if(!projectIssuesData) {
+      issues_list.html('<li class="no-records">There are no open issues for this repo.</li>');
+    } else {
+      goto_issues.show();
+      var rows = [];
+      $.each(projectIssuesData, function (i, obj) {
+        var merged = $.extend({}, options, obj, obj.user);
 
-        commit_list
-            .html(commits.join(''))
-            .children()
-                .filter(':first').addClass("firstrepo").end()
-                .filter(':last').addClass("lastrepo");
+        rows.push(render(issues_item, merged));
+        if ( i === (options.issue_count - 1 ) ) { return false; }
+      });
 
-        goto_commits.show();
-    });
+      if (options.sorting !== "ascending" ) {
+        rows.reverse();
+      }
+
+      issues_list
+        .html(rows.join(''))
+        .children()
+          .filter(':first').addClass("firstrepo").end()
+          .filter(':last').addClass("lastrepo");
+    }
 
   };
 
+  $.fn.GitHubBadge = function(options) {
+    var context = this;
 
-    $.fn.GitHubBadge = function(options) {
-        var context = this;
+    // option parsing
+    options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
 
-        // option parsing
-        options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
+    console.group( 'GitHubBadge' );
+    //console.log( "Options parsed as: %o", options );
 
-        console.group( 'GitHubBadge' );
-        console.log( "Options parsed as: %o", options );
+    // sanity checks.
+    if (!options.login) {
+      //console.log( "%s", options.login + " is undefined, not doing anything." );
+      return this;
+    }
 
-        // sanity checks.
-        if (!options.login) {
-          console.log( "%s", options.login + " is undefined, not doing anything." );
-          return this;
-        }
+    // dispatch
+    if (options.kind === "user") {
+      buildUser(this, options);
+    } else if (options.kind === "project") {
+      if (!options.repo_name) {
+        //console.log( "%s", options.repo_name + " is undefined, not doing anything." );
+        return this;
+      }
+      buildProject(this, options);
+    }
 
-        // dispatch
-        if (options.kind === "user") {
-            buildUser(this, options);
-        } else if (options.kind === "project") {
-            if (!options.repo_name) {
-              console.log( "%s", options.repo_name + " is undefined, not doing anything." );
-              return this;
-            }
-            buildProject(this, options);
-        }
+    this.delegate('.ghb-nav a, .ghb-nav a', 'click', function (e) {
+      e.preventDefault();
+      var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
+        new_panel = $(this).addClass('chosen').attr('rel');
 
-        this.delegate('.ghb-nav a, .ghb-nav a', 'click', function (e) {
-            e.preventDefault();
-            var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
-                new_panel = $(this).addClass('chosen').attr('rel');
+      context.find('.' + old_panel).hide();
+      context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
+    });
 
-            context.find('.' + old_panel).hide();
-            context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
-        });
+    this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseenter', function () {
+      $(this).find("div").show();
+    });
+    this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseleave', function () {
+      $(this).find("div").hide();
+    });
 
-        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseenter', function () {
-            $(this).find("div").show();
-        });
-        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseleave', function () {
-            $(this).find("div").hide();
-        });
+    console.groupEnd();
+    return this; // Don't break the chain
+  };
 
-        console.groupEnd();
-        return this; // Don't break the chain
-    };
+  $.fn.GitHubBadge.defaults = {
+    login: null,
+    kind: "user", // user or project
+    sort_on: "date", // "date" or "name"
+    sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
+    theme: "github", // adds value as class for entire badge
+    include_github_logo: true, // show a lil love
+    image_path: "images/",
+    animate_style: "slide", //slideDown or show
 
+    // User Badge Options
+    user_badge_title: "Repositories",
+    repo_count: "10",
+    show_repos: true,
 
-    $.fn.GitHubBadge.defaults = {
-        login: null,
-        kind: "user", // user or project
-        sort_on: "date", // "date" or "name"
-        sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
-        theme: "github", // adds value as class for entire badge
-        include_github_logo: true, // show a lil love
-        image_path: "images/",
-        animate_style: "slide", //slideDown or show
-
-        // User Badge Options
-        user_badge_title: "Repositories",
-        repo_count: "10",
-        show_repos: true,
-
-        // Repo Badge Options
-        repo_name: null,
-//        repo_branch: "master", // removed as the API acts weird when a branch is added
-        show_issues: true,
-        issue_count: "10",
-        show_commits: true,
-        commit_count: "10"
-    };
-
+    // Repo Badge Options
+    repo_name: null,
+//  repo_branch: "master", // removed as the API acts weird when a branch is added
+    show_issues: true,
+    issue_count: "10",
+    show_commits: true,
+    commit_count: "10"
+  };
 
 }(jQuery));

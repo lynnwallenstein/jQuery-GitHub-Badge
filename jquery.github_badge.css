@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.6 - 12/27/2013
+* jQuery GitHub Badge - v0.8 - 12/28/2013
 *
 * Copyright (c) 2013 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -14,6 +14,7 @@
   background-color: white;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   clear: both;
   font: 13px Helvetica, arial, freesans, clean, sans-serif;
@@ -53,8 +54,12 @@
     line-height: 36px;
     padding: 0 9px; }
     .ghb .ghb-header .github-mark {
+      border: none;
+      box-shadow: none;
       float: right;
+      margin: 0;
       margin-top: 6px;
+      padding: 0;
       height: 24px;
       width: 24px; }
     .ghb .ghb-header h1,
@@ -82,25 +87,39 @@
         border-bottom: 3px solid #d5d5d5; }
   .ghb .ghb-panel {
     clear: both; }
-  .ghb .ghb-info-panel {
+  .ghb .ghb-goto {
+    border-top: 1px solid #d5d5d5;
     font-size: 14px;
     font-weight: bold;
+    padding: 10px;
+    text-align: center; }
+    .ghb .ghb-goto a {
+      color: #888888;
+      margin-right: 15px;
+      text-decoration: none; }
+      .ghb .ghb-goto a:hover {
+        text-decoration: underline; }
+  .ghb .ghb-info-panel {
+    font-size: 14px;
     margin: 10px auto;
     padding: 0px 0px 10px 10px; }
     .ghb .ghb-info-panel a {
       color: #4183c4; }
     .ghb .ghb-info-panel img {
+      border: none;
       border-radius: 3px;
+      box-shadow: none;
       clear: both;
       float: right;
-      margin: 5px 10px 0 0; }
+      margin: 5px 10px 0 0;
+      padding: 0; }
     .ghb .ghb-info-panel dl {
       font-size: 12px;
-      font-weight: bold;
       margin-top: 10px; }
     .ghb .ghb-info-panel dt {
       clear: left;
       float: left;
+      font-weight: bold;
       margin: 0px 5px 0px 0px; }
     .ghb .ghb-info-panel dd {
       margin: 1px 15px 1px 0px; }
@@ -118,8 +137,6 @@
         padding-left: 22px; }
         .ghb .ghb-repo-panel .ghb-repo-list li.ghb-public-fork {
           background-image: url("images/repo-forked.svg"); }
-        .ghb .ghb-repo-panel .ghb-repo-list li:last-child {
-          border-bottom: none; }
         .ghb .ghb-repo-panel .ghb-repo-list li.no-records {
           border-bottom: none;
           color: #940a18;
@@ -138,6 +155,8 @@
         display: none;
         font-size: 10px;
         padding: 6px 25px 5px 10px; }
+    .ghb .ghb-repo-panel .ghb-goto {
+      border-top: none; }
   .ghb .ghb-commit-list {
     list-style: none; }
     .ghb .ghb-commit-list li {
@@ -173,18 +192,6 @@
         line-height: 14px;
         margin: 0 0 5px 5px;
         white-space: nowrap; }
-  .ghb .ghb-goto {
-    border-top: 1px solid #d5d5d5;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-    text-align: center; }
-    .ghb .ghb-goto a {
-      color: #888888;
-      margin-right: 15px;
-      text-decoration: none; }
-      .ghb .ghb-goto a:hover {
-        text-decoration: underline; }
   .ghb .ghb-issue-list {
     list-style: none; }
     .ghb .ghb-issue-list li {

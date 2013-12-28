@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.6 - 12/27/2013
+* jQuery GitHub Badge - v0.8 - 12/28/2013
 *
 * Copyright (c) 2013 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -36,6 +36,7 @@ $nav-height: 30px;
   background-color: $white;
   border: 1px solid $gray;
   border-radius: 5px;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   clear: both;
   font: $base-font-size $base-font-face;
@@ -84,8 +85,12 @@ $nav-height: 30px;
 
     .github-mark {
       $mark-size: 24px;
+      border: none;
+      box-shadow: none;
       float: right;
+      margin: 0;
       margin-top: (($header-height - $mark-size) / 2);
+      padding: 0;
       height: $mark-size;
       width: $mark-size;
     } // .github-mark
@@ -131,9 +136,28 @@ $nav-height: 30px;
     clear: both;
   }
 
-  .ghb-info-panel {
+  .ghb-goto {
+    border-top: 1px solid $gray;
     font-size: $base-font-size + 1px;
     font-weight: bold;
+    padding: 10px;
+    text-align: center;
+
+    a {
+      color: lighten($black-text, 20%);
+      margin-right: 15px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+    } // a
+
+  } // .ghb-goto
+
+  .ghb-info-panel {
+    font-size: $base-font-size + 1px;
     margin: 10px auto;
     padding: 0px 0px 10px 10px;
 
@@ -142,21 +166,24 @@ $nav-height: 30px;
     }
 
     img {
+      border: none;
       border-radius: 3px;
+      box-shadow: none;
       clear: both;
       float: right;
       margin: 5px 10px 0 0;
+      padding: 0;
     }
 
     dl {
       font-size: $base-font-size - 1px;
-      font-weight: bold;
       margin-top: 10px;
     }
 
     dt {
       clear: left;
       float: left;
+      font-weight: bold;
       margin: 0px 5px 0px 0px;
     }
 
@@ -185,10 +212,6 @@ $nav-height: 30px;
           background-image: url("images/repo-forked.svg");
         }
 
-        &:last-child {
-          border-bottom: none;
-        }
-
         &.no-records {
           border-bottom: none;
           color: $red;
@@ -198,27 +221,31 @@ $nav-height: 30px;
 
       } // li
 
-       a {
-          color: $blue;
-          display: block;
-          font-size: $base-font-size + 1px;
-          font-weight: bold;
-          padding: 6px 25px 5px 10px;
-          text-decoration: none;
+      a {
+        color: $blue;
+        display: block;
+        font-size: $base-font-size + 1px;
+        font-weight: bold;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none;
 
-          &:hover {
-            text-decoration: underline;
-          }
-
-        } // a
-
-        div {
-          display: none;
-          font-size: $base-font-size - 3px;
-          padding: 6px 25px 5px 10px;
+        &:hover {
+          text-decoration: underline;
         }
 
+      } // a
+
+      div {
+        display: none;
+        font-size: $base-font-size - 3px;
+        padding: 6px 25px 5px 10px;
+      }
+
     } // .ghb-repo-list
+
+    .ghb-goto {
+      border-top: none;
+    }
 
   } // .ghb-repo-panel
 
@@ -275,26 +302,6 @@ $nav-height: 30px;
     } // li
 
   } // .ghb-commit-list
-
-  .ghb-goto {
-    border-top: 1px solid $gray;
-    font-size: $base-font-size + 1px;
-    font-weight: bold;
-    padding: 10px;
-    text-align: center;
-
-    a {
-      color: lighten($black-text, 20%);
-      margin-right: 15px;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-    } // a
-
-  } // .ghb-goto
 
   .ghb-issue-list {
     list-style: none;
