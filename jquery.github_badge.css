@@ -89,7 +89,6 @@
     clear: both; }
   .ghb .ghb-info-panel {
     font-size: 14px;
-    font-weight: bold;
     margin: 10px auto;
     padding: 0px 0px 10px 10px; }
     .ghb .ghb-info-panel a {
@@ -104,11 +103,11 @@
       padding: 0; }
     .ghb .ghb-info-panel dl {
       font-size: 12px;
-      font-weight: bold;
       margin-top: 10px; }
     .ghb .ghb-info-panel dt {
       clear: left;
       float: left;
+      font-weight: bold;
       margin: 0px 5px 0px 0px; }
     .ghb .ghb-info-panel dd {
       margin: 1px 15px 1px 0px; }

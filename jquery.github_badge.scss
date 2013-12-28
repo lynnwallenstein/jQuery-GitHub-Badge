@@ -138,7 +138,6 @@ $nav-height: 30px;
 
   .ghb-info-panel {
     font-size: $base-font-size + 1px;
-    font-weight: bold;
     margin: 10px auto;
     padding: 0px 0px 10px 10px;
 
@@ -158,13 +157,13 @@ $nav-height: 30px;
 
     dl {
       font-size: $base-font-size - 1px;
-      font-weight: bold;
       margin-top: 10px;
     }
 
     dt {
       clear: left;
       float: left;
+      font-weight: bold;
       margin: 0px 5px 0px 0px;
     }
 

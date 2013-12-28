@@ -96,7 +96,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
         '<div class="ghb {{theme}}">',
             '<div class="ghb-header"></div>',
             '<div class="ghb-nav">',
-                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Repo Info</a>',
+                '<a class="ghb-info-panel_nav chosen" rel="ghb-info-panel"    href="#">Project Info</a>',
                 '<a class="ghb-commit-panel_nav"      rel="ghb-commit-panel"  href="#">Commits</a>',
                 '<a class="ghb-repo-panel_nav"       rel="ghb-repo-panel"   href="#">Issues</a>',
             '</div>',
@@ -143,11 +143,8 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
     var
     // URLs
 
-    //requestURLUserInfo = api_root + "users/" + options.login + "?",
-    //requestURLRepos    = api_root + "users/" + options.login + "/repos?callback=?",
-
-    requestURLUserInfo = api_root + "users/" + options.login + "?client_id=676e189221c665649394&client_secret=96b32d536a38b3f727d5ed02cf2fa74ecc266070",
-    requestURLRepos    = api_root + "users/" + options.login + "/repos?client_id=676e189221c665649394&client_secret=96b32d536a38b3f727d5ed02cf2fa74ecc266070",
+    requestURLUserInfo = api_root + "users/" + options.login + "?",
+    requestURLRepos    = api_root + "users/" + options.login + "/repos?callback=?",
 
     // Select HTML Elements
     base      = $(where).html(render(user_template, options)),
@@ -203,11 +200,11 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
     if(sessionStorage && sessionStorage.getItem(user_repos_storage)){
 
-      console.log("I found the user repos in local storage!!!!!! WHEEEEEE : " + user_repos_storage);
+      //console.log("I found the user repos in local storage!!!!!! WHEEEEEE : " + user_repos_storage);
 
     } else {
 
-      console.log("No Local storage for user repos :( " + user_repos_storage);
+      //console.log("No Local storage for user repos :( " + user_repos_storage);
 
       $.getJSON(requestURLRepos, function(userRepoData){
         if(sessionStorage){
@@ -218,10 +215,10 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
     }
 
     userRepoData = JSON.parse(sessionStorage.getItem(user_repos_storage));
-    console.log("Heres the data I got: ");
-    console.dir(userRepoData);
-    console.log("Length:");
-    console.log(userRepoData.length);
+    //console.log("Heres the data I got: ");
+    //console.dir(userRepoData);
+    //console.log("Length:");
+    //console.log(userRepoData.length);
 
     if(userRepoData.length === 0) {
 
@@ -251,6 +248,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
       }
 
       c = options.repo_count - 1;
+      console.log("You have Count Repos:" + c);
       l = repo_list
         .html(rows.join(''))
         .children()
@@ -260,7 +258,6 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
       if (l.length > c) {
         repo_goto
-          .append('<a href="#" class="ghb-show-more">Show ' + (l.length - c) + ' more</a>')
           .find('.ghb-show-more').click(function(){
             l.show();
             this.innerHTML = '';
@@ -276,14 +273,9 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
     var
     // URLs
-    //requestURLRepo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
-    //requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
-    //requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?callback=?",
-
-    requestURLRepo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?client_id=676e189221c665649394&client_secret=96b32d536a38b3f727d5ed02cf2fa74ecc266070",
-    requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&client_id=676e189221c665649394&client_secret=96b32d536a38b3f727d5ed02cf2fa74ecc266070",
-    requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?client_id=676e189221c665649394&client_secret=96b32d536a38b3f727d5ed02cf2fa74ecc266070",
-
+    requestURLProjectInfo    = api_root + "repos/" + options.login + "/" + options.repo_name + "?callback=?",
+    requestURLIssues  = api_root + "repos/" + options.login + "/" + options.repo_name + "/issues?state=open&callback=?",
+    requestURLCommits = api_root + "repos/" + options.login + "/" + options.repo_name + "/commits?callback=?",
 
     // Select HTML Elements
     base         = $(where).html(render(repo_template, options)),
@@ -295,73 +287,137 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
     commit_list  = base.find('.ghb-commit-list'),
     no_commits   = commit_list.find('.no_commits');
 
-    $.getJSON(requestURLRepo, function(data){
-        var d = data.data;
+    projectIdentifier = options.login + "-" + options.repo_name;
+    project_info_storage = "githubProjectInfo-" + projectIdentifier;
+    project_commits_storage = "githubProjectCommits-" + projectIdentifier;
+    project_issues_storage = "githubProjectIssues-" + projectIdentifier;
 
-        header.html('<h1><a target="_blank" href="http://github.com/' + d.full_name + '">' + d.name +'</a></h1>');
+    if(sessionStorage && sessionStorage.getItem(project_info_storage)){
 
-        if (options.include_github_logo) {
-            header.prepend(render(github_logo_template, options));
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_info_storage);
+
+    } else {
+
+      //console.log("No Local storage for project info :( " + project_info_storage);
+
+      $.getJSON(requestURLProjectInfo, function(projectInfoData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_info_storage,JSON.stringify(projectInfoData));
         }
+      });
 
-        repo_info.html(render(repo_info_template, d));
+    }
 
-        goto_issues.html('<a href="http://github.com/' + d.full_name + '/issues">View All Issues</a>');
-        goto_commits.html('<a href="http://github.com/' + d.full_name + '/commits">View All Commits</a>');
+    projectInfoData = JSON.parse(sessionStorage.getItem(project_info_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(projectInfoData);
 
-        repo_info.show();
-        $(".date").prettyDate();
+    var d = projectInfoData;
+
+    header.html('<h1><a target="_blank" href="http://github.com/' + d.full_name + '">' + d.name +'</a></h1>');
+
+    if (options.include_github_logo) {
+        header.prepend(render(github_logo_template, options));
+    }
+
+    repo_info.html(render(repo_info_template, d));
+
+    goto_issues.html('<a href="http://github.com/' + d.full_name + '/issues">View All Issues</a>');
+    goto_commits.html('<a href="http://github.com/' + d.full_name + '/commits">View All Commits</a>');
+
+    repo_info.show();
+
+    $(".date").prettyDate();
+
+
+
+
+    if(sessionStorage && sessionStorage.getItem(project_commits_storage)){
+
+      console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_commits_storage);
+
+    } else {
+
+      console.log("No Local storage for project info :( " + project_commits_storage);
+
+      $.getJSON(requestURLProjectCommits, function(projectCommitsData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_commits_storage,JSON.stringify(projectCommitsData));
+        }
+      });
+
+    }
+
+    projectCommitsData = JSON.parse(sessionStorage.getItem(project_commits_storage));
+    console.log("Heres the data I got: ");
+    console.dir(projectCommitsData);
+
+    var commits = [];
+    $.each(projectCommitsData, function (i, obj) {
+      commits.push('<li><a target="_blank" href="http://github.com/' + options.login + '/' + options.repo_name + '/commit/' +
+       obj.sha + '">' + obj.commit.message + '<span title="'+ obj.committer.login +' @ '+ obj.commit.committer.date + '">by '+
+       obj.committer.login +'</span></a></li>');
+
+      if ( i === (options.commit_count - 1) ) { return false; }
     });
 
-    $.getJSON(requestURLIssues, function(data){
+    if (options.sorting !== "ascending" ) {
+      commits.reverse();
+    }
 
-        if(!data.data) {
-            issues_list.html('<li class="no-records">There are no open issues for this repo.</li>');
-        } else {
-            goto_issues.show();
-            var rows = [];
-            $.each(data.data, function (i, obj) {
-                var merged = $.extend({}, options, obj, obj.user);
+    commit_list
+      .html(commits.join(''))
+      .children()
+        .filter(':first').addClass("firstrepo").end()
+        .filter(':last').addClass("lastrepo");
 
-                rows.push(render(issues_item, merged));
-                if ( i === (options.issue_count - 1 ) ) { return false; }
-            });
+    goto_commits.show();
 
-            if (options.sorting !== "ascending" ) {
-                rows.reverse();
-            }
 
-            issues_list
-                .html(rows.join(''))
-                .children()
-                    .filter(':first').addClass("firstrepo").end()
-                    .filter(':last').addClass("lastrepo");
 
+
+    if(sessionStorage && sessionStorage.getItem(project_issues_storage)){
+
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_issues_storage);
+
+    } else {
+
+      //console.log("No Local storage for project info :( " + project_issues_storage);
+
+      $.getJSON(requestURLProjectIssues, function(projectIssuesData){
+        if(sessionStorage){
+          sessionStorage.setItem(project_issues_storage,JSON.stringify(projectIssuesData));
         }
-    });
+      });
 
-    $.getJSON(requestURLCommits, function(data){
-        var commits = [];
-        $.each(data.data, function (i, obj) {
-            commits.push('<li><a target="_blank" href="http://github.com/' + options.login + '/' + options.repo_name + '/commit/' +
-             obj.sha + '">' + obj.commit.message + '<span title="'+ obj.committer.login +' @ '+ obj.commit.committer.date + '">by '+
-             obj.committer.login +'</span></a></li>');
+    }
 
-          if ( i === (options.commit_count - 1) ) { return false; }
-        });
+    projectIssuesData = JSON.parse(sessionStorage.getItem(project_issues_storage));
+    //console.log("Heres the data I got: ");
+    //console.dir(projectIssuesData);
 
-        if (options.sorting !== "ascending" ) {
-            commits.reverse();
-        }
+    if(!projectIssuesData) {
+      issues_list.html('<li class="no-records">There are no open issues for this repo.</li>');
+    } else {
+      goto_issues.show();
+      var rows = [];
+      $.each(projectIssuesData, function (i, obj) {
+        var merged = $.extend({}, options, obj, obj.user);
 
-        commit_list
-            .html(commits.join(''))
-            .children()
-                .filter(':first').addClass("firstrepo").end()
-                .filter(':last').addClass("lastrepo");
+        rows.push(render(issues_item, merged));
+        if ( i === (options.issue_count - 1 ) ) { return false; }
+      });
 
-        goto_commits.show();
-    });
+      if (options.sorting !== "ascending" ) {
+        rows.reverse();
+      }
+
+      issues_list
+        .html(rows.join(''))
+        .children()
+          .filter(':first').addClass("firstrepo").end()
+          .filter(':last').addClass("lastrepo");
+    }
 
   };
 
@@ -430,7 +486,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
         // Repo Badge Options
         repo_name: null,
-//        repo_branch: "master", // removed as the API acts weird when a branch is added
+//      repo_branch: "master", // removed as the API acts weird when a branch is added
         show_issues: true,
         issue_count: "10",
         show_commits: true,
