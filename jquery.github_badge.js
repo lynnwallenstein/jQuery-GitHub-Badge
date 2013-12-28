@@ -1,5 +1,3 @@
-
-
 /*!
 * jQuery GitHub Badge - v0.9 - 12/28/2013
 *
