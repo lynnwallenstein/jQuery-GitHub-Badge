@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.7 - 12/27/2013
+* jQuery GitHub Badge - v0.8 - 12/28/2013
 *
 * Copyright (c) 2012 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -248,7 +248,7 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
       }
 
       c = options.repo_count - 1;
-      console.log("You have Count Repos:" + c);
+      //console.log("You have Count Repos:" + c);
       l = repo_list
         .html(rows.join(''))
         .children()
@@ -334,11 +334,11 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
     if(sessionStorage && sessionStorage.getItem(project_commits_storage)){
 
-      console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_commits_storage);
+      //console.log("I found the project info in local storage!!!!!! WHEEEEEE : " + project_commits_storage);
 
     } else {
 
-      console.log("No Local storage for project info :( " + project_commits_storage);
+      //console.log("No Local storage for project info :( " + project_commits_storage);
 
       $.getJSON(requestURLProjectCommits, function(projectCommitsData){
         if(sessionStorage){
@@ -349,8 +349,8 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
     }
 
     projectCommitsData = JSON.parse(sessionStorage.getItem(project_commits_storage));
-    console.log("Heres the data I got: ");
-    console.dir(projectCommitsData);
+    //console.log("Heres the data I got: ");
+    //console.dir(projectCommitsData);
 
     var commits = [];
     $.each(projectCommitsData, function (i, obj) {
@@ -372,9 +372,6 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
         .filter(':last').addClass("lastrepo");
 
     goto_commits.show();
-
-
-
 
     if(sessionStorage && sessionStorage.getItem(project_issues_storage)){
 
@@ -421,77 +418,74 @@ function prettyDate(a){a=new Date((a||"").replace(/-/g,"/").replace(/[TZ]/g," ")
 
   };
 
+  $.fn.GitHubBadge = function(options) {
+    var context = this;
 
-    $.fn.GitHubBadge = function(options) {
-        var context = this;
+    // option parsing
+    options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
 
-        // option parsing
-        options = jQuery.extend({}, $.fn.GitHubBadge.defaults, options);
+    console.group( 'GitHubBadge' );
+    //console.log( "Options parsed as: %o", options );
 
-        console.group( 'GitHubBadge' );
-        console.log( "Options parsed as: %o", options );
+    // sanity checks.
+    if (!options.login) {
+      //console.log( "%s", options.login + " is undefined, not doing anything." );
+      return this;
+    }
 
-        // sanity checks.
-        if (!options.login) {
-          console.log( "%s", options.login + " is undefined, not doing anything." );
-          return this;
-        }
+    // dispatch
+    if (options.kind === "user") {
+      buildUser(this, options);
+    } else if (options.kind === "project") {
+      if (!options.repo_name) {
+        //console.log( "%s", options.repo_name + " is undefined, not doing anything." );
+        return this;
+      }
+      buildProject(this, options);
+    }
 
-        // dispatch
-        if (options.kind === "user") {
-            buildUser(this, options);
-        } else if (options.kind === "project") {
-            if (!options.repo_name) {
-              console.log( "%s", options.repo_name + " is undefined, not doing anything." );
-              return this;
-            }
-            buildProject(this, options);
-        }
+    this.delegate('.ghb-nav a, .ghb-nav a', 'click', function (e) {
+      e.preventDefault();
+      var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
+        new_panel = $(this).addClass('chosen').attr('rel');
 
-        this.delegate('.ghb-nav a, .ghb-nav a', 'click', function (e) {
-            e.preventDefault();
-            var old_panel = context.find('.chosen').removeClass('chosen').attr('rel'),
-                new_panel = $(this).addClass('chosen').attr('rel');
+      context.find('.' + old_panel).hide();
+      context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
+    });
 
-            context.find('.' + old_panel).hide();
-            context.find('.' + new_panel)[options.animate_style === "slide" ? "slideDown" : "show"]();
-        });
+    this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseenter', function () {
+      $(this).find("div").show();
+    });
+    this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseleave', function () {
+      $(this).find("div").hide();
+    });
 
-        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseenter', function () {
-            $(this).find("div").show();
-        });
-        this.delegate('ul.ghb-repo-list li, ul.ghb-issue-list li', 'mouseleave', function () {
-            $(this).find("div").hide();
-        });
+    console.groupEnd();
+    return this; // Don't break the chain
+  };
 
-        console.groupEnd();
-        return this; // Don't break the chain
-    };
+  $.fn.GitHubBadge.defaults = {
+    login: null,
+    kind: "user", // user or project
+    sort_on: "date", // "date" or "name"
+    sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
+    theme: "github", // adds value as class for entire badge
+    include_github_logo: true, // show a lil love
+    image_path: "images/",
+    animate_style: "slide", //slideDown or show
 
+    // User Badge Options
+    user_badge_title: "Repositories",
+    repo_count: "10",
+    show_repos: true,
 
-    $.fn.GitHubBadge.defaults = {
-        login: null,
-        kind: "user", // user or project
-        sort_on: "date", // "date" or "name"
-        sorting: "ascending", // ascending or descending for repos (user badge) and issues (project badge)
-        theme: "github", // adds value as class for entire badge
-        include_github_logo: true, // show a lil love
-        image_path: "images/",
-        animate_style: "slide", //slideDown or show
-
-        // User Badge Options
-        user_badge_title: "Repositories",
-        repo_count: "10",
-        show_repos: true,
-
-        // Repo Badge Options
-        repo_name: null,
-//      repo_branch: "master", // removed as the API acts weird when a branch is added
-        show_issues: true,
-        issue_count: "10",
-        show_commits: true,
-        commit_count: "10"
-    };
-
+    // Repo Badge Options
+    repo_name: null,
+//  repo_branch: "master", // removed as the API acts weird when a branch is added
+    show_issues: true,
+    issue_count: "10",
+    show_commits: true,
+    commit_count: "10"
+  };
 
 }(jQuery));

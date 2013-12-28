@@ -1,5 +1,5 @@
 /*!
-* jQuery GitHub Badge - v0.7 - 12/27/2013
+* jQuery GitHub Badge - v0.8 - 12/28/2013
 *
 * Copyright (c) 2013 Lynn Wallenstein
 * Examples and docs at: http://tablesorter.com
@@ -136,6 +136,26 @@ $nav-height: 30px;
     clear: both;
   }
 
+  .ghb-goto {
+    border-top: 1px solid $gray;
+    font-size: $base-font-size + 1px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+
+    a {
+      color: lighten($black-text, 20%);
+      margin-right: 15px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+    } // a
+
+  } // .ghb-goto
+
   .ghb-info-panel {
     font-size: $base-font-size + 1px;
     margin: 10px auto;
@@ -192,10 +212,6 @@ $nav-height: 30px;
           background-image: url("images/repo-forked.svg");
         }
 
-        &:last-child {
-          border-bottom: none;
-        }
-
         &.no-records {
           border-bottom: none;
           color: $red;
@@ -205,27 +221,31 @@ $nav-height: 30px;
 
       } // li
 
-       a {
-          color: $blue;
-          display: block;
-          font-size: $base-font-size + 1px;
-          font-weight: bold;
-          padding: 6px 25px 5px 10px;
-          text-decoration: none;
+      a {
+        color: $blue;
+        display: block;
+        font-size: $base-font-size + 1px;
+        font-weight: bold;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none;
 
-          &:hover {
-            text-decoration: underline;
-          }
-
-        } // a
-
-        div {
-          display: none;
-          font-size: $base-font-size - 3px;
-          padding: 6px 25px 5px 10px;
+        &:hover {
+          text-decoration: underline;
         }
 
+      } // a
+
+      div {
+        display: none;
+        font-size: $base-font-size - 3px;
+        padding: 6px 25px 5px 10px;
+      }
+
     } // .ghb-repo-list
+
+    .ghb-goto {
+      border-top: none;
+    }
 
   } // .ghb-repo-panel
 
@@ -282,26 +302,6 @@ $nav-height: 30px;
     } // li
 
   } // .ghb-commit-list
-
-  .ghb-goto {
-    border-top: 1px solid $gray;
-    font-size: $base-font-size + 1px;
-    font-weight: bold;
-    padding: 10px;
-    text-align: center;
-
-    a {
-      color: lighten($black-text, 20%);
-      margin-right: 15px;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-    } // a
-
-  } // .ghb-goto
 
   .ghb-issue-list {
     list-style: none;
