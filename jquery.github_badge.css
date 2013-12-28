@@ -1,0 +1,227 @@
+/*!
+* jQuery GitHub Badge - v0.5 - 12/26/2013
+*
+* Copyright (c) 2013 Lynn Wallenstein
+* Examples and docs at: http://tablesorter.com
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*
+* @author Lynn Wallenstein/lynn@lynn.io
+* @contributor Rob Garrison/https://github.com/Mottie/
+*/
+.ghb {
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  clear: both;
+  font: 13px Helvetica, arial, freesans, clean, sans-serif;
+  overflow: hidden;
+  /* Reset */ }
+  .ghb dd,
+  .ghb div,
+  .ghb dl,
+  .ghb dt,
+  .ghb h1,
+  .ghb h2,
+  .ghb p,
+  .ghb span,
+  .ghb ol,
+  .ghb ul,
+  .ghb li {
+    background-color: transparent;
+    border: 0;
+    font-size: 100%;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline; }
+  .ghb * {
+    box-sizing: border-box; }
+  .ghb h2 {
+    display: none; }
+  .ghb .ghb-header {
+    background-color: #eaeaea;
+    background-image: -moz-linear-gradient(#fafafa, #eaeaea);
+    background-image: -webkit-linear-gradient(#fafafa, #eaeaea);
+    background-image: linear-gradient(#fafafa, #eaeaea);
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #d5d5d5;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    line-height: 36px;
+    padding: 0 9px; }
+    .ghb .ghb-header .github-mark {
+      float: right;
+      margin-top: 6px;
+      height: 24px;
+      width: 24px; }
+    .ghb .ghb-header h1,
+    .ghb .ghb-header h1 a {
+      clear: left;
+      color: #555555;
+      font-size: 16px;
+      text-decoration: none; }
+  .ghb .ghb-nav {
+    background-color: #fafafa;
+    border-bottom: 1px solid #d5d5d5;
+    font-size: 11px;
+    font-weight: 200;
+    height: 30px;
+    padding: 6px 8px 0 8px; }
+    .ghb .ghb-nav a {
+      color: black;
+      display: inline-block;
+      line-height: 20px;
+      margin-right: 15px;
+      text-decoration: none; }
+      .ghb .ghb-nav a:hover {
+        text-decoration: underline; }
+      .ghb .ghb-nav a.chosen {
+        border-bottom: 3px solid #d5d5d5; }
+  .ghb .ghb-panel {
+    clear: both; }
+  .ghb .ghb-info-panel {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px auto;
+    padding: 0px 0px 10px 10px; }
+    .ghb .ghb-info-panel a {
+      color: #4183c4; }
+    .ghb .ghb-info-panel img {
+      border-radius: 3px;
+      clear: both;
+      float: right;
+      margin: 5px 10px 0 0; }
+    .ghb .ghb-info-panel dl {
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 10px; }
+    .ghb .ghb-info-panel dt {
+      clear: left;
+      float: left;
+      margin: 0px 5px 0px 0px; }
+    .ghb .ghb-info-panel dd {
+      margin: 1px 15px 1px 0px; }
+  .ghb .ghb-repo-panel {
+    margin: 0 auto 0 auto; }
+    .ghb .ghb-repo-panel .ghb-repo-list {
+      list-style: none; }
+      .ghb .ghb-repo-panel .ghb-repo-list li {
+        background-image: url("images/repo.svg");
+        background-repeat: no-repeat;
+        background-position: 10px 7px;
+        background-size: 12px 16px;
+        border-bottom: 1px solid #d5d5d5;
+        display: block;
+        padding-left: 22px; }
+        .ghb .ghb-repo-panel .ghb-repo-list li.ghb-public-fork {
+          background-image: url("images/repo-forked.svg"); }
+        .ghb .ghb-repo-panel .ghb-repo-list li:last-child {
+          border-bottom: none; }
+        .ghb .ghb-repo-panel .ghb-repo-list li.no-records {
+          border-bottom: none;
+          color: #940a18;
+          font-weight: bold;
+          padding: 6px 25px 5px 32px; }
+      .ghb .ghb-repo-panel .ghb-repo-list a {
+        color: #4183c4;
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none; }
+        .ghb .ghb-repo-panel .ghb-repo-list a:hover {
+          text-decoration: underline; }
+      .ghb .ghb-repo-panel .ghb-repo-list div {
+        display: none;
+        font-size: 10px;
+        padding: 6px 25px 5px 10px; }
+  .ghb .ghb-commit-list {
+    list-style: none; }
+    .ghb .ghb-commit-list li {
+      background-image: url("images/git-commit.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid #d5d5d5;
+      display: block;
+      padding-left: 22px; }
+      .ghb .ghb-commit-list li:last-child {
+        border-bottom: none; }
+      .ghb .ghb-commit-list li.no-records {
+        border-bottom: none;
+        color: #940a18;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px; }
+      .ghb .ghb-commit-list li a {
+        color: #4183c4;
+        display: block;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none; }
+        .ghb .ghb-commit-list li a:hover {
+          text-decoration: underline; }
+        .ghb .ghb-commit-list li a span {
+          color: #555555;
+          text-decoration: none; }
+      .ghb .ghb-commit-list li span {
+        border-bottom: 1px dotted #d5d5d5;
+        color: #555555;
+        cursor: help;
+        font-size: 8px;
+        line-height: 14px;
+        margin: 0 0 5px 5px;
+        white-space: nowrap; }
+  .ghb .ghb-goto {
+    border-top: 1px solid #d5d5d5;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center; }
+    .ghb .ghb-goto a {
+      color: #888888;
+      margin-right: 15px;
+      text-decoration: none; }
+      .ghb .ghb-goto a:hover {
+        text-decoration: underline; }
+  .ghb .ghb-issue-list {
+    list-style: none; }
+    .ghb .ghb-issue-list li {
+      background-image: url("images/issue-opened.svg");
+      background-repeat: no-repeat;
+      background-position: 10px 7px;
+      background-size: 12px 16px;
+      border-bottom: 1px solid #d5d5d5;
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      padding-left: 22px; }
+      .ghb .ghb-issue-list li:last-child {
+        border-bottom: none; }
+      .ghb .ghb-issue-list li.no-records {
+        border-bottom: none;
+        color: #940a18;
+        font-weight: bold;
+        padding: 6px 25px 5px 32px; }
+      .ghb .ghb-issue-list li a {
+        color: #4183c4;
+        display: block;
+        padding: 6px 25px 5px 10px;
+        text-decoration: none; }
+        .ghb .ghb-issue-list li a:hover {
+          text-decoration: none; }
+        .ghb .ghb-issue-list li a span {
+          color: #555555;
+          text-decoration: none; }
+      .ghb .ghb-issue-list li span {
+        border-bottom: 1px dotted #d5d5d5;
+        color: #555555;
+        font-size: 8px;
+        line-height: 14px;
+        margin: 0 0 5px 5px;
+        white-space: nowrap; }
+      .ghb .ghb-issue-list li div {
+        display: none;
+        font-size: 10px;
+        font-weight: normal;
+        padding: 6px 25px 5px 10px; }
