@@ -1,3 +1,9 @@
+## SUPPORT
+
+Due to the limitations of the unauthenticated access to the GitHub API, I am no longer actively developing this.
+
+## DESCRIPTION
+
 jQuery Github Badge is a jQuery plugin allowing you to display Github activity
 for a user or a repo (project).
 
@@ -7,7 +13,7 @@ them work ;)
 
 ## DEMO
 
-[Click Here](http://www.lynn.io/demos/github_badge/index.html) to see it in action.
+[Click Here](http://lynn.io/jQuery-GitHub-Badge/) to see it in action.
 
 
 ## SETUP
